@@ -1,0 +1,12 @@
+import axios from "axios";
+export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_PRODUCTS_BY_NAME = " GET_PRODUCTS_BY_NAME";
+export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL";
+export const FILTER_BY_PRODUCT_TYPE = "FILTER_BY_PRODUCT_TYPE";
+export const FILTER_BY_BRAND = "FILTER_BY_BRAND";
+export const FILTER_BY_COLOR="FILTER_BY_COLOR"
+export const FILTER_BY_SIZE = "FILTER_BY_ORIGIN";
+export const ORDER_BY_PRICE = "FILTER_BY_PRICE";
+export const ORDER_BY_BEST_SELLING= "ORDER_BY_BEST_SELLING";
+
+

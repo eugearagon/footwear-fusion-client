@@ -12,8 +12,13 @@ export default function Register() {
           <label htmlFor="">Nombre</label><input type="text" />
           <label htmlFor="">Apellido</label><input type="text" />
           <label htmlFor="">DNI</label><input type="text" />
+          <label htmlFor="">Fecha de Nacimiento</label><input type="date" />
+          <label htmlFor="">Sexo</label><input type="text" />
+         <label htmlFor=""></label>
           <button>Enviar</button>
         </form>
+
+        <a href="">INICIAR SESIÓN</a>
       </div>
       <img className="zapas" src={Zapas} alt="" />
     </div>

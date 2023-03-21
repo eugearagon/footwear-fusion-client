@@ -1,24 +1,22 @@
 import "./App.css";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Home from "../src/Components/Home/Home.jsx";
-import Register from "../src/Components/Register/Register.jsx";
-import { Route, Routes, BrowserRouter, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./Components/Home/Home.jsx";
-import Register from "./Components/Register/Register";
-// import Navbar from "./NavBar/Navbar"
+import Register from "./Components/Register/Register.jsx";
+import Navbar from "./Components/NavBar/Navbar.jsx";
+
 
 function App() {
-  // const location = useLocation();
+  const location = useLocation()
   return (
+     
     <div className="App">
-      {/* {location.pathname !== "/register" && <Navbar/>} */}
-      <BrowserRouter>
+     {location.pathname !== "/register" && <Navbar/>}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
         </Routes>
-      </BrowserRouter>
     </div>
+     
   );
 }
 

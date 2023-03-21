@@ -1,4 +1,7 @@
 import "./App.css";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Home from "../src/Components/Home/Home.jsx";
+import Register from "../src/Components/Register/Register.jsx";
 import { Route, Routes, BrowserRouter, useLocation } from "react-router-dom";
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";

@@ -1,17 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
+body{
+
+  align-items: center;
+}
+
 h1{
   font-size: 16pt;
   font-weight: 200;
 }
 
+a{
+  text-decoration: none;
+}
+
 button{
   color: aliceblue;
   background-color: #17e1e7;
+  color: #001e40;
   border: none;
-  font-size: 11pt;
+  font-size: 9pt;
+  font-weight: 500;
   padding: 5px 10px;
   cursor: pointer;
+}
+
+button:hover{
+  opacity: 0.8;
 }
 
 .App {
@@ -47,7 +62,7 @@ button{
   margin: 0 auto;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
-  text-align: left;
+  text-align: right;
 }
 
 .register-landing form label{
@@ -60,10 +75,28 @@ button{
   grid-column: 2 / 3;
   align-self: center;
 }
+.register-landing a {
+  color: aliceblue;
+}
 
 /* register landing */
 
+/* home */
 
+.home{
+  margin: 0 auto;
+  align-items: center;
+}
 
+/* home */
 
+/* slider */
+
+.slider{
+  margin: 0 auto !important;
+  text-align: center;
+  width: 1163px;
+}
+
+/* slider */
 

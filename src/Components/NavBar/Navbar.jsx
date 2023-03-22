@@ -25,7 +25,7 @@ export default function Navbar() {
       <div></div>
       <div></div>
       <div></div>
-      <NavLink className="ingresa" to={"/"}>
+      <NavLink className="ingresa" to={"/register"}>
         Ingresa / Registrate <span>{">"}</span>
       </NavLink>
       <NavLink to={"/"}>

@@ -1,8 +1,10 @@
+
 import Slider from "../Slider/Slider.jsx"
 export default function Home(){
 
     return(
         <div className="home">
+
             <Slider/>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias dignissimos modi accusantium necessitatibus libero, ea nihil delectus ratione facere distinctio harum aperiam debitis repellat magnam obcaecati error, esse quidem sint.
             Reprehenderit nemo harum laborum, voluptatum delectus maiores ullam fugit, hic quod impedit minima fugiat suscipit? Doloremque odit tenetur at ut temporibus fugiat consectetur possimus, ab architecto facere hic laudantium suscipit!

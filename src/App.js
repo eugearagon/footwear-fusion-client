@@ -1,9 +1,11 @@
 import "./App.css";
+
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";
 import Navbar from "./Components/NavBar/Navbar.jsx"
 import Footer from "./Components/Footer/Footer";
+
 
 function App() {
  const location = useLocation();

@@ -40,6 +40,3 @@ const settings = {
 }
 
 
-
-
-    

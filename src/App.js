@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register.jsx";
 import Navbar from "./Components/NavBar/Navbar.jsx";
+import Footer from "./Components/Footer/Footer";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
         </Routes>
+        {location.pathname !== "/register" && <Footer/>}
     </div>
      
   );

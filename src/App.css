@@ -4,7 +4,7 @@ h1::selection, h2::selection, h3::selection, p::selection, span::selection{
   background-color: #17e1e7;
 }
 
-h1, h2, h3, h4, p, a, button, li, span{
+h1, h2, h3, h4, h5, p, a, button, li, span{
   font-family: 'Roboto', sans-serif !important;
 }
 
@@ -100,7 +100,6 @@ button:hover{
 /* home */
 
 .home{
-  width: 80%;
   margin: 0 auto;
   align-items: center;
   width: 80vw;
@@ -144,3 +143,19 @@ button:hover{
 }
 
 /* navbar */
+
+
+
+/* footer */
+.footer{
+  color: aliceblue;
+  background-color: #001e40;
+ 
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* footer */

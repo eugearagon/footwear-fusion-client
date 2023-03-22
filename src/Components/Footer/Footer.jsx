@@ -3,6 +3,13 @@ import medios from "../images/mediosdepago.png";
 export default function Footer() {
   return (
     <div className="footer">
+        <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
       <div>
         <h5>MEDIOS DE PAGO</h5>
         <img src={medios} alt="" />
@@ -14,6 +21,14 @@ export default function Footer() {
         <h5>Suscribite a nuestro Newsletter y no te pierdas las novedades!</h5>
         <input type="text" placeholder="Ingresa tu email..." />
         <button className="enviar">Enviar</button>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
   );
 }

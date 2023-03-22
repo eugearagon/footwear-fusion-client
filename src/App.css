@@ -112,7 +112,6 @@ button:hover{
 .slider{
   margin: 0 auto !important;
   text-align: center;
-  width: 1163px;
 }
 
 /* slider */
@@ -162,3 +161,19 @@ button:hover{
   width: 300px;
 }
 /* footer */
+
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.slick-slide img {
+  display: block;
+  height: auto;
+  width: 100%;
+}

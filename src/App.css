@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-body{
+h1::selection, h2::selection, h3::selection, p::selection, span::selection{
+  background-color: #17e1e7;
+}
 
+h1, h2, h3, h4, h5, p, a, button, li, span{
+  font-family: 'Roboto', sans-serif !important;
+}
+
+body{
   align-items: center;
 }
 
@@ -12,6 +19,15 @@ h1{
 
 a{
   text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover{opacity: 0.8;}
+
+p{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 12pt;
 }
 
 button{
@@ -86,6 +102,7 @@ button:hover{
 .home{
   margin: 0 auto;
   align-items: center;
+  width: 80vw;
 }
 
 /* home */
@@ -95,8 +112,68 @@ button:hover{
 .slider{
   margin: 0 auto !important;
   text-align: center;
-  width: 1163px;
 }
 
 /* slider */
 
+/* navbar */
+.navbar{
+  background-color: #292929;
+  padding: 10px 0;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navbar .ingresa{
+  color: #17e1e7;
+  font-size: 9pt;
+}
+
+.navbar .ingresa span{
+  transform: rotate(90deg);
+  position: relative;
+  top: -3px;
+  float: right;
+  margin-left: 10px;
+  font-size: 13pt;
+}
+
+/* navbar */
+
+
+
+/* footer */
+.footer{
+  color: aliceblue;
+  background-color: #001e40;
+  padding: 20px 0;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.footer input{
+  width: 300px;
+}
+/* footer */
+
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.slick-slide img {
+  display: block;
+  height: auto;
+  width: 100%;
+}

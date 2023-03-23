@@ -164,6 +164,7 @@ li{
 .logo-nav{
   cursor: pointer;
   position: relative;
+  width: 11rem;
 }
 .logo-nav:hover{
   top: -1px;
@@ -171,13 +172,13 @@ li{
 }
 
 .searchbar input{
-  width: 300px;
- padding: 10px;
+  width: 20rem;
+ padding: 4px;
  margin-right: 10px;
 }
 
 .searchbar button{
-  padding: 12px;
+  padding: 6px;
 }
 /* navbar */
 

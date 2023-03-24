@@ -113,6 +113,7 @@ li {
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   text-align: right;
+  padding: 40px 0;
 }
 
 .register-landing form label {

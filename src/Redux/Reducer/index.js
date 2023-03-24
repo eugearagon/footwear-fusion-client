@@ -10,7 +10,7 @@ import {
     FILTER_BY_SIZE,
     ORDER_BY_PRICE,
     ORDER_BY_BEST_SELLING,
-  } from "../actions/index";
+  } from "../Actions/index";
   
   const initialState = {
     products: [],

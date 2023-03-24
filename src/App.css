@@ -1,36 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
 
-h1::selection, h2::selection, h3::selection, p::selection, span::selection{
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
+p::selection,
+span::selection,
+li::selection,
+label::selection,
+input::selection,
+a::selection {
   background-color: #17e1e7;
+  color: #001e40;
 }
 
-h1, h2, h3, h4, h5, p, a, button, li, span{
-  font-family: 'Roboto', sans-serif !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a,
+button,
+li,
+span {
+  font-family: "Roboto", sans-serif !important;
 }
 
-body{
+body {
   align-items: center;
 }
 
-h1{
-  font-size: 16pt;
-  font-weight: 200;
+h1 {
+  font-size: 18pt;
+  font-weight: 900;
+  margin: 0;
 }
 
-a{
+h2{
+  font-size: 15pt;
+  font-weight: 700;
+  margin: 0;
+}
+
+a {
   text-decoration: none;
   cursor: pointer;
 }
 
-a:hover{opacity: 0.8;}
-
-p{
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-  font-size: 12pt;
+a:hover {
+  opacity: 0.8;
 }
 
-button{
+p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 10pt;
+}
+
+button {
   color: aliceblue;
   background-color: #17e1e7;
   color: #001e40;
@@ -41,8 +70,15 @@ button{
   cursor: pointer;
 }
 
-button:hover{
+button:hover {
   opacity: 0.8;
+}
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
 }
 
 .App {
@@ -51,27 +87,25 @@ button:hover{
 
 /* register landing */
 
-.register-landing{
+.register-landing {
   display: flex;
   height: 100vh;
 }
 
-.register-landing .form{
+.register-landing .form {
   background-color: #001e40;
   color: aliceblue;
   width: 70%;
-  box-shadow: 14px 0px 29px -4px rgba(0,0,0,1);
+  box-shadow: 14px 0px 29px -4px rgba(0, 0, 0, 1);
   z-index: 1000;
   padding-top: 60px;
 }
 
-
-
-.register-landing .form .zapas{
+.register-landing .form .zapas {
   width: 40%;
 }
 
-.register-landing form{
+.register-landing form {
   display: grid;
   justify-content: center;
   width: 50%;
@@ -81,13 +115,13 @@ button:hover{
   text-align: right;
 }
 
-.register-landing form label{
+.register-landing form label {
   font-size: 10pt;
   grid-column: 1 / 2;
   align-self: center;
 }
 
-.register-landing form input{
+.register-landing form input {
   grid-column: 2 / 3;
   align-self: center;
 }
@@ -99,17 +133,23 @@ button:hover{
 
 /* home */
 
-.home{
+.home {
   margin: 0 auto;
   align-items: center;
   width: 80vw;
+}
+
+.home-adentro {
+  display: flex;
+  text-align: left;
+  padding: 30px 0;
 }
 
 /* home */
 
 /* slider */
 
-.slider{
+.slider {
   margin: 0 auto !important;
   text-align: center;
 }
@@ -117,7 +157,7 @@ button:hover{
 /* slider */
 
 /* navbar */
-.navbar{
+.navbar {
   background-color: #292929;
   padding: 10px 0;
   margin-bottom: 30px;
@@ -127,12 +167,13 @@ button:hover{
   align-items: center;
 }
 
-.navbar .ingresa{
+.navbar .ingresa {
   color: #17e1e7;
   font-size: 9pt;
+  text-align: left;
 }
 
-.navbar .ingresa span{
+.navbar .ingresa span {
   transform: rotate(90deg);
   position: relative;
   top: -3px;
@@ -141,12 +182,33 @@ button:hover{
   font-size: 13pt;
 }
 
+.navbar a:hover {
+  opacity: 1;
+}
+
+.logo-nav {
+  cursor: pointer;
+  position: relative;
+  width: 11rem;
+}
+.logo-nav:hover {
+  top: -1px;
+  left: -1px;
+}
+
+.searchbar input {
+  width: 20rem;
+  padding: 4px;
+  margin-right: 10px;
+}
+
+.searchbar button {
+  padding: 6px;
+}
 /* navbar */
 
-
-
 /* footer */
-.footer{
+.footer {
   color: aliceblue;
   background-color: #001e40;
   padding: 20px 0;
@@ -157,11 +219,12 @@ button:hover{
   align-items: center;
 }
 
-.footer input{
+.footer input {
   width: 300px;
 }
 /* footer */
 
+/* slider */
 
 .slick-list {
   position: relative;
@@ -177,3 +240,187 @@ button:hover{
   height: auto;
   width: 100%;
 }
+
+/* filtros */
+
+.filtros {
+  padding: 20px 15px;
+  border: 1px solid #e8e8e8;
+  width: 170px;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.filtros h3 {
+  font-size: 11pt;
+}
+
+.filtro-adentro {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.filtro-adentro label {
+  color: #a2a2a2;
+  margin: 10px;
+}
+
+.filtro-adentro button {
+  color: #ffffff;
+  margin-top: 10px;
+}
+.filtro-adentro ul {
+  height: 170px;
+  overflow-y: scroll;
+}
+
+.filtro-adentro ul::-webkit-scrollbar {
+  width: 5px; /* Ancho de la barra */
+  background-color: #d7fbfd; /* Color de fondo */
+}
+
+/* Para el botón de desplazamiento */
+.filtro-adentro ul::-webkit-scrollbar-thumb {
+  background-color: #0e2b4d; /* Color del botón */
+}
+
+.filtro-adentro li {
+  margin: 5px 0;
+  font-size: 9pt;
+}
+
+/* fin filtros */
+
+/* cards container */
+
+.card img {
+  width: 215px;
+  height: 259px;
+  overflow: hidden;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 0 20px;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.cards-container h5 {
+  margin: 3px;
+  font-size: 11pt;
+}
+
+.cards-container a {
+  color: #000;
+}
+
+.cards-container .marca {
+  font-size: 9pt;
+  background-color: #17e1e7;
+  color: #0e2b4d;
+  text-align: right;
+  padding: 5px 10px;
+  width: 50%;
+  position: relative;
+  margin-top: -43px;
+  left: -15px;
+}
+
+/* cards container */
+
+/* orden y paginado */
+
+.order-paginate,
+.ordenar,
+.paginado,
+.paginado ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-paginate h5 {
+  margin: 0 10px 0 0;
+}
+
+.paginado button {
+  background-color: #ffffff;
+}
+
+.paginado li,
+.paginado button {
+  font-weight: 600;
+  font-size: 10pt;
+}
+
+.paginado li {
+  margin: 0 3px;
+}
+
+/* fin orden y paginado */
+
+/* detail */
+
+.detail {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px 0;
+  gap: 30px;
+  width: 60%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.detail-der h1{
+  font-size: 1.4rem;
+  background-color: #17e1e7;
+  color: #0e2b4d;
+  text-align: right;
+  padding: 5px 20px 5px 150px;
+  margin-bottom: 10px;
+  width: max-content;
+}
+
+.detail-der h3{
+  font-size: 38pt;
+  font-weight: 300;
+}
+
+.options{
+  display: flex;
+  flex-direction: column;
+}
+.options button{
+  margin: 5px 0;
+  padding: 10px 0;
+}
+
+.options select{
+  margin-bottom: 5px;
+}
+.comprar{
+  background-color: #0e2b4d;
+  color: #ffffff;
+}
+.favs{
+  background-color: #d9d9d9;
+  color: #4d4d4d;
+}
+
+.description {
+  border-top: 1px solid #d9d9d9;
+  text-align: left;
+  width: 80%;
+  margin: 0 auto;
+  padding: 30px 0;
+  margin-top: 10px;
+}
+/* detail */

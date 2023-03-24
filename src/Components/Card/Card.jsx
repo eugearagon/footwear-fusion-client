@@ -7,7 +7,7 @@ export default function Card() {
     <div className="card">
         <img src={product} alt="" />
         <h4 className="marca">ADIDAS</h4>
-        <NavLink to={"/"}><h5>Zapatilla Negra Adidas adizero</h5></NavLink>
+        <NavLink to={"/detail"}><h5>Zapatilla Negra Adidas adizero</h5></NavLink>
         <h5>$23.700.-</h5>
     </div>
   );

@@ -69,7 +69,7 @@ function rootReducer(state = initialState, action) {
     case FILTER_BY_PRODUCT_TYPE:
       return {};
 
-      case FILTER_BY_BRAND:
+     case FILTER_BY_BRAND:
       const brandFilter = state.brandFilter.includes(action.payload)
         ? state.brandFilter.filter((brand) => brand !== action.payload)
         : [...state.brandFilter, action.payload];

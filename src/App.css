@@ -85,6 +85,27 @@ li {
   text-align: center;
 }
 
+.popup{
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #04101eed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup img{
+  width: 95%;
+}
+
+.popup a:hover{
+  opacity: 1;
+}
+
 /* register landing */
 
 .register-landing {
@@ -167,9 +188,13 @@ li {
   padding: 10px 0;
   margin-bottom: 30px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 80px;
+  /* flex-direction: row;
+  align-items: center; */
 }
 
 .navbar .ingresa {
@@ -219,13 +244,19 @@ li {
   padding: 20px 0;
   text-align: left;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 40px;
 }
 
 .footer input {
   width: 300px;
+  padding: 5px;
+}
+.footer button {
+  padding: 7px 10px;
 }
 /* footer */
 
@@ -246,6 +277,10 @@ li {
   width: 100%;
 }
 
+.slick-prev, .slick-next{
+  display: none !important;
+}
+
 /* filtros */
 
 .filtros {
@@ -262,6 +297,10 @@ li {
   font-size: 11pt;
 }
 
+.filtros input{
+  padding: 5px;
+}
+
 .filtro-adentro {
   display: flex;
   flex-direction: column;
@@ -274,7 +313,7 @@ li {
 }
 
 .filtro-adentro button {
-  color: #ffffff;
+  color: #001e40;
   margin-top: 10px;
 }
 .filtro-adentro ul {
@@ -311,9 +350,9 @@ li {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  gap: 20px;
+  gap: 55px;
   padding: 0 20px;
-  width: 75%;
+  width: 60%;
   margin: 0 auto;
 }
 
@@ -322,8 +361,13 @@ li {
   font-size: 11pt;
 }
 
+.cards-container img{
+  margin-bottom: 5px;
+}
+
 .cards-container a {
-  color: #000;
+  color: #202123;
+
 }
 
 .cards-container .marca {
@@ -371,6 +415,11 @@ li {
 
 .paginado li {
   margin: 0 3px;
+  color: #a2a2a2;
+}
+
+.paginado .active{
+  color: #000;
 }
 
 /* fin orden y paginado */
@@ -445,3 +494,40 @@ li {
   margin-top: 10px;
 }
 /* detail */
+
+
+
+
+/* DARK MODE */
+
+.dark-btn{
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+}
+
+.dark-mode{
+  color: #ededed;
+  background-color: #202123;
+}
+
+.dark-mode .footer{
+  background-color: #292929;
+}
+
+.dark-mode .cards-container a {
+  color: #17e1e7;
+}
+
+.dark-mode .paginado button{
+  color: #ededed;
+  background: none;
+}
+
+.dark-mode input{
+  border: 1px solid #ededed;
+  background: none;
+  color: #ededed;
+}
+
+/* DARK MODE */

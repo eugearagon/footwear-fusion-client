@@ -50,26 +50,14 @@ export default function OrderPaginate(props) {
       </div>
 
       <nav className="paginado">
-    <h5>Pagina {currentPage} de {pageNumbers.length}</h5>
+   
     <ul>
         <li>
           <button onClick={handlePrevPage} >
           {"<<"}
           </button>
         </li>
-        {pageNumbers.map((number) => (
-          <li key={number}>
-            <a 
-              className={currentPage === number ? "active" : ""}
-              onClick={() => {
-                setCurrentPage(number);
-                paginado(number);
-              }}
-            >
-              {number}
-            </a>
-          </li>
-        ))}
+      <h5>Pagina {currentPage} de {pageNumbers.length}</h5>
         <li>
           <button
             onClick={handleNextPage}

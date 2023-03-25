@@ -10,7 +10,7 @@ export default function OrderPaginate(props) {
   const prodPerPage = 6; // este estado local setea cuantas cartas entran por pagina
   const indexLastProd = currentPage * prodPerPage;
   const indexFirstProd = indexLastProd - prodPerPage;
-  const currentProd = allProducts.slice(indexFirstProd, indexLastProd);
+  //const currentProd = allProducts.slice(indexFirstProd, indexLastProd);
   
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(allProducts.length / prodPerPage); i++) {

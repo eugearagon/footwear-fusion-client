@@ -303,7 +303,7 @@ li {
 
 .card img {
   width: 215px;
-  height: 259px;
+  height: auto;
   overflow: hidden;
 }
 
@@ -336,6 +336,10 @@ li {
   position: relative;
   margin-top: -43px;
   left: -15px;
+}
+
+.card:hover{
+  transform: scale(1.01);
 }
 
 /* cards container */
@@ -382,6 +386,10 @@ li {
   width: 60%;
   margin: 0 auto;
   text-align: left;
+}
+
+.detail img{
+  width: 30%;
 }
 
 .detail-der h1{

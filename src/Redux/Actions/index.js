@@ -16,13 +16,13 @@ export const ORDER_BY_BEST_SELLING= "ORDER_BY_BEST_SELLING";
 export function getProducts() {
     return async function (dispatch) {
       try {
-        var products = await axios.get("http://localhost:3001/");
+        var products = await axios.get("http://localhost:3001/product");
         return dispatch({
           type: GET_PRODUCTS,
           payload: products.data,
         });
       } catch (error) {
-        console.log(error);
+        console.log("no se encontraron productos");
       }
     };
   }
@@ -112,6 +112,12 @@ export function getProducts() {
       payload,
     };
   }
+  export function filterBySize(payload) {
+    return {
+      type: FILTER_BY_SIZE,
+      payload,
+    };
+  }
 
   export function filterByColor(payload) {
     return {
@@ -120,11 +126,5 @@ export function getProducts() {
     };
   }
   
-  export function filterBySize(payload) {
-    return {
-      type: FILTER_BY_SIZE,
-      payload,
-    };
-  }
 
 

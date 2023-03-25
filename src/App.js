@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/detail" element={<Detail />} />
+          <Route path="/product/:prodId" element={<Detail />} />
         </Routes>
         {location.pathname !== "/register" && <Footer/>}
     </div>

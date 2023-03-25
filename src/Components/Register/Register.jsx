@@ -18,7 +18,7 @@ export default function Register() {
           <button>Enviar</button>
         </form>
 
-        <a href="">INICIAR SESIÓN</a>
+        {/* <a href="">INICIAR SESIÓN</a> */}
       </div>
       <img className="zapas" src={Zapas} alt="" />
     </div>

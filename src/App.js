@@ -1,23 +1,25 @@
 import "./App.css";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Home from "../src/Components/Home/Home.jsx";
-import Register from "../src/Components/Register/Register.jsx";
-import { Route, Routes, BrowserRouter, useLocation } from "react-router-dom";
+
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";
-// import Navbar from "./NavBar/Navbar"
+import Navbar from "./Components/NavBar/Navbar.jsx"
+import Footer from "./Components/Footer/Footer";
+import Detail from "./Components/Detail/Detail";
+
 
 function App() {
-  // const location = useLocation();
+ const location = useLocation();
   return (
     <div className="App">
-      {/* {location.pathname !== "/register" && <Navbar/>} */}
-      <BrowserRouter>
+      {location.pathname !== "/register" && <Navbar/>}
+      
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/product/:prodId" element={<Detail />} />
         </Routes>
-      </BrowserRouter>
+        {location.pathname !== "/register" && <Footer/>}
     </div>
   );
 }

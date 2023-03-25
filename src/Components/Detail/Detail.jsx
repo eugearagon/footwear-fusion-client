@@ -64,7 +64,7 @@ export default function Detail() {
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
           style={{
-            transform: `scale(${isHovering ? 2.3 : 1}) translate(${mousePosition.x}px, ${
+            transform: `scale(${isHovering ? 2.8 : 1}) translate(${mousePosition.x}px, ${
               mousePosition.y
             }px)`,
             transition: isLeaving ? "transform 0.3s ease-out" : "",

@@ -390,7 +390,7 @@ li {
 
 .detail img{
   width: 100%;
-  transition: transform 0.5s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+  transition: transform 0.1s cubic-bezier(0.25, 0.45, 0.45, 0.95);
 }
 
 .img-cont{

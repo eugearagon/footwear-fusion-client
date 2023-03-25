@@ -8,8 +8,8 @@ export default function OrderPaginate(props) {
   const allProducts = useSelector((state) => state.products);
 
   const prodPerPage = 6; // este estado local setea cuantas cartas entran por pagina
-  const indexLastProd = currentPage * prodPerPage;
-  const indexFirstProd = indexLastProd - prodPerPage;
+  //const indexLastProd = currentPage * prodPerPage;
+  //const indexFirstProd = indexLastProd - prodPerPage;
   //const currentProd = allProducts.slice(indexFirstProd, indexLastProd);
   
   const pageNumbers = [];
@@ -18,7 +18,7 @@ export default function OrderPaginate(props) {
   }
    
   const paginado = (pageNumber) => {
-    props.setCurrentPage(pageNumber); // actualizar currentPage usando props.setCurrentPage
+    props.setCurrentPage(pageNumber); 
   };
 
   const handleNextPage = () => {

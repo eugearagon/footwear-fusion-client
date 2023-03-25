@@ -371,6 +371,11 @@ li {
 
 .paginado li {
   margin: 0 3px;
+  color: #a2a2a2;
+}
+
+.paginado .active{
+  color: #000;
 }
 
 /* fin orden y paginado */

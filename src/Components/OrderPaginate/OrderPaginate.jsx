@@ -17,11 +17,10 @@ export default function OrderPaginate() {
           <li>
             <button>{"<<"}</button>
           </li>
-          <a><li>1</li></a>
-          <a><li>2</li></a>
-          <a><li>3</li></a>
-          <a><li>4</li></a>
-          <a><li>5</li></a>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
 
           <li>
             <button>{">>"}</button>

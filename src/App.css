@@ -113,8 +113,13 @@ li {
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   text-align: right;
+  padding: 20px 0;
 }
 
+.register-landing h1{
+  font-weight: 300;
+  padding: 30px 0;
+}
 .register-landing form label {
   font-size: 10pt;
   grid-column: 1 / 2;
@@ -298,7 +303,7 @@ li {
 
 .card img {
   width: 215px;
-  height: 259px;
+  height: auto;
   overflow: hidden;
 }
 
@@ -331,6 +336,10 @@ li {
   position: relative;
   margin-top: -43px;
   left: -15px;
+}
+
+.card:hover{
+  transform: scale(1.01);
 }
 
 /* cards container */
@@ -377,6 +386,10 @@ li {
   width: 60%;
   margin: 0 auto;
   text-align: left;
+}
+
+.detail img{
+  width: 30%;
 }
 
 .detail-der h1{

@@ -1,13 +1,44 @@
-import product from "../images/product.jpg";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 export default function Detail() {
+
+  const [prod, setProd] = useState({
+    id: "",
+    title: "",
+    code: "",
+    price: "",
+    image: "",
+    description: "",
+    MarcaProducts: [{}],
+    talle: [{}],
+  });
+
+  const { prodId } = useParams();
+
+   
+  useEffect(() => {
+    window.scrollTo(0, 0); // Desplazar a la parte superior del DOM
+  }, []); // Ejecutar solo una vez al montar el componente
+  
+  useEffect(() => {
+    fetch(`http://localhost:3001/product/${prodId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setProd(data);
+      })
+      .catch((error) => window.alert("Algo salio mal, intentalo nuevamente"));
+  }, [prodId]);
+
+
+
   return (
     <div className="detail">
-      <img src={product} alt="" />
+      <img src={prod.image} alt={prod.title} />
       <div className="detail-der">
-        <h1>ADIDAS</h1>
-        <h2>Zapatilla Blanca Adidas Grand Court 2.0 CF</h2>
-        <h3>$15.999.-</h3>
+      <h1>{prod.MarcaProducts[0]?.name && prod.MarcaProducts[0].name.toUpperCase()}</h1>
+        <h2>{prod.title}</h2>
+        <h3>${prod.price}.-</h3>
         <div className="options">
           <h5>TALLES</h5>
           <select defaultValue="Seleccione un talle">
@@ -24,15 +55,7 @@ export default function Detail() {
  
      <div className="description">
      <h5>DETALLES DEL PRODUCTO</h5>
-        <p>ZAPATILLAS PARA BEBÉ PARA USO DIARIO HECHAS PARCIALMENTE CON MATERIALES RECICLADOS
-<br />
-Estas zapatillas adidas para bebé combinan con todo, desde overoles hasta lo que sea que encontrés en el armario. 
-<br />
-La suela tipo cupsole resistente y las tiras regulables de cierre por contacto ofrecen sujeción y facilitan el movimiento en las citas de juego, las clases sensoriales y los momentos de snacks. Y esos son solo sus planes matutinos.
-<br />
-Hecho con una serie de materiales reciclados, este exterior incorpora al menos un 50 % de contenido reciclado. 
-<br />
-Este producto representa solo una de nuestras soluciones para acabar con los residuos plásticos.</p>
+        <p></p>
      </div>
     </div>
   );

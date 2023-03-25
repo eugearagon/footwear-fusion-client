@@ -6,12 +6,19 @@ import Register from "./Components/Register/Register";
 import Navbar from "./Components/NavBar/Navbar.jsx"
 import Footer from "./Components/Footer/Footer";
 import Detail from "./Components/Detail/Detail";
+import DarkMode from "./Components/DarkMode/DarkMode";
+import { useState } from "react";
 
 
 function App() {
  const location = useLocation();
+ const [darkMode, setDarkMode] = useState(false);
+
+  function toggleDarkMode() {
+    setDarkMode(!darkMode);
+  }
   return (
-    <div className="App">
+    <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/register" && <Navbar/>}
       
         <Routes>
@@ -19,6 +26,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/product/:prodId" element={<Detail />} />
         </Routes>
+        {location.pathname !== "/register" && <DarkMode toggleDarkMode={toggleDarkMode}/>}
         {location.pathname !== "/register" && <Footer/>}
     </div>
   );

@@ -7,14 +7,11 @@ import Searchbar from "../Searchbar/Searchbar";
 export default function Navbar() {
   return (
     <div className="navbar">
-      <div></div>
-      <div></div>
-      <div></div>
+
       <NavLink to={"/"}>
         <img className="logo-nav" src={logo} alt="" />
       </NavLink>
-      <div></div>
-      <div></div>
+
 
 
       <Searchbar />
@@ -28,9 +25,7 @@ export default function Navbar() {
       <NavLink to={"/"}>
         <img src={carro} alt="" />
       </NavLink>
-      <div></div>
-      <div></div>
-      <div></div>
+
     </div>
   );
 }

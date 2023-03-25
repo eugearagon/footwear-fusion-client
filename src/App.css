@@ -389,8 +389,16 @@ li {
 }
 
 .detail img{
-  width: 30%;
+  width: 100%;
+  transition: transform 0.1s cubic-bezier(0.25, 0.45, 0.45, 0.95);
 }
+
+.img-cont{
+  width: 265px;
+  height: 380px;
+  overflow: hidden;
+}
+
 
 .detail-der h1{
   font-size: 1.4rem;

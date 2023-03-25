@@ -6,7 +6,7 @@ import Card from "../Card/Card";
 export default function CardsContainer() {
 
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.filteredProducts);
+  const allProducts = useSelector((state) => state.products);
 
 //   const [filteredProducts, setFilteredProducts] = useState(allProducts);
   

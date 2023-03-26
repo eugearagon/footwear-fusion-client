@@ -1,17 +1,23 @@
 import axios from "axios";
-export const GET_PRODUCTS = "GET_PRODUCTS";
-export const GET_PRODUCTS_BY_NAME = " GET_PRODUCTS_BY_NAME"; // searchBar recibe query name
-export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL";// recibe id 
-export const GET_USERS="GET_USERS"
-export const POST_USERS="POST_USERS"
-export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
-export const FILTER_BY_BRAND = "FILTER_BY_BRAND";
-export const FILTER_BY_COLOR="FILTER_BY_COLOR"
-export const FILTER_BY_SIZE = "FILTER_BY_SIZE";
-export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
-export const ORDER_BY_BEST_SELLING= "ORDER_BY_BEST_SELLING";
-
-
+import {
+  GET_PRODUCTS,
+  GET_PRODUCTS_BY_NAME,
+  GET_PRODUCT_DETAIL,
+  GET_CATEGORY,
+  GET_BRAND,
+  GET_COLOR,
+  GET_SIZE,
+  GET_PUNCTUATION,
+  GET_USERS,
+  POST_USERS,
+  FILTER_BY_CATEGORY,
+  FILTER_BY_BRAND,
+  FILTER_BY_COLOR,
+  FILTER_BY_SIZE,
+  ORDER_BY_PRICE,
+  ORDER_BY_BEST_RATING,
+  PUT_USERS_FAVORITES
+} from "../Actions/actions";
 
 export function getProducts() {
     return async function (dispatch) {

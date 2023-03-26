@@ -1,8 +1,32 @@
-export default function Searchbar(){
-    return(
-        <div className="searchbar">
-            <input type="text" placeholder="Buscá por producto, marca, categoría..." />
-            <button>Buscar</button>
-        </div>
-    )
+import { getProductsByName } from "../../Redux/Actions";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+
+export default function Searchbar() {
+  const dispatch = useDispatch();
+  const [name, setName] = useState();
+
+  function handleInputChange(e) {
+    e.preventDefault();
+    setName(e.target.value);
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(getProductsByName(name.toLowerCase().trim())); //lo pasamos a minusculas y elminiamos los espacios en blanco
+    }
+
+
+  return (
+    <div className="searchbar">
+      <input
+        value={name}
+        onChange={(e) => handleInputChange(e)}
+        type="text"
+        placeholder="Buscá tus zapas!"
+      />
+      <button type="submit" onClick={(e) => handleSubmit(e)}>
+        Buscar
+      </button>
+    </div>
+  );
 }

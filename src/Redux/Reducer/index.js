@@ -10,15 +10,27 @@ import {
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   ORDER_BY_BEST_SELLING,
-} from "../actions/index";
+} from "../Actions/index";
 
 const initialState = {
-  products: [], // todas las zapatillas
-  detail: {}, // una zapatilla
-  filteredProducts: [], // zapatillas por talle, zapatillas por categoria
-  selectedFilters: [], // categoria, talle
-  users: [], // usuario logueado
+  products: [],
+  detail: [],
+  filteredProducts: [],
+  SelectedFilters: [],
+  users: [],
+  brandFilter: [],
+  sizeFilter: [],
 };
+
+function applyFilters(products, brandFilter, sizeFilter) {
+  const filteredProductsByBrand = products.filter((product) =>
+    brandFilter.length === 0 ? true : brandFilter.includes(product.MarcaProducts?.[0]?.name)
+  );
+  const filteredProducts = filteredProductsByBrand.filter((product) =>
+    sizeFilter.length === 0 ? true : sizeFilter.includes(product.talle?.[0]?.talle)
+  );
+  return filteredProducts;
+}
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -26,6 +38,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
+        filteredProducts: action.payload,
       };
 
     case GET_PRODUCTS_BY_NAME:
@@ -39,6 +52,8 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
+    default:
+      return state;
 
     case GET_USERS:
       return {
@@ -51,66 +66,52 @@ function rootReducer(state = initialState, action) {
         ...state,
       };
 
-    case FILTER_BY_CATEGORY:
-      const filteredByCategoryProducts = state.products.filter(
-        (product) => product.category.includes(action.payload)
+    case FILTER_BY_PRODUCT_TYPE:
+      return {};
+
+     case FILTER_BY_BRAND:
+      const brandFilter = state.brandFilter.includes(action.payload)
+        ? state.brandFilter.filter((brand) => brand !== action.payload)
+        : [...state.brandFilter, action.payload];
+      const filteredProducts = applyFilters(
+        state.products,
+        brandFilter,
+        state.sizeFilter
       );
       return {
         ...state,
-        filteredProducts: filteredByCategoryProducts,
-        selectedFilters: state.selectedFilters.concat(action.payload),
+        brandFilter,
+        filteredProducts,
       };
 
-    case FILTER_BY_BRAND:
-      const filteredByBrandProducts = state.products.filter(
-        (product) => product.brand === action.payload
-      );
-      return {
-        ...state,
-        filteredProducts: filteredByBrandProducts,
-        selectedFilters: state.selectedFilters.concat(action.payload),
-      };
+
 
     case FILTER_BY_COLOR:
-      const filteredByColorProducts = state.products.filter(
-        (product) => product.color.includes(action.payload)
+      return {};
+
+      case FILTER_BY_SIZE:
+      const sizeFilter = state.sizeFilter.includes(action.payload)
+        ? state.sizeFilter.filter((size) => size !== action.payload)
+        : [...state.sizeFilter, action.payload];
+      const filteredProductsBySize = applyFilters(
+        state.products,
+        state.brandFilter,
+        sizeFilter
       );
       return {
         ...state,
-        filteredProducts: filteredByColorProducts,
-        selectedFilters: state.selectedFilters.concat(action.payload),
+        sizeFilter,
+        filteredProducts: filteredProductsBySize,
       };
 
-    case FILTER_BY_SIZE:
-      const filteredBySizeProducts = state.products.filter((product) =>
-        product.size.includes(parseInt(action.payload))
-      );
-      return {
-        ...state,
-        filteredProducts: filteredBySizeProducts,
-        selectedFilters: state.selectedFilters.concat(action.payload),
-      };
+
 
     case ORDER_BY_PRICE:
-      const sortedByPriceProducts = state.products.sort((a, b) =>
-        action.payload === "ASC" ? a.price - b.price : b.price - a.price
-      );
-      return {
-        ...state,
-        filteredProducts: sortedByPriceProducts,
-      };
+      return {};
 
     case ORDER_BY_BEST_SELLING:
-      
-      return {
-     
-      };
-
-    default:
-      return state;
+      return {};
   }
 }
 
 export default rootReducer;
-
-  

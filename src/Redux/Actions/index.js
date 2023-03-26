@@ -22,7 +22,7 @@ export function getProducts() {
           payload: products.data,
         });
       } catch (error) {
-        console.log(error);
+        console.log("no se encontraron productos");
       }
     };
   }
@@ -112,6 +112,12 @@ export function getProducts() {
       payload,
     };
   }
+  export function filterBySize(payload) {
+    return {
+      type: FILTER_BY_SIZE,
+      payload,
+    };
+  }
 
   export function filterByColor(payload) {
     return {
@@ -120,11 +126,5 @@ export function getProducts() {
     };
   }
   
-  export function filterBySize(payload) {
-    return {
-      type: FILTER_BY_SIZE,
-      payload,
-    };
-  }
 
 

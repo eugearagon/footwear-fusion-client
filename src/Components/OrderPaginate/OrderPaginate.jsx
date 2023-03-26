@@ -1,7 +1,45 @@
-export default function OrderPaginate() {
+import { useState } from "react";
+import { useSelector } from "react-redux";
+
+export default function OrderPaginate(props) {
+
+  var [currentPage, setCurrentPage] = useState(1);
+
+  const allProducts = useSelector((state) => state.products);
+
+  const prodPerPage = 6; // este estado local setea cuantas cartas entran por pagina
+  //const indexLastProd = currentPage * prodPerPage;
+  //const indexFirstProd = indexLastProd - prodPerPage;
+  //const currentProd = allProducts.slice(indexFirstProd, indexLastProd);
+  
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(allProducts.length / prodPerPage); i++) {
+    pageNumbers.push(i);
+  }
+   
+  const paginado = (pageNumber) => {
+    props.setCurrentPage(pageNumber); 
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < pageNumbers.length) {
+      setCurrentPage(currentPage + 1);
+      paginado(currentPage + 1);
+      currentPage = currentPage + 1
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      paginado(currentPage - 1);
+      currentPage = currentPage - 1
+    }
+  };
+
   return (
     <div className="order-paginate">
-      <h5>Zapatillas 845 productos</h5>
+      <h5>Zapatillas {allProducts.length} productos</h5>
       <div className="ordenar">
         <h5>Ordenar Por</h5>
         <select defaultValue="Mas Populares">
@@ -12,20 +50,23 @@ export default function OrderPaginate() {
       </div>
 
       <nav className="paginado">
-    <h5>Pagina 1 de 16</h5>
-        <ul>
-          <li>
-            <button>{"<<"}</button>
-          </li>
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-
-          <li>
-            <button>{">>"}</button>
-          </li>
-        </ul>
+   
+    <ul>
+        <li>
+          <button onClick={handlePrevPage} >
+          {"<<"}
+          </button>
+        </li>
+      <h5>Pagina {currentPage} de {pageNumbers.length}</h5>
+        <li>
+          <button
+            onClick={handleNextPage}
+           
+          >
+            {">>"}
+          </button>
+        </li>
+      </ul>
       </nav>
     </div>
   );

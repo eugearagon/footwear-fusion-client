@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getDetail } from "../../Redux/Actions";
 
-export default function Detail(props) {
+export default function Detail() {
   const { prodId } = useParams();
   const dispatch = useDispatch();
 

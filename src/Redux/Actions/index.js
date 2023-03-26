@@ -43,10 +43,10 @@ export function getProducts() {
     };
   }
 
-  export function getDetail(id) {
+  export function getDetail(prodId) {
     return async function (dispatch) {
       try {
-        var productDetail = await axios.get(`http://localhost:3001/product/${id}`,id);
+        var productDetail = await axios.get(`http://localhost:3001/product/${prodId}`,prodId);
         return dispatch({
           type: GET_PRODUCT_DETAIL,
           payload: productDetail.data,

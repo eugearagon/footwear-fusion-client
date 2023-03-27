@@ -439,6 +439,7 @@ li {
 }
 
 .img-cont{
+  cursor: zoom-in;
   width: 265px;
   height: 380px;
   overflow: hidden;

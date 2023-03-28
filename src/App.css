@@ -528,3 +528,20 @@ li {
 }
 
 /* DARK MODE */
+
+/* whatsapp*/
+.whatsapp{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+ 
+}
+  .wa{
+    width: 40px;
+    height: auto;
+    border-radius: 100%;
+  }
+
+
+
+/* whatsapp*/

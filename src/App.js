@@ -7,6 +7,7 @@ import Navbar from "./Components/NavBar/Navbar.jsx";
 import Footer from "./Components/Footer/Footer";
 import Detail from "./Components/Detail/Detail";
 import DarkMode from "./Components/DarkMode/DarkMode";
+import Whatsapp from "./Components/whatsapp/whatsapp";
 import { useState } from "react";
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
       </Routes>
       {location.pathname !== "/register" && (
         <DarkMode toggleDarkMode={toggleDarkMode} />
+      )}
+      {location.pathname !== "/register" && (
+        <Whatsapp />
       )}
       {location.pathname !== "/register" && <Footer />}
     </div>

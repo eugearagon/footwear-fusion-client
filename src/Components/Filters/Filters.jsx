@@ -30,6 +30,7 @@ export default function Filters() {
         console.error(error);
       });
   }, []);
+  
 
   const handleSearchMarca = (event) => {
     setSearchMarca(event.target.value);

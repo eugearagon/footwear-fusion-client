@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { orderByPrice } from "../../Redux/Actions";
+import { useDispatch } from "react-redux";
 
 export default function OrderPaginate(props) {
+  const dispatch = useDispatch();
 
   var [currentPage, setCurrentPage] = useState(1);
 
@@ -37,15 +40,24 @@ export default function OrderPaginate(props) {
     }
   };
 
+  const handleSelect = (e) => {
+    dispatch(orderByPrice(e.target.value))
+  }
+
+
+
+
+
+
   return (
     <div className="order-paginate">
       <h5>Zapatillas {allProducts.length} productos</h5>
       <div className="ordenar">
         <h5>Ordenar Por</h5>
-        <select defaultValue="Mas Populares">
-          <option value="Menos Populares">Menos Populares</option>
-          <option value="Mayor Precio">Mayor Precio</option>
+        <select defaultValue="Ordenar por..." onChange={(e) => handleSelect(e)}>
+          <option disabled >Ordenar por...</option>
           <option value="Menor Precio">Menor Precio</option>
+          <option value="Mayor Precio">Mayor Precio</option>
         </select>
       </div>
 

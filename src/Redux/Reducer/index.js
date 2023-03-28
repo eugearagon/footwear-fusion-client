@@ -66,7 +66,14 @@ function rootReducer(state = initialState, action) {
       return {};
 
     case ORDER_BY_PRICE:
-      return {};
+      const { payload } = action;
+      const { products } = state;
+      const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+      return {
+        ...state,
+        products:
+          payload === "Mayor Precio" ? sortedProducts.reverse() : sortedProducts,
+      };
 
     case ORDER_BY_BEST_SELLING:
       return {};

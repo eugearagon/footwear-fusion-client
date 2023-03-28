@@ -1,4 +1,25 @@
 import axios from "axios";
+<<<<<<< HEAD
+import {
+  GET_PRODUCTS,
+  GET_PRODUCTS_BY_NAME,
+  GET_PRODUCT_DETAIL,
+  GET_CATEGORY,
+  GET_BRAND,
+  GET_COLOR,
+  GET_SIZE,
+  GET_PUNCTUATION,
+  GET_USERS,
+  POST_USERS,
+  FILTER_BY_CATEGORY,
+  FILTER_BY_BRAND,
+  FILTER_BY_COLOR,
+  FILTER_BY_SIZE,
+  ORDER_BY_PRICE,
+  ORDER_BY_BEST_RATING,
+  PUT_USERS_FAVORITES
+} from "../Actions/actions";
+=======
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const FILTER_BY_PRODUCT_TYPE = "FILTER_BY_PRODUCT_TYPE";
 export const GET_PRODUCTS_BY_NAME = " GET_PRODUCTS_BY_NAME"; // searchBar recibe query name
@@ -11,6 +32,7 @@ export const FILTER_BY_COLOR = "FILTER_BY_COLOR";
 export const FILTER_BY_SIZE = "FILTER_BY_SIZE";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
 export const ORDER_BY_BEST_SELLING = "ORDER_BY_BEST_SELLING";
+>>>>>>> 383d579a1256a639cb8ae746fcb3bad619cf1760
 
 export function getProducts() {
   return async function (dispatch) {

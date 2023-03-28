@@ -59,19 +59,6 @@ export function getDetail(prodId) {
   };
 }
 
-export function getUsers() {
-  return async function (dispatch) {
-    try {
-      var users = await axios.get("http://localhost:3001/");
-      return dispatch({
-        type: GET_USERS,
-        payload: users.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
 
 export function postUsers(payload) {
   return async function (dispatch) {

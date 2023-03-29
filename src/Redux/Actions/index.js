@@ -1,5 +1,4 @@
 import axios from "axios";
-<<<<<<< HEAD
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
@@ -17,22 +16,9 @@ import {
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   ORDER_BY_BEST_RATING,
+  ORDER_BY_BEST_SELLING,
   PUT_USERS_FAVORITES
-} from "../Actions/actions";
-=======
-export const GET_PRODUCTS = "GET_PRODUCTS";
-export const FILTER_BY_PRODUCT_TYPE = "FILTER_BY_PRODUCT_TYPE";
-export const GET_PRODUCTS_BY_NAME = " GET_PRODUCTS_BY_NAME"; // searchBar recibe query name
-export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL";// recibe id 
-export const GET_USERS="GET_USERS"
-export const POST_USERS="POST_USERS"
-export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
-export const FILTER_BY_BRAND = "FILTER_BY_BRAND";
-export const FILTER_BY_COLOR = "FILTER_BY_COLOR";
-export const FILTER_BY_SIZE = "FILTER_BY_SIZE";
-export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
-export const ORDER_BY_BEST_SELLING = "ORDER_BY_BEST_SELLING";
->>>>>>> 383d579a1256a639cb8ae746fcb3bad619cf1760
+} from "../Actions/actions.js";
 
 export function getProducts() {
   return async function (dispatch) {
@@ -114,7 +100,26 @@ export function orderByPrice(payload) {
       }
     };
   }
+  export function getSize() {
+    return async function (dispatch) {
+      try {
+        var size = await axios.get("http://localhost:3001/filter/talle");
+        return dispatch({
+          type : GET_SIZE,
+          payload: size.data,
+        });
+      } catch (error) {
+        console.log("no se encontraron talles");
+      }
+    };
+  }
 
+  export function filterBySize(payload) {
+    return {
+      type: FILTER_BY_SIZE,
+      payload,
+    };
+  }
 
 export function orderByBestSelling(payload) {
   return {
@@ -131,24 +136,30 @@ export function orderByBestSelling(payload) {
     };
   }
   
+  export function getBrand() {
+    return async function (dispatch) {
+      try {
+        var brand = await axios.get("http://localhost:3001/filter/marca");
+        return dispatch({
+          type : GET_BRAND,
+          payload: brand.data,
+        });
+      } catch (error) {
+        console.log("no se encontraron marcas");
+      }
+    };
+  }
+
+  export function filterByBrand(brand) {
+    return async (dispatch) => {
+      dispatch({
+        type: FILTER_BY_BRAND,
+        payload: brand,
+      });
+    };
+  }
 
 
-export function filterByBrand(brand) {
-  return async (dispatch) => {
-    const response = await axios.get(`http://localhost:3001/filter/marca`);
-    dispatch({
-      type: FILTER_BY_BRAND,
-      payload: response,
-    });
-  };
-}
-
-export function filterBySize(payload) {
-  return {
-    type: FILTER_BY_SIZE,
-    payload,
-  };
-}
 
 export function filterByColor(payload) {
   return {

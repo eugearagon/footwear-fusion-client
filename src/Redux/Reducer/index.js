@@ -3,15 +3,16 @@ import {
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
   GET_USERS,
+  GET_CATEGORY,
+  GET_SIZE,
+  GET_BRAND,
   POST_USERS,
   FILTER_BY_CATEGORY,
-  FILTER_BY_PRODUCT_TYPE,
   FILTER_BY_BRAND,
   FILTER_BY_COLOR,
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
-  ORDER_BY_BEST_SELLING,
-} from "../Actions/index";
+} from "../Actions/actions";
 
 const initialState = {
   products: [],
@@ -42,6 +43,13 @@ function rootReducer(state = initialState, action) {
         detail: action.payload,
       };
 
+    case GET_CATEGORY:
+      return {
+        ...state,
+        products: action.payload,
+        filteredProducts: action.payload,
+      };
+
     case GET_USERS:
       return {
         ...state,
@@ -53,23 +61,69 @@ function rootReducer(state = initialState, action) {
         ...state,
       };
 
-    case FILTER_BY_PRODUCT_TYPE:
-      return {};
+    case ORDER_BY_PRICE:
+      const { payload } = action;
+      const { products } = state;
+      const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+      return {
+        ...state,
+        products:
+          payload === "Mayor Precio"
+            ? sortedProducts.reverse()
+            : sortedProducts,
+      };
 
+    case FILTER_BY_CATEGORY:
+      const { payload: biribiri } = action;
+      const { categories, products: prodCat } = state;
+      const filteredProducts = prodCat.filter((product) =>
+        product.categories.includes(biribiri)
+      );
+      return {
+        ...state,
+        filteredProducts,
+        activeCategory: categories.find(
+          (category) => category.slug === biribiri
+        ),
+      };
+
+    case GET_SIZE:
+      return {
+        ...state,
+        sizes: action.payload,
+      };
+
+    case FILTER_BY_SIZE:
+      const { payload: size } = action;
+      const { sizes, products: sizeProducts } = state;
+      const filteredSizeProducts = sizeProducts.filter((product) =>
+        product.sizes.includes(size)
+      );
+      return {
+        ...state,
+        filteredProducts: filteredSizeProducts,
+        activeSize: sizes.find((s) => s === size),
+      };
+    case GET_BRAND:
+      return {
+        ...state,
+        brands: action.payload,
+      };
     case FILTER_BY_BRAND:
-      return {};
+      const { payload: brand } = action;
+      const { brands, products: brandProducts } = state;
+      const filteredBrandProducts = brandProducts.filter(
+        (product) => product.brand === brand
+      );
+      return {
+        ...state,
+        filteredProducts: filteredBrandProducts,
+        activeBrand: brands.find((br) => br.name === brand),
+      };
 
     case FILTER_BY_COLOR:
       return {};
 
-    case FILTER_BY_SIZE:
-      return {};
-
-    case ORDER_BY_PRICE:
-      return {};
-
-    case ORDER_BY_BEST_SELLING:
-      return {};
     default:
       return state;
   }

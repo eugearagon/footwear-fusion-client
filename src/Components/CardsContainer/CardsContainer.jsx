@@ -9,6 +9,7 @@ export default function CardsContainer(props) {
   const allProducts = useSelector((state) => state.products);
 
   
+  
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);

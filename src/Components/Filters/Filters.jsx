@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { getBrand, filterByBrand } from "../../Redux/Actions";
 import { useDispatch } from "react-redux";
-
 
 export default function Filters() {
   const dispatch = useDispatch();

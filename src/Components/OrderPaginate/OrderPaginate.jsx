@@ -54,8 +54,8 @@ export default function OrderPaginate(props) {
       <h5>Zapatillas {allProducts.length} productos</h5>
       <div className="ordenar">
         <h5>Ordenar Por</h5>
-        <select defaultValue="Ordenar por..." onChange={(e) => handleSelect(e)}>
-          <option disabled >Ordenar por...</option>
+        <select defaultValue="Seleccione" onChange={(e) => handleSelect(e)}>
+          <option disabled >Seleccione</option>
           <option value="Menor Precio">Menor Precio</option>
           <option value="Mayor Precio">Mayor Precio</option>
         </select>

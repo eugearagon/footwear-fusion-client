@@ -2,21 +2,26 @@ import { useEffect, useState } from "react";
 import { getBrand, filterByBrand } from "../../Redux/Actions";
 import { getSize, filterBySize } from "../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
+import Slider from "@mui/material/Slider";
+
+function valuetext(value) {
+  return `$${value}`;
+}
 
 export default function Filters() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBrand())
-  },[dispatch])
+    dispatch(getBrand());
+  }, [dispatch]);
 
-  const allBrands = useSelector((state) => state.brands)
+  const allBrands = useSelector((state) => state.brands);
 
   useEffect(() => {
-    dispatch(getSize())
-  },[dispatch])
+    dispatch(getSize());
+  }, [dispatch]);
 
-  const allSizes = useSelector((state) => state.sizes)
+  const allSizes = useSelector((state) => state.sizes);
 
   const [searchBrand, setSearchBrand] = useState("");
   const [searchSize, setSearchSize] = useState("");
@@ -50,7 +55,23 @@ export default function Filters() {
     dispatch(filterBySize(checkedSizes));
   };
 
-  
+
+ /* esto es parte del slider de precios  */
+
+  const [value, setValue] = useState([4000, 45000]);
+  console.log(value[1]);
+
+  function valuetext(value) {
+    return `$ ${value}`;
+  }
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+   /* esto es parte del slider de precios  */
+
+
   return (
     <div className="filtros">
       <div className="filtro-adentro">
@@ -65,7 +86,8 @@ export default function Filters() {
           {filteredBrands?.map((marca) => (
             <li key={marca}>
               <input id={marca} type="checkbox" value={marca} />
-              {"    "}{marca}
+              {"    "}
+              {marca}
             </li>
           ))}
         </ul>
@@ -84,11 +106,29 @@ export default function Filters() {
           {filteredSizes?.map((talle) => (
             <li key={talle}>
               <input id={talle} className="cb" type="checkbox" value={talle} />
-              {"    "}{talle}
+              {"    "}
+              {talle}
             </li>
           ))}
         </ul>
         <button onClick={handleSizeFilter}>APLICAR</button>
+      </div>
+
+      <div className="filtro-adentro">
+      <h3>RANGO DE PRECIOS</h3>
+        <Slider
+          className="precios"
+          min={4000}
+          max={45000}
+          step={1000}
+          getAriaLabel={() => "Rango de Precio"}
+          value={value}
+          onChange={handleChange}
+          valueLabelDisplay="auto"
+          getAriaValueText={valuetext}
+        />
+        
+          <button>APLICAR</button>
       </div>
     </div>
   );

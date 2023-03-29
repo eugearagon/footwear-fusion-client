@@ -332,6 +332,12 @@ li {
   font-size: 9pt;
 }
 
+.precios {
+  margin: 0 auto;
+  width: 90% !important;
+  color: #0e2b4d !important;
+}
+
 /* fin filtros */
 
 /* cards container */
@@ -530,6 +536,11 @@ li {
   border: 1px solid #ededed;
   background: none;
   color: #ededed;
+}
+
+.dark-mode .precios {
+  width: 90% !important;
+  color: #d9d9d9 !important;
 }
 
 /* DARK MODE */

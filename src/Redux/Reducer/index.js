@@ -12,7 +12,7 @@ import {
   FILTER_BY_COLOR,
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
-} from "../Actions/index";
+} from "../Actions/actions";
 
 const initialState = {
   products: [],

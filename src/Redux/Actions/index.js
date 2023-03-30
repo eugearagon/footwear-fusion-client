@@ -69,11 +69,13 @@ export function getDetail(prodId) {
 export function getCategory() {
   return async function (dispatch) {
     try {
-      var size = await axios.get("http://localhost:3001/filter/category");
+      var category = await axios.get("http://localhost:3001/filter/category");
+      console.log(category.data)
       return dispatch({
         type : GET_CATEGORY,
         payload: category.data,
       });
+      
     } catch (error) {
       console.log("no se encontraron categorias");
     }

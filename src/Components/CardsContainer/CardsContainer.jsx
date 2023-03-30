@@ -4,24 +4,17 @@ import { getProducts } from "../../Redux/Actions";
 import Card from "../Card/Card";
 
 export default function CardsContainer(props) {
-
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.products);
 
-  
-  
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
-
-
-const prodPerPage = 6;
-const indexLastProd = props.currentPage * prodPerPage;
-const indexFirstProd = indexLastProd - prodPerPage;
-const currentProd = allProducts.slice(indexFirstProd, indexLastProd);
-
-
+  const prodPerPage = 6;
+  const indexLastProd = props.currentPage * prodPerPage;
+  const indexFirstProd = indexLastProd - prodPerPage;
+  const currentProd = allProducts.slice(indexFirstProd, indexLastProd);
 
   return (
     <div className="cards-container">

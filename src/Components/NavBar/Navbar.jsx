@@ -22,7 +22,7 @@ export default function Navbar() {
       <NavLink to={"/"}>
         <img src={corazon} alt="" />
       </NavLink>
-      <NavLink to={"/"}>
+      <NavLink to={"/cart"}>
         <img src={carro} alt="" />
       </NavLink>
 

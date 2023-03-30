@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { getBrand, filterByBrand } from "../../Redux/Actions";
-import { getSize, filterBySize } from "../../Redux/Actions";
+import { getBrand, filterByBrand, getSize, filterBySize } from "../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "@mui/material/Slider";
 
@@ -59,7 +58,7 @@ export default function Filters() {
  /* esto es parte del slider de precios  */
 
   const [value, setValue] = useState([4000, 45000]);
-  console.log(value[1]);
+
 
   function valuetext(value) {
     return `$ ${value}`;

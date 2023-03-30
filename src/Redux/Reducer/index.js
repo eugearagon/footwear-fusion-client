@@ -17,6 +17,7 @@ import {
 const initialState = {
   products: [],
   detail: [],
+  categories: [],
   filteredProducts: [],
   users: [],
 };
@@ -45,8 +46,8 @@ function rootReducer(state = initialState, action) {
     case GET_CATEGORY:
       return {
         ...state,
-        products: action.payload,
-        filteredProducts: action.payload,
+        categories: action.payload,
+        // filteredProducts: action.payload,
       };
 
    case GET_SIZE: 

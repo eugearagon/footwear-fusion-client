@@ -1,29 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "../../Redux/Actions";
 
 export default function Categories() {
+  const dispatch = useDispatch();
 
-    const [category, setCategory] = useState()
-  
-    useEffect(() => {
-        fetch('http://localhost:3001/filter/category')
-          .then(response => response.json())
-          .then(data => setCategory(data));
-      }, []);
 
-      console.log(category);
+
+  const allCategories = useSelector((state) => state.categories);
+
+  useEffect(() => {
+    dispatch(getCategory());
+  }, [dispatch]);
+
+console.log(allCategories);
+
 
   return (
-
-      <ul className="categorias">
-          {category?.map((talle) => (
-            <li key={talle}>
-              <a href="">{talle}</a>
-           
+    <div className="categorias">
+      <ul className="cat-ul">
+      {allCategories?.map((c) => (
+            <li key={c}>
+              <a href="#">{c}</a>
             </li>
           ))}
-        </ul>
-   
+      </ul>
+    </div>
   );
 }

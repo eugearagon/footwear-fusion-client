@@ -258,7 +258,6 @@ li {
 
 .categorias{
   margin: 0 auto;
-  padding: 6px 0;
   display: flex;
   color: #001e40;
   font-size: 10pt;
@@ -279,16 +278,17 @@ li {
   align-items: center;
 }
 
-.categorias a{
+.categorias button{
   font-size:9pt;
-  padding: 7px 30px;
+  padding: 15px 35px;
   color:#001e40;
+  background: none;
 }
 
-.categorias a:hover{
+.categorias button:hover{
   opacity: 1;
   background-color:#17e1e7;
-
+  color: #001e40 !important;
 }
 
 /* categorias */
@@ -597,6 +597,10 @@ li {
 .dark-mode .cart button{
   background-color: #17e1e7;
   color: #0e2b4d;
+}
+
+.dark-mode .categorias button{
+  color: #17e1e7;
 }
 
 /* DARK MODE */

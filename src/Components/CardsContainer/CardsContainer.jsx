@@ -14,7 +14,10 @@ export default function CardsContainer(props) {
   const prodPerPage = 6;
   const indexLastProd = props.currentPage * prodPerPage;
   const indexFirstProd = indexLastProd - prodPerPage;
-  const currentProd = allProducts.slice(indexFirstProd, indexLastProd);
+  
+  let currentProd = allProducts;
+
+  currentProd = currentProd.slice(indexFirstProd, indexLastProd);
 
   return (
     <div className="cards-container">

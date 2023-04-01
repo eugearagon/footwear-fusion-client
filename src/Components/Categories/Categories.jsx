@@ -27,13 +27,7 @@ export default function Categories() {
           </li>
         ))}
       </ul>
-      {filteredProducts && (
-        <ul>
-          {filteredProducts.map((product) => (
-            <li key={product.id}>{product.name}</li>
-          ))}
-        </ul>
-      )}
+      
     </div>
   );
 }

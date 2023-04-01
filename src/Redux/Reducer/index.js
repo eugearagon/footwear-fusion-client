@@ -23,7 +23,11 @@ const initialState = {
   categories: [],
   filteredProducts: [],
   users: [],
-  selectedPriceRange:[]
+  prices:[],
+  filters: {
+    size: null,
+    brand: null,
+  },
 };
 
 function rootReducer(state = initialState, action) {
@@ -32,7 +36,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
-        prodRender: action.payload
+        prodRender: action.payload,
       };
 
     case GET_PRODUCTS_BY_NAME:
@@ -51,6 +55,8 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         categories: action.payload,
+        //filteredProducts: action.payload,
+        selected: action.payload,
       };
 
     case GET_SIZE:
@@ -65,12 +71,6 @@ function rootReducer(state = initialState, action) {
         brands: action.payload,
       };
 
-      case GET_PRICE:
-      return {
-        ...state,
-        prices: action.payload,
-      };
-
     case GET_USERS:
       return {
         ...state,
@@ -81,6 +81,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+
+      case GET_PRICE: 
+        return {
+          ...state,
+          prices: action.payload,
+        };
 
     case FILTER_BY_CATEGORY:
       const filteredProducts = state.prodRender.filter((product) => {
@@ -97,31 +103,46 @@ function rootReducer(state = initialState, action) {
       };
 
     case FILTER_BY_SIZE:
-      const { payload: size } = action;
-      const { sizes, products: sizeProducts } = state;
-      const filteredSizeProducts = sizeProducts.filter((product) =>
-        product.sizes.includes(size)
-      );
+      const sizeFilter = action.payload;
+      let sizeProd = state.prodRender;
+      if (sizeFilter) {
+        sizeProd = sizeProd.filter((product) => {
+          if (product.TalleProducts) {
+            return product.TalleProducts[0].talle === action.payload;
+          } else {
+            return false;
+          }
+
+        });
+      }
       return {
         ...state,
-        filteredProducts: filteredSizeProducts,
-        activeSize: sizes.find((s) => s === size),
+        products: sizeProd,
       };
 
+
+
     case FILTER_BY_BRAND:
-      const { payload: brand } = action;
-      const { brands, products: brandProducts } = state;
-      const filteredBrandProducts = brandProducts.filter(
-        (product) => product.brand === brand
-      );
+      const brandFilter = action.payload.toUpperCase();
+      let brandProd = state.prodRender;
+      if (brandFilter) {
+        brandProd = brandProd.filter((product) => {
+          if (product.MarcaProducts && product.MarcaProducts.length > 0) {
+            return product.MarcaProducts[0].name.toUpperCase() === brandFilter;
+          } else {
+            return false;
+          }
+        });
+      }
       return {
         ...state,
-        filteredProducts: filteredBrandProducts,
-        activeBrand: brands.find((br) => br.name === brand),
+        products: brandProd,
       };
 
     case FILTER_BY_COLOR:
       return {};
+
+     
 
     case ORDER_BY_PRICE:
       const { payload } = action;
@@ -141,6 +162,7 @@ function rootReducer(state = initialState, action) {
           ...state,
           selectedPriceRange: { minPrice, maxPrice },
         };
+
     default:
       return state;
   }

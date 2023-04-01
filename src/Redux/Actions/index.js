@@ -128,7 +128,7 @@ export function getColor() {
 export function getPrice() {
   return async function (dispatch) {
     try {
-      var price = await axios.get("http://localhost:3001/price");
+      var price = await axios.get("http://localhost:3001/precios");
       return dispatch({
         type : GET_PRICE,
         payload: price.data,
@@ -172,11 +172,11 @@ export function orderByPrice(payload) {
 }
 
 export function filterBySize(payload) {
-    return {
-      type: FILTER_BY_SIZE,
-      payload,
-    };
-  }
+  return {
+    type: FILTER_BY_SIZE,
+    payload,
+  };
+}
   
 export function filterByCategory(payload) {
     return {
@@ -209,6 +209,7 @@ export function orderByBestSelling(payload) {
 }
 
 export function priceRangeSelector(payload) {
+  
   return {
     type: PRICE_RANGE_SELECTOR,
     payload,

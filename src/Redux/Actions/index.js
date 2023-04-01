@@ -16,7 +16,9 @@ import {
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   ORDER_BY_BEST_SELLING,
-  PUT_USERS_FAVORITES
+  PUT_USERS_FAVORITES,
+  GET_PRICE,
+  PRICE_RANGE_SELECTOR
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -112,13 +114,27 @@ export function getBrand() {
 export function getColor() {
   return async function (dispatch) {
     try {
-      var size = await axios.get("http://localhost:3001/filter/color");
+      var color = await axios.get("http://localhost:3001/filter/color");
       return dispatch({
         type : GET_COLOR,
-        payload: size.data,
+        payload: color.data,
       });
     } catch (error) {
       console.log("no se encontraron colores");
+    }
+  };
+}
+
+export function getPrice() {
+  return async function (dispatch) {
+    try {
+      var price = await axios.get("http://localhost:3001/precios");
+      return dispatch({
+        type : GET_PRICE,
+        payload: price.data,
+      });
+    } catch (error) {
+      console.log("no se encontraron precios");
     }
   };
 }
@@ -156,11 +172,11 @@ export function orderByPrice(payload) {
 }
 
 export function filterBySize(payload) {
-    return {
-      type: FILTER_BY_SIZE,
-      payload,
-    };
-  }
+  return {
+    type: FILTER_BY_SIZE,
+    payload,
+  };
+}
   
 export function filterByCategory(payload) {
     return {
@@ -191,3 +207,12 @@ export function orderByBestSelling(payload) {
     payload,
   };
 }
+
+export function priceRangeSelector(payload) {
+  
+  return {
+    type: PRICE_RANGE_SELECTOR,
+    payload,
+  };
+}
+

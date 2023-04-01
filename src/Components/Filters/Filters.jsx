@@ -1,23 +1,37 @@
 import { useEffect, useState } from "react";
-import { getBrand, filterByBrand, getSize, filterBySize } from "../../Redux/Actions";
+import {
+  getBrand,
+  filterByBrand,
+  getSize,
+  filterBySize,
+  getPrice,
+  priceRangeSelector,
+} from "../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "@mui/material/Slider";
 
-
 export default function Filters() {
   const dispatch = useDispatch();
+
+  const allBrands = useSelector((state) => state.brands);
+  const allSizes = useSelector((state) => state.sizes);
+  const allPrices = useSelector((state) => state.prices);
+  
+  const minPrice = (allPrices ? allPrices[0] : "no existe");
+  const maxPrice = allPrices ? allPrices[allPrices.length - 1] : "no existe";
+
 
   useEffect(() => {
     dispatch(getBrand());
   }, [dispatch]);
 
-  const allBrands = useSelector((state) => state.brands);
-
   useEffect(() => {
     dispatch(getSize());
   }, [dispatch]);
 
-  const allSizes = useSelector((state) => state.sizes);
+  useEffect(() => {
+    dispatch(getPrice());
+  }, [dispatch]);
 
   const [searchBrand, setSearchBrand] = useState("");
   const [searchSize, setSearchSize] = useState("");
@@ -26,47 +40,44 @@ export default function Filters() {
     setSearchBrand(e.target.value);
   };
   const handleSearchSize = (e) => {
-    setSearchSize(e.target.value);
+    setSearchSize(e.target.checked);
   };
 
-  const filteredBrands = allBrands?.filter((brand) =>
-    brand.toLowerCase().includes(searchBrand.toLowerCase())
-  );
-
-  const filteredSizes = allSizes?.filter((size) =>
-    size.toLowerCase().includes(searchSize.toLowerCase())
-  );
-
-  const handleBrandFilter = () => {
-    const checkedBrands = filteredBrands.filter(
-      (brand) => document.getElementById(brand).checked
-    );
-    dispatch(filterByBrand(checkedBrands));
+  const handleBrandFilter = (e) => {
+    if (e.target.checked) {
+      dispatch(filterByBrand(e.target.value));
+    } else {
+      dispatch(filterByBrand(""));
+    }
   };
 
-  const handleSizeFilter = () => {
-    const checkedSizes = filteredSizes.filter(
-      (size) => document.getElementById(size).checked
-    );
-    dispatch(filterBySize(checkedSizes));
+  const handleSizeFilter = (e) => {
+    const value = e.target.value;
+    if (e.target.checked) {
+      dispatch(filterBySize(value));
+    } else {
+      dispatch(filterBySize(""));
+    }
   };
 
+  /* esto es parte del slider de precios  */
 
- /* esto es parte del slider de precios  */
-
-  const [value, setValue] = useState([4000, 45000]);
-
+  const [value, setValue] = useState([minPrice, maxPrice]);
 
   function valuetext(value) {
-    return `$ ${value}`;
+    return "$ " + value;
   }
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-   /* esto es parte del slider de precios  */
+  const handleApplyFilter = () => {
+    dispatch(priceRangeSelector({ minPrice: minPrice, maxPrice: maxPrice }));
+  };
 
+  /* esto es parte del slider de precios  */
 
   return (
     <div className="filtros">
@@ -79,15 +90,20 @@ export default function Filters() {
           onChange={handleSearchBrand}
         />
         <ul>
-          {filteredBrands?.map((marca) => (
+          {allBrands?.map((marca) => (
             <li key={marca}>
-              <input id={marca} type="checkbox" value={marca} />
+              <input
+                id={marca}
+                type="checkbox"
+                value={marca}
+                onClick={handleBrandFilter}
+              />
               {"    "}
               {marca}
             </li>
           ))}
         </ul>
-        <button onClick={handleBrandFilter}>APLICAR</button>
+        {/* <button onClick={handleBrandFilter}>APLICAR</button> */}
       </div>
 
       <div className="filtro-adentro">
@@ -99,32 +115,37 @@ export default function Filters() {
           onChange={handleSearchSize}
         />
         <ul>
-          {filteredSizes?.map((talle) => (
+          {allSizes?.map((talle) => (
             <li key={talle}>
-              <input id={talle} className="cb" type="checkbox" value={talle} />
+              <input
+                id={talle}
+                className="cb"
+                type="checkbox"
+                value={talle}
+                onClick={handleSizeFilter}
+              />
               {"    "}
               {talle}
             </li>
           ))}
         </ul>
-        <button onClick={handleSizeFilter}>APLICAR</button>
+        {/* <button onClick={handleSizeFilter}>APLICAR</button> */}
       </div>
 
       <div className="filtro-adentro">
-      <h3>RANGO DE PRECIOS</h3>
+        <h3>RANGO DE PRECIOS</h3>
         <Slider
           className="precios"
-          min={4000}
-          max={45000}
           step={1000}
           getAriaLabel={() => "Rango de Precio"}
           value={value}
           onChange={handleChange}
           valueLabelDisplay="auto"
           getAriaValueText={valuetext}
+          min={minPrice}
+          max={maxPrice}
         />
-        
-          <button>APLICAR</button>
+        <button onClick={handleApplyFilter}>APLICAR</button>
       </div>
     </div>
   );

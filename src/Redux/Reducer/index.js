@@ -28,6 +28,7 @@ const initialState = {
     size: null,
     brand: null,
   },
+  selectedPriceRange: { minPrice: 0, maxPrice: 0 },
 };
 
 function rootReducer(state = initialState, action) {

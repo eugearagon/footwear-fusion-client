@@ -16,7 +16,9 @@ export default function Filters() {
   const allBrands = useSelector((state) => state.brands);
   const allSizes = useSelector((state) => state.sizes);
   const allPrices = useSelector((state) => state.prices);
-  
+  const selectedPriceRange = useSelector((state) => state.selectedPriceRange);
+
+
   const minPrice = (allPrices ? allPrices[0] : "no existe");
   const maxPrice = allPrices ? allPrices[allPrices.length - 1] : "no existe";
 
@@ -40,8 +42,16 @@ export default function Filters() {
     setSearchBrand(e.target.value);
   };
   const handleSearchSize = (e) => {
-    setSearchSize(e.target.checked);
+    setSearchSize(e.target.value);
   };
+
+  const filteredBrands = allBrands?.filter((brand) =>
+    brand.toLowerCase().includes(searchBrand.toLowerCase())
+  );
+
+  const filteredSizes = allSizes?.filter((size) =>
+    size.toLowerCase().includes(searchSize.toLowerCase())
+  );
 
   const handleBrandFilter = (e) => {
     if (e.target.checked) {
@@ -79,6 +89,8 @@ export default function Filters() {
 
   /* esto es parte del slider de precios  */
 
+  
+
   return (
     <div className="filtros">
       <div className="filtro-adentro">
@@ -90,7 +102,7 @@ export default function Filters() {
           onChange={handleSearchBrand}
         />
         <ul>
-          {allBrands?.map((marca) => (
+          {filteredBrands?.map((marca) => (
             <li key={marca}>
               <input
                 id={marca}
@@ -115,7 +127,7 @@ export default function Filters() {
           onChange={handleSearchSize}
         />
         <ul>
-          {allSizes?.map((talle) => (
+          {filteredSizes?.map((talle) => (
             <li key={talle}>
               <input
                 id={talle}

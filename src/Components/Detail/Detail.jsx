@@ -20,12 +20,20 @@ export default function Detail() {
   }, [dispatch, prodId]);
 
   const prod = useSelector((state) => state.detail);
-  
+  console.log(prod);
+
   const marca = prod.MarcaProducts
     ? prod.MarcaProducts.filter((m) => m && m.name)
         .map((m) => m.name)
         .toString()
     : "Zapatillas";
+
+  const talle = prod.TalleProducts
+    ? prod.TalleProducts.filter((m) => m && m.talle)
+    .map((m) => m.talle)
+    .toString()
+    : "talle";
+  console.log(talle);
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -67,15 +75,14 @@ export default function Detail() {
       <div className="detail-der">
         <h1>{marca}</h1>
         <h2>{prod.title}</h2>
-        <h3>${prod.price}.-</h3>
+        <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">
           <h5>TALLES</h5>
           <select defaultValue="Seleccione un talle">
             <option disabled value="Seleccione un talle">
               Seleccione un talle
             </option>
-            <option value="34">34</option>
-            <option value="35">35</option>
+            <option value={talle}>{talle}</option>
           </select>
           <button className="comprar">Comprar</button>
           <button className="favs"> ❤️ Agregar a favoritos</button>

@@ -3,9 +3,6 @@ import { getBrand, filterByBrand, getSize, filterBySize} from "../../Redux/Actio
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "@mui/material/Slider";
 
-function valuetext(value) {
-  return `$${value}`;
-}
 
 export default function Filters() {
   const dispatch = useDispatch();

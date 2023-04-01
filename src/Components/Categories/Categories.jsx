@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory, filterByCategory } from "../../Redux/Actions";
 
@@ -27,6 +27,13 @@ export default function Categories() {
           </li>
         ))}
       </ul>
+      {filteredProducts && (
+        <ul>
+          {filteredProducts.map((product) => (
+            <li key={product.id}>{product.name}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

@@ -12,6 +12,8 @@ import {
   FILTER_BY_COLOR,
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
+  GET_PRICE,
+  PRICE_RANGE_SELECTOR,
 } from "../Actions/actions";
 
 const initialState = {
@@ -21,7 +23,7 @@ const initialState = {
   categories: [],
   filteredProducts: [],
   users: [],
-  selected: [],
+  selectedPriceRange:[]
 };
 
 function rootReducer(state = initialState, action) {
@@ -49,8 +51,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         categories: action.payload,
-        //filteredProducts: action.payload,
-        selected: action.payload,
       };
 
     case GET_SIZE:
@@ -63,6 +63,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         brands: action.payload,
+      };
+
+      case GET_PRICE:
+      return {
+        ...state,
+        prices: action.payload,
       };
 
     case GET_USERS:
@@ -129,6 +135,12 @@ function rootReducer(state = initialState, action) {
             : sortedProducts,
       };
 
+      case PRICE_RANGE_SELECTOR:
+        const { minPrice, maxPrice } = action.payload;
+        return {
+          ...state,
+          selectedPriceRange: { minPrice, maxPrice },
+        };
     default:
       return state;
   }

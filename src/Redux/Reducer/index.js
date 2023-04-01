@@ -23,7 +23,7 @@ const initialState = {
   categories: [],
   filteredProducts: [],
   users: [],
-  prices:[],
+  prices: [],
   filters: {
     size: null,
     brand: null,
@@ -83,11 +83,11 @@ function rootReducer(state = initialState, action) {
         ...state,
       };
 
-      case GET_PRICE: 
-        return {
-          ...state,
-          prices: action.payload,
-        };
+    case GET_PRICE:
+      return {
+        ...state,
+        prices: action.payload,
+      };
 
     case FILTER_BY_CATEGORY:
       const filteredProducts = state.prodRender.filter((product) => {
@@ -113,15 +113,12 @@ function rootReducer(state = initialState, action) {
           } else {
             return false;
           }
-
         });
       }
       return {
         ...state,
         products: sizeProd,
       };
-
-
 
     case FILTER_BY_BRAND:
       const brandFilter = action.payload.toUpperCase();
@@ -143,8 +140,6 @@ function rootReducer(state = initialState, action) {
     case FILTER_BY_COLOR:
       return {};
 
-     
-
     case ORDER_BY_PRICE:
       const { payload } = action;
       const { products } = state;
@@ -157,12 +152,27 @@ function rootReducer(state = initialState, action) {
             : sortedProducts,
       };
 
-      case PRICE_RANGE_SELECTOR:
-        const { minPrice, maxPrice } = action.payload;
-        return {
-          ...state,
-          selectedPriceRange: { minPrice, maxPrice },
-        };
+
+
+    case PRICE_RANGE_SELECTOR:
+      const { minPrice, maxPrice } = action.payload;
+      let priceProd = state.prodRender;
+      console.log(minPrice);
+      console.log(maxPrice);
+     let nuevoPrecio = []
+      if (minPrice && maxPrice) {
+        priceProd = priceProd.filter((product) => {
+           if(Number(product.price) >= minPrice && Number(product.price) <= maxPrice){
+            nuevoPrecio.push(product)
+           }
+        });
+      }
+      console.log(nuevoPrecio);
+      return {
+        ...state,
+        selectedPriceRange: { minPrice, maxPrice },
+        products: nuevoPrecio,
+      };
 
     default:
       return state;

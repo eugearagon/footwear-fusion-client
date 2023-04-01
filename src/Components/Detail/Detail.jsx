@@ -33,8 +33,9 @@ export default function Detail() {
     .map((m) => m.talle)
     .toString()
     : "talle";
-  console.log(talle);
 
+    const nuevoTalle = talle.split(",").map(numero => parseInt(numero));
+  console.log(nuevoTalle);
   const handleMouseOver = () => {
     setIsHovering(true);
   };
@@ -82,7 +83,11 @@ export default function Detail() {
             <option disabled value="Seleccione un talle">
               Seleccione un talle
             </option>
-            <option value={talle}>{talle}</option>
+           {nuevoTalle?.map((talle) => (
+            <option 
+            key={talle}
+            value={talle}>{talle}</option>
+           ))}
           </select>
           <button className="comprar">Comprar</button>
           <button className="favs"> ❤️ Agregar a favoritos</button>

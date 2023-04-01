@@ -16,12 +16,15 @@ export default function Filters() {
   const allBrands = useSelector((state) => state.brands);
   const allSizes = useSelector((state) => state.sizes);
   const allPrices = useSelector((state) => state.prices);
-  const selectedPriceRange = useSelector((state) => state.selectedPriceRange);
 
+  const minPrice = allPrices ? allPrices[0] : 0;
+  const maxPrice = allPrices ? allPrices[allPrices.length - 1] : 0;
 
-  const minPrice = (allPrices ? allPrices[0] : "no existe");
-  const maxPrice = allPrices ? allPrices[allPrices.length - 1] : "no existe";
+  const [value, setValue] = useState([minPrice, maxPrice]);
 
+  function valuetext(value) {
+    return `$${value}`;
+  }
 
   useEffect(() => {
     dispatch(getBrand());
@@ -72,24 +75,19 @@ export default function Filters() {
 
   /* esto es parte del slider de precios  */
 
-  const [value, setValue] = useState([minPrice, maxPrice]);
-
-  function valuetext(value) {
-    return "$ " + value;
-  }
-
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const handleApplyFilter = () => {
-    dispatch(priceRangeSelector({ minPrice: minPrice, maxPrice: maxPrice }));
+  const handleRangeSelector = () => {
+    dispatch(priceRangeSelector({ minPrice: value[0], maxPrice: value[1] }));
+  };
+
+  const valueLabelFormat = (value) => {
+    return `$${value}`;
   };
 
   /* esto es parte del slider de precios  */
-
-  
 
   return (
     <div className="filtros">
@@ -153,11 +151,12 @@ export default function Filters() {
           value={value}
           onChange={handleChange}
           valueLabelDisplay="auto"
+          valueLabelFormat={valueLabelFormat}
           getAriaValueText={valuetext}
           min={minPrice}
           max={maxPrice}
         />
-        <button onClick={handleApplyFilter}>APLICAR</button>
+        <button onClick={(e) => handleRangeSelector(e)}>APLICAR</button>
       </div>
     </div>
   );

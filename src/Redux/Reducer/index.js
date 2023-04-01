@@ -47,7 +47,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         categories: action.payload,
-        // filteredProducts: action.payload,
+        filteredProducts: action.payload,
       };
 
    case GET_SIZE: 

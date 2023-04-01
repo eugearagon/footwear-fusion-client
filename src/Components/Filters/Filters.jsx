@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getBrand, filterByBrand, getSize, filterBySize } from "../../Redux/Actions";
+import { getBrand, filterByBrand, getSize, filterBySize} from "../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "@mui/material/Slider";
 

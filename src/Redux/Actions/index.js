@@ -112,10 +112,10 @@ export function getBrand() {
 export function getColor() {
   return async function (dispatch) {
     try {
-      var size = await axios.get("http://localhost:3001/filter/color");
+      var color = await axios.get("http://localhost:3001/filter/color");
       return dispatch({
         type : GET_COLOR,
-        payload: size.data,
+        payload: color.data,
       });
     } catch (error) {
       console.log("no se encontraron colores");

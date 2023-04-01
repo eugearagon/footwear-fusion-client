@@ -16,28 +16,30 @@ import {
 
 const initialState = {
   products: [],
+  prodRender: [],
   detail: [],
   categories: [],
   filteredProducts: [],
   users: [],
+  selected: [],
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-   case GET_PRODUCTS:
+    case GET_PRODUCTS:
       return {
         ...state,
         products: action.payload,
-        filteredProducts: action.payload,
+        prodRender: action.payload
       };
 
-   case GET_PRODUCTS_BY_NAME:
+    case GET_PRODUCTS_BY_NAME:
       return {
         ...state,
         products: action.payload,
       };
 
-   case GET_PRODUCT_DETAIL:
+    case GET_PRODUCT_DETAIL:
       return {
         ...state,
         detail: action.payload,
@@ -47,10 +49,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         categories: action.payload,
-        // filteredProducts: action.payload,
+        //filteredProducts: action.payload,
+        selected: action.payload,
       };
 
-   case GET_SIZE: 
+    case GET_SIZE:
       return {
         ...state,
         sizes: action.payload,
@@ -62,32 +65,32 @@ function rootReducer(state = initialState, action) {
         brands: action.payload,
       };
 
-   case GET_USERS:
-        return {
-          ...state,
-          users: action.payload,
-        };
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
 
-   case POST_USERS:
+    case POST_USERS:
       return {
         ...state,
       };
-   
-   case FILTER_BY_CATEGORY:
-          const { payload: biribiri } = action;
-          const { categories, products: prodCat } = state;
-          const filteredProducts = prodCat.filter((product) =>
-            product.categories.includes(biribiri)
-          );
-          return {
-            ...state,
-            filteredProducts,
-            activeCategory: categories.find(
-              (category) => category.slug === biribiri
-            ),
-          };
 
-   case FILTER_BY_SIZE:
+    case FILTER_BY_CATEGORY:
+      const filteredProducts = state.prodRender.filter((product) => {
+        if (product.CategoriProducts && product.CategoriProducts.length > 0) {
+          return product.CategoriProducts[0].category === action.payload;
+        } else {
+          return false;
+        }
+      });
+
+      return {
+        ...state,
+        products: filteredProducts,
+      };
+
+    case FILTER_BY_SIZE:
       const { payload: size } = action;
       const { sizes, products: sizeProducts } = state;
       const filteredSizeProducts = sizeProducts.filter((product) =>
@@ -98,8 +101,8 @@ function rootReducer(state = initialState, action) {
         filteredProducts: filteredSizeProducts,
         activeSize: sizes.find((s) => s === size),
       };
-    
-   case FILTER_BY_BRAND:
+
+    case FILTER_BY_BRAND:
       const { payload: brand } = action;
       const { brands, products: brandProducts } = state;
       const filteredBrandProducts = brandProducts.filter(
@@ -111,20 +114,20 @@ function rootReducer(state = initialState, action) {
         activeBrand: brands.find((br) => br.name === brand),
       };
 
-   case FILTER_BY_COLOR:
-          return {};
+    case FILTER_BY_COLOR:
+      return {};
 
-   case ORDER_BY_PRICE:
-            const { payload } = action;
-            const { products } = state;
-            const sortedProducts = [...products].sort((a, b) => a.price - b.price);
-            return {
-              ...state,
-              products:
-                payload === "Mayor Precio"
-                  ? sortedProducts.reverse()
-                  : sortedProducts,
-            };
+    case ORDER_BY_PRICE:
+      const { payload } = action;
+      const { products } = state;
+      const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+      return {
+        ...state,
+        products:
+          payload === "Mayor Precio"
+            ? sortedProducts.reverse()
+            : sortedProducts,
+      };
 
     default:
       return state;

@@ -1,5 +1,4 @@
 import axios from "axios";
-<<<<<<< HEAD
 import {
   GET_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
@@ -16,23 +15,14 @@ import {
   FILTER_BY_COLOR,
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
-  ORDER_BY_BEST_RATING,
-  PUT_USERS_FAVORITES
-} from "../Actions/actions";
-=======
-export const GET_PRODUCTS = "GET_PRODUCTS";
-export const FILTER_BY_PRODUCT_TYPE = "FILTER_BY_PRODUCT_TYPE";
-export const GET_PRODUCTS_BY_NAME = " GET_PRODUCTS_BY_NAME"; // searchBar recibe query name
-export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL";// recibe id 
-export const GET_USERS="GET_USERS"
-export const POST_USERS="POST_USERS"
-export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
-export const FILTER_BY_BRAND = "FILTER_BY_BRAND";
-export const FILTER_BY_COLOR = "FILTER_BY_COLOR";
-export const FILTER_BY_SIZE = "FILTER_BY_SIZE";
-export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
-export const ORDER_BY_BEST_SELLING = "ORDER_BY_BEST_SELLING";
->>>>>>> 383d579a1256a639cb8ae746fcb3bad619cf1760
+  ORDER_BY_BEST_SELLING,
+  PUT_USERS_FAVORITES,
+  GET_PRICE,
+  PRICE_RANGE_SELECTOR,
+  ADD_TO_CART,
+  ADD_QUANTITY,
+  ADD_SIZE
+} from "../Actions/actions.js";
 
 export function getProducts() {
   return async function (dispatch) {
@@ -81,6 +71,90 @@ export function getDetail(prodId) {
   };
 }
 
+export function getCategory() {
+  return async function (dispatch) {
+    try {
+      var category = await axios.get("http://localhost:3001/filter/category");
+      return dispatch({
+        type : GET_CATEGORY,
+        payload: category.data,
+      });
+      
+    } catch (error) {
+      console.log("no se encontraron categorias");
+    }
+  };
+} 
+
+export function getSize() {
+  return async function (dispatch) {
+    try {
+      var size = await axios.get("http://localhost:3001/filter/talle");
+      return dispatch({
+        type : GET_SIZE,
+        payload: size.data,
+      });
+    } catch (error) {
+      console.log("no se encontraron talles");
+    }
+  };
+}
+
+export function getBrand() {
+  return async function (dispatch) {
+    try {
+      var brand = await axios.get("http://localhost:3001/filter/marca");
+      return dispatch({
+        type : GET_BRAND,
+        payload: brand.data,
+      });
+    } catch (error) {
+      console.log("no se encontraron marcas");
+    }
+  };
+}
+
+export function getColor() {
+  return async function (dispatch) {
+    try {
+      var color = await axios.get("http://localhost:3001/filter/color");
+      return dispatch({
+        type : GET_COLOR,
+        payload: color.data,
+      });
+    } catch (error) {
+      console.log("no se encontraron colores");
+    }
+  };
+}
+
+export function getPrice() {
+  return async function (dispatch) {
+    try {
+      var price = await axios.get("http://localhost:3001/precios");
+      return dispatch({
+        type : GET_PRICE,
+        payload: price.data,
+      });
+    } catch (error) {
+      console.log("no se encontraron precios");
+    }
+  };
+}
+
+export function getUsers() {
+  return async function (dispatch) {
+    try {
+      var users = await axios.get("http://localhost:3001/users");
+      return dispatch({
+        type: GET_USERS,
+        payload: users.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
 export function postUsers(payload) {
   return async function (dispatch) {
@@ -93,53 +167,10 @@ export function postUsers(payload) {
   };
 }
 
-
 export function orderByPrice(payload) {
   return {
     type: ORDER_BY_PRICE,
     payload,
-  };
-}
-
-  export function getUsers() {
-    return async function (dispatch) {
-      try {
-        var users = await axios.get("http://localhost:3001/users");
-        return dispatch({
-          type: GET_USERS,
-          payload: users.data,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  }
-
-
-export function orderByBestSelling(payload) {
-  return {
-    type: ORDER_BY_BEST_SELLING,
-    payload,
-  };
-}
-
-  
-  export function filterByCategory(payload) {
-    return {
-      type: FILTER_BY_CATEGORY,
-      payload,
-    };
-  }
-  
-
-
-export function filterByBrand(brand) {
-  return async (dispatch) => {
-    const response = await axios.get(`http://localhost:3001/filter/marca`);
-    dispatch({
-      type: FILTER_BY_BRAND,
-      payload: response,
-    });
   };
 }
 
@@ -149,6 +180,22 @@ export function filterBySize(payload) {
     payload,
   };
 }
+  
+export function filterByCategory(payload) {
+    return {
+      type: FILTER_BY_CATEGORY,
+      payload: payload.toLowerCase(),
+    };
+  }
+
+export function filterByBrand(brand) {
+    return async (dispatch) => {
+      dispatch({
+        type: FILTER_BY_BRAND,
+        payload: brand,
+      });
+    };
+  }
 
 export function filterByColor(payload) {
   return {
@@ -156,3 +203,41 @@ export function filterByColor(payload) {
     payload,
   };
 }
+
+export function orderByBestSelling(payload) {
+  return {
+    type: ORDER_BY_BEST_SELLING,
+    payload,
+  };
+}
+
+export function priceRangeSelector(payload) {
+  
+  return {
+    type: PRICE_RANGE_SELECTOR,
+    payload,
+  };
+
+}
+  export function addToCart(item) {
+    return{
+      type: ADD_TO_CART,
+      payload: item
+    }
+}
+
+export function addSize(payload) {
+  return{
+    type:ADD_SIZE,
+    payload
+  }
+}
+
+
+export function addQty(payload) {
+  return{
+    type: ADD_QUANTITY,
+    payload
+  }
+}
+

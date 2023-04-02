@@ -28,7 +28,7 @@ export const ingreso = (email) => {
     return async function (dispatch) {
       try {
         const apiData = await axios.post(
-          "http://localhost:3001/user/rigistro",
+          "http://localhost:3001/user/registro",
           { email }
         );
         const usuario = apiData.data;

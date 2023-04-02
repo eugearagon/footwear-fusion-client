@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useAuth } from "./authContext";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { registros } from "./redux/action";
+import { registros } from "../../Redux/Actions/index";
 
 export default function Register() {
   

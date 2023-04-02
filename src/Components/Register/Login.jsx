@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "./authContext";
 
-import {loginUserGoogle, ingreso} from "./redux/action";
+import {loginUserGoogle, ingreso} from "../../Redux/Actions/index";
 import { useDispatch } from "react-redux";
 
 

@@ -34,6 +34,7 @@ const initialState = {
   selectedPriceRange: { minPrice: 0, maxPrice: 0 },
   selectedSize: [],
   selectedQty: [],
+  item:[]
 };
 
 function rootReducer(state = initialState, action) {
@@ -180,21 +181,25 @@ function rootReducer(state = initialState, action) {
 
       case ADD_SIZE:
         const size = action.payload
-        if(size)
-        console.log(size);
+        console.log("console.log add_size",size);
         return{
           ...state,
           selectedSize:size
         }
 
       case ADD_QUANTITY:
+        const qty = action.payload
+        console.log("console.log add_qty",qty)
         return{
           ...state,
-          selectedQty:action.payload
+          selectedQty: qty
         }
 
       case ADD_TO_CART:
-        return{}
+        return{
+          ...state,
+         item: action.payload,
+        }
 
     default:
       return state;

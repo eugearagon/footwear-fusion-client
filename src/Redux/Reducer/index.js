@@ -196,9 +196,13 @@ function rootReducer(state = initialState, action) {
         }
 
       case ADD_TO_CART:
+        let elegidos = [];
+        if(action.payload){
+          elegidos.push(action.payload)
+        }
         return{
           ...state,
-         item: action.payload,
+         item: elegidos,
         }
 
     default:

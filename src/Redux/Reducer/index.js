@@ -14,6 +14,9 @@ import {
   ORDER_BY_PRICE,
   GET_PRICE,
   PRICE_RANGE_SELECTOR,
+  ADD_QUANTITY,
+  ADD_SIZE,
+  ADD_TO_CART
 } from "../Actions/actions";
 
 const initialState = {
@@ -23,12 +26,14 @@ const initialState = {
   categories: [],
   filteredProducts: [],
   users: [],
-  prices:[],
+  prices: [],
   filters: {
     size: null,
     brand: null,
   },
   selectedPriceRange: { minPrice: 0, maxPrice: 0 },
+  selectedSize: [],
+  selectedQty: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -83,11 +88,11 @@ function rootReducer(state = initialState, action) {
         ...state,
       };
 
-      case GET_PRICE: 
-        return {
-          ...state,
-          prices: action.payload,
-        };
+    case GET_PRICE:
+      return {
+        ...state,
+        prices: action.payload,
+      };
 
     case FILTER_BY_CATEGORY:
       const filteredProducts = state.prodRender.filter((product) => {
@@ -113,15 +118,12 @@ function rootReducer(state = initialState, action) {
           } else {
             return false;
           }
-
         });
       }
       return {
         ...state,
         products: sizeProd,
       };
-
-
 
     case FILTER_BY_BRAND:
       const brandFilter = action.payload.toUpperCase();
@@ -143,8 +145,6 @@ function rootReducer(state = initialState, action) {
     case FILTER_BY_COLOR:
       return {};
 
-     
-
     case ORDER_BY_PRICE:
       const { payload } = action;
       const { products } = state;
@@ -157,12 +157,44 @@ function rootReducer(state = initialState, action) {
             : sortedProducts,
       };
 
-      case PRICE_RANGE_SELECTOR:
-        const { minPrice, maxPrice } = action.payload;
-        return {
+    case PRICE_RANGE_SELECTOR:
+      const { minPrice, maxPrice } = action.payload;
+      let priceProd = state.prodRender;
+      let nuevoPrecio = [];
+      if (minPrice && maxPrice) {
+        priceProd && priceProd.filter((product) => {
+          if (
+            Number(product.price) >= minPrice &&
+            Number(product.price) <= maxPrice
+          ) {
+            nuevoPrecio.push(product);
+          }
+        });
+      }
+
+      return {
+        ...state,
+        selectedPriceRange: { minPrice, maxPrice },
+        products: nuevoPrecio,
+      };
+
+      case ADD_SIZE:
+        const size = action.payload
+        if(size)
+        console.log(size);
+        return{
           ...state,
-          selectedPriceRange: { minPrice, maxPrice },
-        };
+          selectedSize:size
+        }
+
+      case ADD_QUANTITY:
+        return{
+          ...state,
+          selectedQty:action.payload
+        }
+
+      case ADD_TO_CART:
+        return{}
 
     default:
       return state;

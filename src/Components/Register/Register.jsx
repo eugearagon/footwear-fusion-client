@@ -97,13 +97,13 @@ export default function Register() {
             </div>
             <br />
             <button>Enviar</button>
-            <button className="favs">Olvidé mi contraseña</button>
+          
           </form>
         </div>
         <div className="log-admin">
-          <h6>Ya estas registrado?</h6>
+          <h6 className="ya-estas">Ya estas registrado?</h6>
           <NavLink to={"/login"}>
-            <h6> Logueate aca</h6>
+            <h6 className="ya-estas"> Logueate aca</h6>
           </NavLink>
         </div>
         <div className="log-admin">

@@ -18,7 +18,10 @@ import {
   ORDER_BY_BEST_SELLING,
   PUT_USERS_FAVORITES,
   GET_PRICE,
-  PRICE_RANGE_SELECTOR
+  PRICE_RANGE_SELECTOR,
+  ADD_TO_CART,
+  ADD_QUANTITY,
+  ADD_SIZE
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -214,5 +217,27 @@ export function priceRangeSelector(payload) {
     type: PRICE_RANGE_SELECTOR,
     payload,
   };
+
+}
+  export function addToCart(item) {
+    return{
+      type: ADD_TO_CART,
+      payload: item
+    }
+}
+
+export function addSize(payload) {
+  return{
+    type:ADD_SIZE,
+    payload
+  }
+}
+
+
+export function addQty(payload) {
+  return{
+    type: ADD_QUANTITY,
+    payload
+  }
 }
 

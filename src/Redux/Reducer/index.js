@@ -61,10 +61,10 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           loginUser: {
-            id: payload.id,
-            email: payload.email,
-            rol: payload.rol,
-            token: payload.token,
+            id: action.payload.id,
+            email: action.payload.email,
+            rol: action.payload.rol,
+            token: action.payload.token,
           },
         };
   
@@ -72,10 +72,10 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           loginUser: {
-            id: payload.id,
-            email: payload.email,
-            rol: payload.rol,
-            token: payload.token,
+            id: action.payload.id,
+            email: action.payload.email,
+            rol: action.payload.rol,
+            token: action.payload.token,
           },
         };
   
@@ -83,10 +83,10 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           loginUser: {
-            id: payload.id,
-            email: payload.email,
-            rol: payload.rol,
-            token: payload.token,
+            id: action.payload.id,
+            email: action.payload.email,
+            rol: action.payload.rol,
+            token: action.payload.token,
           },
         };
   

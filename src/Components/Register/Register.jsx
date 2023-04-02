@@ -1,5 +1,6 @@
 import Zapas from "../images/login-image.jpg";
 import logo from "../images/logo.png";
+
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "./authContext";
@@ -8,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { registros } from "./redux/action";
 
 export default function Register() {
+  
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
@@ -99,6 +101,8 @@ export default function Register() {
             <button>Enviar</button>
             <button className="favs">Olvidé mi contraseña</button>
           </form>
+          
+         
         </div>
         <div className="log-admin">
           <h6>Ya estas registrado?</h6>

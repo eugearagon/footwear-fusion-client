@@ -16,7 +16,14 @@ import {
   PRICE_RANGE_SELECTOR,
   ADD_QUANTITY,
   ADD_SIZE,
-  ADD_TO_CART
+  ADD_TO_CART,
+  POST_INGRESO,
+  BORRAR_TOKEN,
+  //   SET_USUARIO,
+  POST_REGISTRO,
+  POST_GOOGLE,
+  //   GET_USUARIOS,
+  //   GET_PRODUCT,
 } from "../Actions/actions";
 
 const initialState = {
@@ -26,6 +33,12 @@ const initialState = {
   categories: [],
   filteredProducts: [],
   users: [],
+  loginUser: {
+    id: "",
+    email: "",
+    rol: "",
+    token: "",
+  },
   prices: [],
   filters: {
     size: null,
@@ -44,7 +57,50 @@ function rootReducer(state = initialState, action) {
         products: action.payload,
         prodRender: action.payload,
       };
-
+      case POST_INGRESO:
+        return {
+          ...state,
+          loginUser: {
+            id: payload.id,
+            email: payload.email,
+            rol: payload.rol,
+            token: payload.token,
+          },
+        };
+  
+      case POST_REGISTRO:
+        return {
+          ...state,
+          loginUser: {
+            id: payload.id,
+            email: payload.email,
+            rol: payload.rol,
+            token: payload.token,
+          },
+        };
+  
+      case POST_GOOGLE:
+        return {
+          ...state,
+          loginUser: {
+            id: payload.id,
+            email: payload.email,
+            rol: payload.rol,
+            token: payload.token,
+          },
+        };
+  
+      case BORRAR_TOKEN:
+        return {
+          ...state,
+          loginUser: {
+            id: "",
+            email: "",
+            rol: "",
+            token: "",
+          },
+        };
+  
     case GET_PRODUCTS_BY_NAME:
       return {
         ...state,

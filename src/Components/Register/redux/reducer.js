@@ -11,25 +11,16 @@ import {
 const initialState = {
   users: [],
   productos: [],
-  usuario: {
-    id: "",
-    email: "",
-    rol: "",
-    token: "",
-  },
+  usuario: {},
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case POST_INGRESO:
+      console.log(payload);
       return {
         ...state,
-        usuario: {
-          id: payload.id,
-          email: payload.email,
-          rol: payload.rol,
-          token: payload.token,
-        },
+        usuario: payload,
       };
 
     case POST_REGISTRO:

@@ -3,10 +3,16 @@ import corazon from "../images/cora-icon.png";
 import carro from "../images/carro.png";
 import { NavLink } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
-// import { useAuth } from "../Register/authContext";
+import { useSelector } from "react-redux";
+
+
+
+
 export default function Navbar() {
-//   const {userFirebase} = useAuth()
-//  console.log(userFirebase);
+
+
+const user = useSelector((state) => state.usuario);
+console.log(user);
 
   return (
     <div className="navbar">
@@ -17,16 +23,16 @@ export default function Navbar() {
       <Searchbar />
 
       
-      {/* {userFirebase ? (
+      {user && user ? (
         <>
-          <span>{userFirebase.email}</span>
+          <span>{user.email}</span>
           
         </>
       ) : (
-      )} */}
         <NavLink className="ingresa" to={"/register"}>
           Ingresa / <br /> Registrate <span>{">"}</span>
         </NavLink>
+      )}
       <NavLink to={"/"}>
         <img src={corazon} alt="" />
       </NavLink>

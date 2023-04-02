@@ -9,6 +9,7 @@ export const ingreso = (email) => {
           { email }
         );
         const usuario = apiData.data;
+        console.log(usuario);
         localStorage.setItem("token", usuario.token);
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
@@ -17,9 +18,9 @@ export const ingreso = (email) => {
           type: POST_INGRESO,
           payload: usuario,
         });
-        return usuario;
+       
       } catch (error) {
-        
+        console.log("aver que onda");
       }
     };
   };
@@ -32,6 +33,7 @@ export const ingreso = (email) => {
           { email }
         );
         const usuario = apiData.data;
+        console.log(usuario);
         localStorage.setItem("token", usuario.token);
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
@@ -40,9 +42,9 @@ export const ingreso = (email) => {
           type: POST_REGISTRO,
           payload: usuario,
         });
-        return usuario;
+      
       } catch (error) {
-       
+        console.log("aver que onda");
       }
     };
   };
@@ -63,9 +65,9 @@ export const ingreso = (email) => {
           type: POST_GOOGLE,
           payload: usuario,
         });
-        return usuario;
+    
       } catch (error) {
-        
+        console.log("aver que onda");
       }
     };
   };

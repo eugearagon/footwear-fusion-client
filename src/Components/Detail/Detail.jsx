@@ -80,7 +80,7 @@ useEffect(()=>{
     price: prod.price,
     marca: marca,
     size: selectedSize,
-    qty: selectedQty?.map(),
+    //qty: selectedQty?.map(),
   }
 console.log(item);
 

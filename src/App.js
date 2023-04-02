@@ -3,6 +3,8 @@ import "./App.css";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";
+import Login from "./Components/Register/Login";
+import LoginAdmin from "./Components/admin/LoginAdmin/LoginAdmin";
 import Navbar from "./Components/NavBar/Navbar.jsx";
 import Categories from "./Components/Categories/Categories";
 import Footer from "./Components/Footer/Footer";
@@ -23,23 +25,54 @@ function App() {
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
-      {location.pathname !== "/register" && <Navbar />}
-      {location.pathname !== "/register" && <Categories />}
+      {location.pathname !== "/login" && location.pathname !== "/login-admin"  && location.pathname !== "/register" && (
+        <>
+          <Navbar />
+          <Categories />
+         
+        </>
+      )}
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/login-admin" element={<LoginAdmin />} />
           <Route path="/product/:prodId" element={<Detail />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
-      </AuthProvider>
-      {location.pathname !== "/register" && (
-        <DarkMode toggleDarkMode={toggleDarkMode} />
+        {location.pathname !== "/login" && location.pathname !== "/login-admin"  && location.pathname !== "/register" && (
+        <>
+          <DarkMode toggleDarkMode={toggleDarkMode} />
+          <Whatsapp />
+          <Footer />
+        </>
       )}
-      {location.pathname !== "/register" && <Whatsapp />}
-      {location.pathname !== "/register" && <Footer />}
+      </AuthProvider>
     </div>
   );
+  
+
+  // return (
+  //   <div className={`App ${darkMode ? "dark-mode" : ""}`}>
+  //     {location.pathname !== "/register" && <Navbar />}
+  //     {location.pathname !== "/register" && <Categories />}
+  //     <AuthProvider>
+  //       <Routes>
+  //         <Route path="/" element={<Home />} />
+  //         <Route path="/register" element={<Register />} />
+  //         <Route path="/login" element={<Login />} />
+  //         <Route path="/product/:prodId" element={<Detail />} />
+  //         <Route path="/cart" element={<Cart />} />
+  //       </Routes>
+  //     </AuthProvider>
+  //     {location.pathname !== "/register" && (
+  //       <DarkMode toggleDarkMode={toggleDarkMode} />
+  //     )}
+  //     {location.pathname !== "/register" && <Whatsapp />}
+  //     {location.pathname !== "/register" && <Footer />}
+  //   </div>
+  // );
 }
 
 export default App;

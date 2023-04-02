@@ -10,14 +10,13 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import {auth} from "./firebase"
 
 export const authContext = createContext();
-
+console.log(authContext);
 //para cerrar
 const logout = () => signOut(auth)
 
-export const useAuth = () => { //lamando a este useAuth me va a traer la info del usuario
-    const context = useContext(authContext);
-    if(!context) throw new Error("No existe proveedor de autenticacion")
-    return context
+export const useAuth = () => {
+    const contex = useContext(authContext);
+    return contex
 }
 
 

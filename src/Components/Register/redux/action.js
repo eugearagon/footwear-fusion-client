@@ -19,7 +19,7 @@ export const ingreso = (email) => {
         });
         return usuario;
       } catch (error) {
-        alert (error.response.data.message);
+        
       }
     };
   };
@@ -42,7 +42,7 @@ export const ingreso = (email) => {
         });
         return usuario;
       } catch (error) {
-        alert (error.response.data.message);
+       
       }
     };
   };
@@ -65,7 +65,7 @@ export const ingreso = (email) => {
         });
         return usuario;
       } catch (error) {
-        alert (error.response.data.message);
+        
       }
     };
   };

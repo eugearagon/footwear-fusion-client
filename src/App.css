@@ -269,6 +269,13 @@ padding: 10px 20px !important;
 .searchbar button {
   padding: 6px;
 }
+
+.bienvenido{
+  color: #fff;
+}
+.bienvenido p{
+  margin: 0;
+}
 /* navbar */
 
 

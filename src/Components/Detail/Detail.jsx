@@ -122,7 +122,10 @@ const handleAddToCart = () => {
         <div className="options">
     <div className="cantidades">
       <h5>Cantidad</h5>
-      <select defaultValue="1" onChange={handleQtySelect}>
+      <select defaultValue="Cantidad" onChange={handleQtySelect}>
+      <option disabled value="Cantidad">
+      Cantidad
+      </option>
         {valores?.map((s) => (
           <option value={s} key={s}>
             {s}

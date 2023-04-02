@@ -21,7 +21,11 @@ import {
   PRICE_RANGE_SELECTOR,
   ADD_TO_CART,
   ADD_QUANTITY,
-  ADD_SIZE
+  ADD_SIZE,
+  POST_INGRESO,
+  BORRAR_TOKEN,
+  POST_REGISTRO,
+  POST_GOOGLE
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -167,6 +171,88 @@ export function postUsers(payload) {
   };
 }
 
+export const ingreso = (email) => {
+  return async function (dispatch) {
+    try {
+      const apiData = await axios.post(
+        "http://localhost:3001/user/login",
+        { email }
+      );
+      const usuario = apiData.data;
+      localStorage.setItem("token", usuario.token);
+      const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+      // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
+      localStorage.setItem('expirationDate', expirationDate);
+      dispatch({
+        type: POST_INGRESO,
+        payload: usuario,
+      });
+      return usuario;
+    } catch (error) {
+      
+    }
+  };
+};
+
+export const registros = (email) => {
+  return async function (dispatch) {
+    try {
+      const apiData = await axios.post(
+        "http://localhost:3001/user/registro",
+        { email }
+      );
+      const usuario = apiData.data;
+      localStorage.setItem("token", usuario.token);
+      const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+      // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
+      localStorage.setItem('expirationDate', expirationDate);
+      dispatch({
+        type: POST_REGISTRO,
+        payload: usuario,
+      });
+      return usuario;
+    } catch (error) {
+     
+    }
+  };
+};
+
+export const loginUserGoogle = (email) => {
+  return async function (dispatch) {
+    try {
+      const apiData = await axios.post(
+        "http://localhost:3001/user/google",
+        { email }
+      );
+      const usuario = apiData.data;
+      localStorage.setItem("token", usuario.token);
+      const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+      // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
+      localStorage.setItem('expirationDate', expirationDate);
+      dispatch({
+        type: POST_GOOGLE,
+        payload: usuario,
+      });
+      return usuario;
+    } catch (error) {
+      
+    }
+  };
+};
+
+export const borrarToken = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem("expirationDate");
+  return {
+    type: BORRAR_TOKEN,
+    payload: {
+      email: "",
+      rol: "",
+      token: ""
+    }
+  }
+};
+
 export function orderByPrice(payload) {
   return {
     type: ORDER_BY_PRICE,
@@ -232,7 +318,6 @@ export function addSize(payload) {
     payload
   }
 }
-
 
 export function addQty(payload) {
   return{

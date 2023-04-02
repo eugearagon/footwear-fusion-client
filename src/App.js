@@ -11,6 +11,7 @@ import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import { useState } from "react";
+import { AuthProvider } from "./Components/Register/authContext";
 
 function App() {
   const location = useLocation();
@@ -24,18 +25,18 @@ function App() {
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/register" && <Navbar />}
       {location.pathname !== "/register" && <Categories />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/product/:prodId" element={<Detail />} />
-        <Route path="/cart" element={<Cart/>} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/product/:prodId" element={<Detail />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </AuthProvider>
       {location.pathname !== "/register" && (
         <DarkMode toggleDarkMode={toggleDarkMode} />
       )}
-      {location.pathname !== "/register" && (
-        <Whatsapp />
-      )}
+      {location.pathname !== "/register" && <Whatsapp />}
       {location.pathname !== "/register" && <Footer />}
     </div>
   );

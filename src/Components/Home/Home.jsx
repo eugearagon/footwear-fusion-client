@@ -5,7 +5,11 @@ import CardsContainer from "../CardsContainer/CardsContainer.jsx";
 import OrderPaginate from "../OrderPaginate/OrderPaginate.jsx";
 import { CookiesProvider, useCookies } from 'react-cookie';
 import popup from "../images/popup.jpg"
+
+
 export default function Home() {
+
+
   const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
   const [cookies, setCookie] = useCookies(['visited']);
   if (!cookies.visited) {

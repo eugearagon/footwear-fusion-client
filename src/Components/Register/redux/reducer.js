@@ -11,7 +11,12 @@ import {
 const initialState = {
   users: [],
   productos: [],
-  usuario: {},
+  usuario: {
+    id: "",
+    email: "",
+    rol: "",
+    token: "",
+  },
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {

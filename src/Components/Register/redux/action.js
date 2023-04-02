@@ -17,7 +17,6 @@ export const ingreso = (email) => {
           type: POST_INGRESO,
           payload: usuario,
         });
-        return usuario;
       } catch (error) {
         
       }
@@ -28,7 +27,7 @@ export const ingreso = (email) => {
     return async function (dispatch) {
       try {
         const apiData = await axios.post(
-          "http://localhost:3001/user/rigistro",
+          "http://localhost:3001/user/registro",
           { email }
         );
         const usuario = apiData.data;
@@ -40,7 +39,6 @@ export const ingreso = (email) => {
           type: POST_REGISTRO,
           payload: usuario,
         });
-        return usuario;
       } catch (error) {
        
       }
@@ -55,6 +53,7 @@ export const ingreso = (email) => {
           { email }
         );
         const usuario = apiData.data;
+        console.log("accion",usuario);
         localStorage.setItem("token", usuario.token);
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 

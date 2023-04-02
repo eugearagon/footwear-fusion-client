@@ -44,6 +44,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case POST_GOOGLE:
+      console.log("payload",payload);
       return {
         ...state,
         usuario: {

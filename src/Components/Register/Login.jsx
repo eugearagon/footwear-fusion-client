@@ -104,9 +104,9 @@ export default function Login() {
           <button className="google-btn" onClick={iniciarGoogle}>Entrar con google</button>
         </div>
         <div className="log-admin">
-          <h6>Todavia no estas registrado?</h6>
+          <h6 className="ya-estas">Todavia no estas registrado?</h6>
           <NavLink to={"/register"}>
-            <h6> Registrate aca</h6>
+            <h6 className="ya-estas"> Registrate aca</h6>
           </NavLink>
         </div>
         <div className="log-admin">

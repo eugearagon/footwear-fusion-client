@@ -80,13 +80,24 @@ useEffect(()=>{
     price: prod.price,
     marca: marca,
     size: selectedSize,
-    //qty: selectedQty?.map(),
+    qty:selectedQty
   }
-console.log(item);
+console.log("este es el console.log de item",item);
 
-  const handleSizeSelect = (e) => {
-    dispatch(addSize(e.target.value))
-  }
+const handleSizeSelect = (e) => {
+  dispatch(addSize(e.target.value));
+};
+const handleQtySelect = (e) => {
+  dispatch(addQty(e.target.value));
+};
+
+const handleAddToCart = () => {
+  const newItem = {
+    ...item,
+    description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
+  };
+  dispatch(addToCart(newItem));
+};
 
   return (
     <div className="detail">
@@ -109,36 +120,38 @@ console.log(item);
         <h2>{prod.title}</h2>
         <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">
-          <div className="cantidades">
-          <h5>Cantidad</h5>
-          <select defaultValue="1">
-            {valores?.map((s) => (
-              <option value={s} key={s} onClick={handleSizeSelect}>
-                {s}
-              </option>
-            ))}
-          </select>
-          </div>
-          <h5>TALLES</h5> 
-          <select defaultValue="Seleccione un talle">
-            <option disabled value="Seleccione un talle">
-              Seleccione un talle
-            </option>
-           {nuevoTalle?.map((talle) => (
-            <option 
-            key={talle}
-            value={talle}>{talle}</option>
-           ))}
-          </select>
-          <button className="comprar">¡Agregar al Carrito!</button>
-          <button className="favs"> ❤️ Agregar a favoritos</button>
-        </div>
-      </div>
-
+    <div className="cantidades">
+      <h5>Cantidad</h5>
+      <select defaultValue="Cantidad" onChange={handleQtySelect}>
+      <option disabled value="Cantidad">
+      Cantidad
+      </option>
+        {valores?.map((s) => (
+          <option value={s} key={s}>
+            {s}
+          </option>
+        ))}
+      </select>
+    </div>
+    <h5>TALLES</h5>
+    <select defaultValue="Seleccione un talle" onChange={handleSizeSelect}>
+      <option disabled value="Seleccione un talle">
+        Seleccione un talle
+      </option>
+      {nuevoTalle?.map((talle) => (
+        <option key={talle} value={talle}>
+          {talle}
+        </option>
+      ))}
+    </select>
+    <button className="comprar" onClick={handleAddToCart}>¡Agregar al Carrito!</button>
+    <button className="favs"> ❤️ Agregar a favoritos</button>
+  </div>
       <div className="description">
         <h5>DETALLES DEL PRODUCTO</h5>
         <p>{prod.description}</p>
       </div>
+    </div>
     </div>
   );
 }

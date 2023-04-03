@@ -10,11 +10,11 @@ span::selection,
 li::selection,
 label::selection,
 input::selection,
-a::selection {
+a::selection,
+strong::selection {
   background-color: #17e1e7;
   color: #001e40;
 }
-
 h1,
 h2,
 h3,
@@ -186,6 +186,10 @@ li {
 padding: 10px 20px !important;
 }
 
+.ya-estas{
+  font-size: 12pt;
+}
+
 /* register landing */
 
 /* home */
@@ -264,6 +268,13 @@ padding: 10px 20px !important;
 
 .searchbar button {
   padding: 6px;
+}
+
+.bienvenido{
+  color: #fff;
+}
+.bienvenido p{
+  margin: 0;
 }
 /* navbar */
 

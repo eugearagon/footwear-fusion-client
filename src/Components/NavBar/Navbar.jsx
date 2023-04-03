@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 export default function Navbar() {
 
 
-const user = useSelector((state) => state.usuario);
+const user = useSelector((state) => state.loginUser);
 console.log(user);
 
   return (
@@ -23,11 +23,11 @@ console.log(user);
       <Searchbar />
 
       
-      {user && user ? (
-        <>
-          <span>{user.email}</span>
-          
-        </>
+      {user && user.email ? (
+        <div className="bienvenido">
+           <p><b>BIENVENIDO!</b></p>
+          <p>{user.email}</p>
+        </div>
       ) : (
         <NavLink className="ingresa" to={"/register"}>
           Ingresa / <br /> Registrate <span>{">"}</span>

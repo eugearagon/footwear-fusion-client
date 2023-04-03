@@ -113,7 +113,6 @@ li {
 
 .register-landing {
   display: flex;
-  height: 100vh;
 }
 
 .register-landing .form {

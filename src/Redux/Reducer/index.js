@@ -219,7 +219,7 @@ function rootReducer(state = initialState, action) {
       let priceProd = state.prodRender;
       let nuevoPrecio = [];
       if (minPrice && maxPrice) {
-        priceProd && priceProd.filter((product) => {
+        priceProd && priceProd.filter((product)  => {
           if (
             Number(product.price) >= minPrice &&
             Number(product.price) <= maxPrice

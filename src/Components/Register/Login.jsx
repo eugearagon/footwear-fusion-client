@@ -1,5 +1,6 @@
 import Zapas from "../images/login-image.jpg";
 import logo from "../images/logo.png";
+import google from "../images/google.jpg"
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "./authContext";
@@ -100,7 +101,7 @@ export default function Login() {
             </button>
           </form>
           <button className="google-btn" onClick={iniciarGoogle}>
-            Entrar con google
+            <img src={google} width="200" alt="" />
           </button>
         </div>
         <div className="log-admin">

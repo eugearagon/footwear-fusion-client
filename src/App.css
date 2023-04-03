@@ -10,11 +10,11 @@ span::selection,
 li::selection,
 label::selection,
 input::selection,
-a::selection {
+a::selection,
+strong::selection {
   background-color: #17e1e7;
   color: #001e40;
 }
-
 h1,
 h2,
 h3,
@@ -184,6 +184,10 @@ li {
 
 .google-btn{
 padding: 10px 20px !important;
+}
+
+.ya-estas{
+  font-size: 12pt;
 }
 
 /* register landing */

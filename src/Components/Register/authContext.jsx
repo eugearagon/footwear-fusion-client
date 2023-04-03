@@ -10,13 +10,12 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import {auth} from "./firebase"
 
 export const authContext = createContext();
-console.log(authContext);
 //para cerrar
 const logout = () => signOut(auth)
 
 export const useAuth = () => {
-    const contex = useContext(authContext);
-    return contex
+    const context = useContext(authContext);
+    return context
 }
 
 

@@ -12,7 +12,7 @@ export default function Navbar() {
 
 
 const user = useSelector((state) => state.loginUser);
-console.log(user);
+const lcdtmab = useSelector((state) => state.item)
 
   return (
     <div className="navbar">
@@ -38,6 +38,9 @@ console.log(user);
       </NavLink>
       <NavLink to={"/cart"}>
         <img src={carro} alt="" />
+        {lcdtmab && lcdtmab.length > 0 && (
+          <span className="cant-carro">{lcdtmab.length}</span>
+        )}
       </NavLink>
     </div>
   );

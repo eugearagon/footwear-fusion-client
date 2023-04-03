@@ -38,11 +38,13 @@ export default function Cart() {
                   Cantidad <b>{e.qty}</b>
                 </p>
               </div>
+                <button className="eliminar"><small>eliminar</small></button>
             </div>
             <div className="zapato-precio">
               <h2>Precio</h2>
               <h2>${e.price.toLocaleString("de-De")}</h2>
             </div>
+            
           </div>
         ))
       ) : (

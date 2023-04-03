@@ -764,6 +764,12 @@ li {
 .ahora-si span{
   font-size: 8pt;
 }
+.eliminar{
+  background: none !important;
+  color: #646464 !important;
+  text-align: left;
+  padding: 0 !important;
+}
 
 /* CARRITO DE COMPRAS */
 

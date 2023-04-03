@@ -3,8 +3,6 @@ import promos from "../images/promos.jpg";
 import { useSelector } from "react-redux";
 
 export default function Cart() {
-<<<<<<< HEAD
-=======
   const item = useSelector((state) => state.item);
   console.log("a ver este otro ", item);
 
@@ -13,7 +11,6 @@ export default function Cart() {
     0
   );
 
->>>>>>> d98baeba9f122a7b800f854304fe6b727aad09d7
   return (
     <div className="cart">
       <div className="cart-header">
@@ -57,13 +54,10 @@ export default function Cart() {
       <div className="cart-footer">
         <img src={promos} alt="" />
         <div className="ahora-si">
-<<<<<<< HEAD
           <span>Subtotal: $6.500</span>
           <h1>Total $6.500</h1>
-=======
           <span>Subtotal: </span>
           <h1>${totalPrice.toFixed(2)}</h1>
->>>>>>> d98baeba9f122a7b800f854304fe6b727aad09d7
           <button>COMPRAR</button>
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>

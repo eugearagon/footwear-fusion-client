@@ -27,6 +27,7 @@ const lcdtmab = useSelector((state) => state.item)
         <div className="bienvenido">
            <p><b>BIENVENIDO!</b></p>
           <p>{user.email}</p>
+          <button className="cerrar-sesion">cerrar sesión</button>
         </div>
       ) : (
         <NavLink className="ingresa" to={"/register"}>

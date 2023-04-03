@@ -764,7 +764,7 @@ li {
 .ahora-si span{
   font-size: 8pt;
 }
-.eliminar{
+.eliminar, .cerrar-sesion{
   background: none !important;
   color: #646464 !important;
   text-align: left;

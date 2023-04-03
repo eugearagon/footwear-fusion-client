@@ -251,15 +251,11 @@ function rootReducer(state = initialState, action) {
           selectedQty: qty
         }
 
-      case ADD_TO_CART:
-        let elegidos = [];
-        if(action.payload){
-          elegidos.push(action.payload)
-        }
-        return{
-          ...state,
-         item: elegidos,
-        }
+        case ADD_TO_CART:
+          return {
+            ...state,
+            item: [...state.item, action.payload],
+          };
 
     default:
       return state;

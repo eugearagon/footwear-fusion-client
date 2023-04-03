@@ -6,6 +6,11 @@ export default function Cart() {
   const item = useSelector((state) => state.item);
   console.log("a ver este otro ", item);
 
+  const totalPrice = item.reduce(
+    (total, item) => total + item.price * item.qty,
+    0
+  );
+
   return (
     <div className="cart">
       <div className="cart-header">
@@ -50,7 +55,7 @@ export default function Cart() {
         <img src={promos} alt="" />
         <div className="ahora-si">
           <span>Subtotal: </span>
-          <h1>Total </h1>
+          <h1>${totalPrice.toFixed(2)}</h1>
           <button>COMPRAR</button>
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>

@@ -26,6 +26,7 @@ import {
   //   GET_PRODUCT,
 } from "../Actions/actions";
 
+
 const initialState = {
   products: [],
   prodRender: [],
@@ -47,7 +48,7 @@ const initialState = {
   selectedPriceRange: { minPrice: 0, maxPrice: 0 },
   selectedSize: [],
   selectedQty: [],
-  item:[]
+  item:[],
 };
 
 

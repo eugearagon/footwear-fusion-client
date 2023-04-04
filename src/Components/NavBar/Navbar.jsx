@@ -5,14 +5,13 @@ import { NavLink } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
 import { useSelector } from "react-redux";
 
-
-
-
 export default function Navbar() {
 
 
 const user = useSelector((state) => state.loginUser);
-const lcdtmab = useSelector((state) => state.item)
+const lcdtmab = useSelector((state) => state.item);
+
+
 
   return (
     <div className="navbar">

@@ -94,7 +94,7 @@ const handleQtySelect = (e) => {
 
 const navigate = useNavigate()
   const token = localStorage.getItem("token")
-  const expirationDate = localStorage.getItem('expirationDate');
+
 
 
 const handleAddToCart = () => {

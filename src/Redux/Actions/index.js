@@ -179,10 +179,11 @@ export const ingreso = (email) => {
         { email }
       );
       const usuario = apiData.data;
-      localStorage.setItem("token", usuario.token);
-      const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
-      localStorage.setItem('expirationDate', expirationDate);
+      // localStorage.setItem("token", usuario.token);
+      // localStorage.setItem("loginUser", JSON.stringify(usuario));
+      // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
+      // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_INGRESO,
         payload: usuario,
@@ -202,10 +203,11 @@ export const registros = (email) => {
         { email }
       );
       const usuario = apiData.data;
-      localStorage.setItem("token", usuario.token);
-      const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
-      localStorage.setItem('expirationDate', expirationDate);
+      // localStorage.setItem("token", usuario.token);
+      // localStorage.setItem("loginUser", JSON.stringify(usuario));
+      // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
+      // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_REGISTRO,
         payload: usuario,
@@ -225,10 +227,11 @@ export const loginUserGoogle = (email) => {
         { email }
       );
       const usuario = apiData.data;
-      localStorage.setItem("token", usuario.token);
-      const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
-      localStorage.setItem('expirationDate', expirationDate);
+      // localStorage.setItem("token", usuario.token);
+      // localStorage.setItem("loginUser", JSON.stringify(usuario));
+      // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
+      // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_GOOGLE,
         payload: usuario,

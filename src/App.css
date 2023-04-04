@@ -5,7 +5,9 @@ h2::selection,
 h3::selection,
 h4::selection,
 h5::selection,
+h6::selection,
 p::selection,
+b::selection,
 span::selection,
 li::selection,
 label::selection,
@@ -111,7 +113,6 @@ li {
 
 .register-landing {
   display: flex;
-  height: 100vh;
 }
 
 .register-landing .form {
@@ -183,7 +184,7 @@ li {
 }
 
 .google-btn{
-padding: 10px 20px !important;
+  background: none;
 }
 
 .ya-estas{
@@ -275,6 +276,16 @@ padding: 10px 20px !important;
 }
 .bienvenido p{
   margin: 0;
+}
+
+.cant-carro{
+  color: #fff;
+  background-color: #c82c2c;
+  font-size: 6pt;
+  font-weight: 900;
+  position: absolute;
+  padding: 3px 5px;
+  border-radius: 100%;
 }
 /* navbar */
 
@@ -752,6 +763,12 @@ padding: 10px 20px !important;
 
 .ahora-si span{
   font-size: 8pt;
+}
+.eliminar, .cerrar-sesion{
+  background: none !important;
+  color: #646464 !important;
+  text-align: left;
+  padding: 0 !important;
 }
 
 /* CARRITO DE COMPRAS */

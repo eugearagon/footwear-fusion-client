@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getDetail, addQty, addSize, addToCart } from "../../Redux/Actions";
 
@@ -24,6 +24,7 @@ useEffect(()=>{
 },[dispatch])
 
   const prod = useSelector((state) => state.detail);
+  
 
 
   const marca = prod.MarcaProducts
@@ -91,13 +92,22 @@ const handleQtySelect = (e) => {
   dispatch(addQty(e.target.value));
 };
 
+const navigate = useNavigate()
+  const token = localStorage.getItem("token")
+
+
+
 const handleAddToCart = () => {
+  if (!token) navigate("/login")
   const newItem = {
     ...item,
     description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
   };
   dispatch(addToCart(newItem));
 };
+
+const loginUser= useSelector(state => state.loginUser)
+console.log("credenciales", loginUser)
 
   return (
     <div className="detail">

@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";
 import Login from "./Components/Register/Login";
@@ -12,7 +12,7 @@ import Detail from "./Components/Detail/Detail";
 import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
 
 function App() {
@@ -22,6 +22,19 @@ function App() {
   function toggleDarkMode() {
     setDarkMode(!darkMode);
   }
+
+  const navigate = useNavigate()
+  const token = localStorage.getItem("token")
+  const expirationDate = localStorage.getItem('expirationDate');
+
+  useEffect(() => {
+    if (token && new Date(expirationDate) <= new Date()) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('expirationDate');
+      navigate('/login');
+      alert('Credenciales expiradas. Por favor, inicie sesión de nuevo.');
+    }
+  }, [token, expirationDate, navigate]);
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>

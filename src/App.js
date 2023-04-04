@@ -36,6 +36,8 @@ function App() {
     }
   }, [token, expirationDate, navigate]);
 
+  
+
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/login" &&

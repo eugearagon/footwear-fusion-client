@@ -327,3 +327,9 @@ export function addQty(payload) {
   }
 }
 
+export const saveCartToLocalStorage = (cart) => {
+  localStorage.setItem('cart', JSON.stringify(cart));
+};
+
+
+

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getDetail, addQty, addSize, addToCart } from "../../Redux/Actions";
+import swal from 'sweetalert';
+
 
 export default function Detail() {
   const { prodId } = useParams();
@@ -96,10 +98,16 @@ const navigate = useNavigate()
 
   const handleAddToCart = () => {
     if (!token) navigate("/login");
+    if (!selectedSize || !selectedQty) {
+      swal("Error", "Para agregar este producto al carrito debe seleccionar un talle y la cantidad", "error");
+      navigate("/product/:prodId")
+      return;
+    }
     const newItem = {
       ...item,
       description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
     };
+    swal("Excelente!", "Producto agregado al carrito!", "success");
     dispatch(addToCart(newItem));
   };
 

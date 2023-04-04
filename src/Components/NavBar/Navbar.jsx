@@ -3,15 +3,22 @@ import corazon from "../images/cora-icon.png";
 import carro from "../images/carro.png";
 import { NavLink } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {borrarToken} from "../../Redux/Actions/index"
+
+
+
 
 export default function Navbar() {
 
 
 const user = useSelector((state) => state.loginUser);
-const lcdtmab = useSelector((state) => state.item);
+const lcdtmab = useSelector((state) => state.item)
+const dispatch = useDispatch();
 
-
+const eliminarLocalStore = () => {
+  dispatch(borrarToken())
+}
 
   return (
     <div className="navbar">
@@ -26,7 +33,7 @@ const lcdtmab = useSelector((state) => state.item);
         <div className="bienvenido">
            <p><b>BIENVENIDO!</b></p>
           <p>{user.email}</p>
-          <button className="cerrar-sesion">cerrar sesión</button>
+          <button className="cerrar-sesion" onClick={eliminarLocalStore}>cerrar sesión</button>
         </div>
       ) : (
         <NavLink className="ingresa" to={"/register"}>

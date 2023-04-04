@@ -89,9 +89,10 @@ export default function Detail() {
     dispatch(addQty(e.target.value));
   };
 
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const expirationDate = localStorage.getItem("expirationDate");
+const navigate = useNavigate()
+  const token = localStorage.getItem("token")
+
+
 
   const handleAddToCart = () => {
     if (!token) navigate("/login");

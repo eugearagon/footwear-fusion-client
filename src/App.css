@@ -13,7 +13,8 @@ li::selection,
 label::selection,
 input::selection,
 a::selection,
-strong::selection {
+strong::selection,
+small::selection {
   background-color: #17e1e7;
   color: #001e40;
 }

@@ -97,7 +97,10 @@ const navigate = useNavigate()
 
 
   const handleAddToCart = () => {
-    if (!token) navigate("/login");
+    if (!token) {
+      swal("Error", "Logueate para continuar!", "error");
+      return navigate("/login")
+    };
     if (!selectedSize || !selectedQty) {
       swal("Error", "Para agregar este producto al carrito debe seleccionar un talle y la cantidad", "error");
       navigate("/product/:prodId")
@@ -107,8 +110,9 @@ const navigate = useNavigate()
       ...item,
       description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
     };
-    swal("Excelente!", "Producto agregado al carrito!", "success");
+   
     dispatch(addToCart(newItem));
+    swal("Excelente!", "Producto agregado al carrito!", "success");
   };
 
   const loginUser = useSelector((state) => state.loginUser);

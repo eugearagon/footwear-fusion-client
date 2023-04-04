@@ -184,7 +184,7 @@ li {
 }
 
 .google-btn{
-padding: 10px 20px !important;
+  background: none;
 }
 
 .ya-estas{
@@ -763,6 +763,12 @@ padding: 10px 20px !important;
 
 .ahora-si span{
   font-size: 8pt;
+}
+.eliminar, .cerrar-sesion{
+  background: none !important;
+  color: #646464 !important;
+  text-align: left;
+  padding: 0 !important;
 }
 
 /* CARRITO DE COMPRAS */

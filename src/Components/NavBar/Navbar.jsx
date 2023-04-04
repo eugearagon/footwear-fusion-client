@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
 import { useSelector, useDispatch } from "react-redux";
 import {borrarToken} from "../../Redux/Actions/index"
-
+import swal from 'sweetalert';
 
 
 
@@ -17,6 +17,7 @@ const lcdtmab = useSelector((state) => state.item)
 const dispatch = useDispatch();
 
 const eliminarLocalStore = () => {
+  swal("Hasta luego!", "Te esperamos cuando quieras!", "info");
   dispatch(borrarToken())
 }
 

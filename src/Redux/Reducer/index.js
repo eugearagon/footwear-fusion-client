@@ -123,6 +123,9 @@ function rootReducer(state = initialState, action) {
           };
   
       case BORRAR_TOKEN:
+        localStorage.removeItem('token');
+        localStorage.removeItem("loginUser");
+        localStorage.removeItem("expirationDate");
         return {
           ...state,
           loginUser: {

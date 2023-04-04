@@ -244,8 +244,6 @@ export const loginUserGoogle = (email) => {
 };
 
 export const borrarToken = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem("expirationDate");
   return {
     type: BORRAR_TOKEN,
     payload: {

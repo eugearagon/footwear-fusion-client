@@ -159,11 +159,12 @@ const navigate = useNavigate()
           </button>
           <button className="favs"> ❤️ Agregar a favoritos</button>
         </div>
-        <div className="description">
+       
+      </div>
+      <div className="description">
           <h5>DETALLES DEL PRODUCTO</h5>
           <p>{prod.description}</p>
         </div>
-      </div>
     </div>
   );
 }

@@ -33,7 +33,7 @@ const eliminarLocalStore = () => {
       {user && user.email ? (
         <div className="bienvenido">
            <p><b>BIENVENIDO!</b></p>
-          <p>{user.email}</p>
+          <NavLink to="/userpanel"><p>{user.email}</p></NavLink>
           <button className="cerrar-sesion" onClick={eliminarLocalStore}>cerrar sesión</button>
         </div>
       ) : (
@@ -41,7 +41,7 @@ const eliminarLocalStore = () => {
           Ingresa / <br /> Registrate <span>{">"}</span>
         </NavLink>
       )}
-      <NavLink to={"/"}>
+      <NavLink to={"/userpanel"}>
         <img src={corazon} alt="" />
       </NavLink>
       <NavLink to={"/cart"}>

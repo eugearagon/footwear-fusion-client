@@ -269,11 +269,15 @@ li {
   padding: 6px;
 }
 
-.bienvenido {
+.bienvenido, .bienvenido a {
   color: #fff;
 }
 .bienvenido p {
   margin: 0;
+}
+
+.bienvenido a:hover{
+ opacity: 0.8;
 }
 
 .cant-carro {
@@ -820,3 +824,68 @@ li {
 
   padding: 0 85px !important;
 }
+
+
+/*  ----   panel de usuario   ---- */
+
+.user-panel{
+  border:#a2a2a2 1px solid ;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.user-menu{
+  font-size: 9pt;
+  color: #001e40 !important;
+  font-weight: 900;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  border-bottom:#a2a2a2 1px solid ;
+}
+
+.user-menu li{
+  padding: 30px 10px;
+  width: 33%;
+  
+}
+
+.user-menu li:hover, .user-active{
+  color: #ffffff;
+  background-color: #001e40;
+}
+
+
+.user-content{
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  align-items: flex-start;
+  padding: 50px;
+}
+
+.user-data{
+  display: flex;
+  line-height: 13pt;
+  flex-direction: row;
+  text-align: left;
+  margin: 0 50px;
+  align-items: flex-start;
+}
+
+.user-data h6{
+  margin: 0;
+}
+
+.data-list{
+  margin: 0 50px;
+}
+
+
+
+/*  ----   panel de usuario   ---- */

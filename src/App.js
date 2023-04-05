@@ -12,6 +12,7 @@ import Detail from "./Components/Detail/Detail";
 import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
+import UserPanel from "./Components/UserPanel/UserPanel";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
 
@@ -56,6 +57,7 @@ function App() {
           <Route path="/login-admin" element={<LoginAdmin />} />
           <Route path="/product/:prodId" element={<Detail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/userpanel" element={<UserPanel />} />
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&

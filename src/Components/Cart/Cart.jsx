@@ -17,7 +17,11 @@ export default function Cart() {
   );
 
   const mercadoPago = () => {
-    axios.post("http://localhost:3001/mp/create_preference", item)
+    const token = localStorage.getItem("token");
+        const headers = { 
+          'x-access-token': token,
+      };
+    axios.post("http://localhost:3001/mp/create_preference",item,{headers})
       .then((res) => (window.location.href = res.data.global.init_point))
       .catch((error) => console.log(error))
   }

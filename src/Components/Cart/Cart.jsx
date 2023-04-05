@@ -2,11 +2,14 @@ import { NavLink } from "react-router-dom";
 import promos from "../images/promos.jpg";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 
 export default function Cart() {
   const item = useSelector((state) => state.item);
   console.log("a ver este otro ", item);
+  
+  
 
   const totalPrice = item.reduce(
     (total, item) => total + item.price * item.qty,
@@ -21,7 +24,7 @@ export default function Cart() {
 
 
   return (
-    <div className="cart">
+     <div className="cart">
       <div className="cart-header">
         <div>
           <h3>CARRITO DE COMPRAS</h3>
@@ -32,7 +35,7 @@ export default function Cart() {
 
       {item && item.length > 0 ? (
         item.map((e) => (
-          <div className="zapato">
+          <div className="zapato" key={e.code}>
             <img src={e.image} alt="zapato" />
             <div className="zapato-datos">
               <p>
@@ -47,7 +50,7 @@ export default function Cart() {
                   Cantidad <b>{e.qty}</b>
                 </p>
               </div>
-                <button className="eliminar"><small>eliminar</small></button>
+              <button className="eliminar"><small>eliminar</small></button>
             </div>
             <div className="zapato-precio">
               <h2>Precio</h2>
@@ -65,7 +68,7 @@ export default function Cart() {
       <div className="cart-footer">
         <img src={promos} alt="" />
         <div className="ahora-si">
-          <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
+        <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
           <button onClick={mercadoPago}>COMPRAR</button>
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>

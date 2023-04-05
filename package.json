@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@mercadopago/sdk-react": "^0.0.3",
     "@mui/material": "^5.11.15",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",

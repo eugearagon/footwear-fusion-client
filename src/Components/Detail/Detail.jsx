@@ -97,13 +97,6 @@ const navigate = useNavigate()
 
 
 
-<<<<<<< HEAD
-const handleAddToCart = () => {
-  if (!token) navigate("/login")
-  const newItem = {
-    ...item,
-    description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
-=======
   const handleAddToCart = () => {
     if (!token) navigate("/login");
     if (!selectedSize || !selectedQty) {
@@ -115,11 +108,7 @@ const handleAddToCart = () => {
       description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
     };
     dispatch(addToCart(newItem));
->>>>>>> 9d1face00f9ed9b25f669a1b137cecb1b123d447
   };
-
-const loginUser= useSelector(state => state.loginUser)
-console.log("credenciales", loginUser)
 
 const loginUser= useSelector(state => state.loginUser)
 console.log("credenciales", loginUser)

@@ -25,6 +25,7 @@ export const ADD_TO_CART="ADD_TO_CART";
 //accion Favoritos
 export const GET_USERS_FAVORITES="GET_USERS_FAVORITES";
 export const ADD_FAV="ADD_FAV";
+export const DELETE_FAV = "DELETE_FAV";
 //acciones del carrito
 export const CHANGE_PRODUCT="CHANGE_PRODUCT";
 export const BUY="BUY";

@@ -17,7 +17,7 @@ import {
   ADD_QUANTITY,
   ADD_SIZE,
   ADD_TO_CART,
-  ADD_FAV,
+  DELETE_FAV,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
@@ -302,6 +302,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         itemFav: action.payload ,
       };
+    
+      case DELETE_FAV:
+        return {
+          ...state,
+          itemFav: action.payload ,
+        };
+    
 
     default:
       return state;

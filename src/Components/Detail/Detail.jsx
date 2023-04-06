@@ -7,6 +7,7 @@ import {
   addSize,
   addToCart,
   addFav,
+  getFav,
 } from "../../Redux/Actions";
 import swal from "sweetalert";
 
@@ -88,7 +89,7 @@ export default function Detail() {
     size: selectedSize,
     qty: selectedQty,
   };
-  console.log("este es el console.log de item", item);
+  
 
   const handleSizeSelect = (e) => {
     dispatch(addSize(e.target.value));
@@ -161,12 +162,18 @@ export default function Detail() {
   };
 
     // favoritos //
-
-
+    const itemFav = useSelector((state) => state.itemFav);
+    useEffect(()=>{
+      const favoritos = async () =>{
+        try {
+          await dispatch(getFav(userId))
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+      favoritos()
+    },[userId, dispatch, itemFav])
     
-
-  // const loginUser = useSelector((state) => state.loginUser);
-  // console.log("credenciales", loginUser);
 
   return (
     <div className="detail">

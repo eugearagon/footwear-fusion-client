@@ -1,23 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import fav from "../images/cora.png";
-import { useEffect } from "react";
-import { getFav } from "../../Redux/Actions";
+import { deletFav } from "../../Redux/Actions";
+import { useParams } from "react-router-dom";
+
 
 
 export default function UserFavs() {
 
-    // const dispatch = useDispatch()
-    // const userId = useSelector((state) => state.loginUser.id)
-
-    // useEffect(()=>{
-    //   const favoritos = async () =>{
-    //     await dispatch(getFav(userId))
-    //   }
-    //   favoritos()
-    // },[userId, dispatch])
-
     const itemFav = useSelector((state) => state.itemFav);
-    console.log("itemFav", itemFav);
+    const userId = useSelector((state) => state.loginUser.id)
+    const dispatch = useDispatch()
+    const deleteOneFav = async (userId,prodId) => {
+      await dispatch(deletFav(userId, prodId))
+    }
+
   return (
     <div className="user-content">
       <div className="user-data">
@@ -28,6 +24,7 @@ export default function UserFavs() {
         
         {itemFav && itemFav.length > 0 ? (
             itemFav.map((e) => (
+              console.log(e),
                 <div className="zapato-fav" key={e.id}>
                 <img src={e.image} alt={e.title} />
                 <div className="zapato-datos-fav">
@@ -47,7 +44,8 @@ export default function UserFavs() {
                   <br />
                   <div className="botonera">
                     <button className="comprar">¡Agregar al Carrito!</button>
-                    <button className="favs">Eliminar producto</button>
+                    <button className="favs" onClick={() => deleteOneFav(userId,e.id)}>Eliminar producto</button>
+                    
                   </div>
                 </div>
               </div>

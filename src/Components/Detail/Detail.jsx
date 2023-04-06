@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getDetail, addQty, addSize, addToCart } from "../../Redux/Actions";
+import {
+  getDetail,
+  addQty,
+  addSize,
+  addToCart,
+  addFav,
+} from "../../Redux/Actions";
+import swal from "sweetalert";
 
 export default function Detail() {
   const { prodId } = useParams();
@@ -19,12 +26,11 @@ export default function Detail() {
     dispatch(getDetail(prodId));
   }, [dispatch, prodId]);
 
-useEffect(()=>{
-  dispatch(addSize())
-},[dispatch])
+  useEffect(() => {
+    dispatch(addSize());
+  }, [dispatch]);
 
   const prod = useSelector((state) => state.detail);
-
 
   const marca = prod.MarcaProducts
     ? prod.MarcaProducts.filter((m) => m && m.name)
@@ -32,21 +38,21 @@ useEffect(()=>{
         .toString()
     : "Zapatillas";
 
-    const stock = Number(prod.stock);
+  const stock = Number(prod.stock);
 
-    const valores = [];
+  const valores = [];
 
-    for (let i = 1; i <= stock; i++) {
-      valores.push(i);
-    }
+  for (let i = 1; i <= stock; i++) {
+    valores.push(i);
+  }
 
   const talle = prod.TalleProducts
     ? prod.TalleProducts.filter((m) => m && m.talle)
-    .map((m) => m.talle)
-    .toString()
+        .map((m) => m.talle)
+        .toString()
     : "talle";
 
-    const nuevoTalle = talle.split(",").map(numero => parseInt(numero));
+  const nuevoTalle = talle.split(",").map((numero) => parseInt(numero));
   const handleMouseOver = () => {
     setIsHovering(true);
   };
@@ -68,9 +74,8 @@ useEffect(()=>{
     setMousePosition({ x, y });
   };
 
-  const selectedSize = useSelector((state) => state.selectedSize)
-  const selectedQty = useSelector((state) => state.selectedQty)
-
+  const selectedSize = useSelector((state) => state.selectedSize);
+  const selectedQty = useSelector((state) => state.selectedQty);
 
   const item = {
     id: prod.id,
@@ -80,24 +85,88 @@ useEffect(()=>{
     price: prod.price,
     marca: marca,
     size: selectedSize,
-    qty:selectedQty
-  }
-console.log("este es el console.log de item",item);
-
-const handleSizeSelect = (e) => {
-  dispatch(addSize(e.target.value));
-};
-const handleQtySelect = (e) => {
-  dispatch(addQty(e.target.value));
-};
-
-const handleAddToCart = () => {
-  const newItem = {
-    ...item,
-    description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
+    qty: selectedQty,
   };
-  dispatch(addToCart(newItem));
-};
+  console.log("este es el console.log de item", item);
+
+  const handleSizeSelect = (e) => {
+    dispatch(addSize(e.target.value));
+  };
+  const handleQtySelect = (e) => {
+    dispatch(addQty(e.target.value));
+  };
+
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const handleAddToCart = () => {
+    if (!token) {
+      swal("Error", "Logueate para continuar!", "error");
+      return navigate("/login");
+    }
+    if (!selectedSize || !selectedQty) {
+      swal(
+        "Error",
+        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
+        "error"
+      );
+      navigate("/product/:prodId");
+      return;
+    }
+    const newItem = {
+      ...item,
+      description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
+    };
+
+    dispatch(addToCart(newItem));
+    swal("Excelente!", "Producto agregado al carrito!", "success");
+  };
+
+
+  // favoritos //
+
+  const itemFav = {
+    id: prod.id,
+    code: prod.code,
+    title: prod.title,
+    image: prod.image,
+    price: prod.price,
+    marca: marca,
+    size: selectedSize,
+    qty: selectedQty,
+  };
+
+  const handleAddFav = () => {
+    if (!token) {
+      swal("Error", "Logueate para continuar!", "error");
+      return navigate("/login");
+    }
+    if (!selectedSize || !selectedQty) {
+      swal(
+        "Error",
+        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
+        "error"
+      );
+      navigate("/product/:prodId");
+      return;
+    }
+    const newItemFav = {
+      ...itemFav,
+      description: `${itemFav.title}-${itemFav.id} ${itemFav.code}- ${itemFav.marca}- ${itemFav.image}- ${itemFav.price} - ${itemFav.size} - ${itemFav.qty}`,
+    };
+
+    dispatch(addFav(newItemFav));
+    swal("Excelente!", "Producto agregado a favoritos!", "success");
+  };
+
+
+    // favoritos //
+
+
+    
+
+  const loginUser = useSelector((state) => state.loginUser);
+  console.log("credenciales", loginUser);
 
   return (
     <div className="detail">
@@ -120,38 +189,43 @@ const handleAddToCart = () => {
         <h2>{prod.title}</h2>
         <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">
-    <div className="cantidades">
-      <h5>Cantidad</h5>
-      <select defaultValue="Cantidad" onChange={handleQtySelect}>
-      <option disabled value="Cantidad">
-      Cantidad
-      </option>
-        {valores?.map((s) => (
-          <option value={s} key={s}>
-            {s}
-          </option>
-        ))}
-      </select>
-    </div>
-    <h5>TALLES</h5>
-    <select defaultValue="Seleccione un talle" onChange={handleSizeSelect}>
-      <option disabled value="Seleccione un talle">
-        Seleccione un talle
-      </option>
-      {nuevoTalle?.map((talle) => (
-        <option key={talle} value={talle}>
-          {talle}
-        </option>
-      ))}
-    </select>
-    <button className="comprar" onClick={handleAddToCart}>¡Agregar al Carrito!</button>
-    <button className="favs"> ❤️ Agregar a favoritos</button>
-  </div>
+          <div className="cantidades">
+            <h5>Cantidad</h5>
+            <select defaultValue="Cantidad" onChange={handleQtySelect}>
+              <option disabled value="Cantidad">
+                Cantidad
+              </option>
+              {valores?.map((s) => (
+                <option value={s} key={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </div>
+          <h5>TALLES</h5>
+          <select
+            defaultValue="Seleccione un talle"
+            onChange={handleSizeSelect}
+          >
+            <option disabled value="Seleccione un talle">
+              Seleccione un talle
+            </option>
+            {nuevoTalle?.map((talle) => (
+              <option key={talle} value={talle}>
+                {talle}
+              </option>
+            ))}
+          </select>
+          <button className="comprar" onClick={handleAddToCart}>
+            ¡Agregar al Carrito!
+          </button>
+          <button className="favs" onClick={handleAddFav}> ❤️ Agregar a favoritos</button>
+        </div>
+      </div>
       <div className="description">
         <h5>DETALLES DEL PRODUCTO</h5>
         <p>{prod.description}</p>
       </div>
-    </div>
     </div>
   );
 }

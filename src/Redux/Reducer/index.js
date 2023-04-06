@@ -17,6 +17,7 @@ import {
   ADD_QUANTITY,
   ADD_SIZE,
   ADD_TO_CART,
+  ADD_FAV,
   POST_INGRESO,
   BORRAR_TOKEN,
   //   SET_USUARIO,
@@ -25,6 +26,7 @@ import {
   //   GET_USUARIOS,
   //   GET_PRODUCT,
 } from "../Actions/actions";
+
 
 const initialState = {
   products: [],
@@ -47,8 +49,22 @@ const initialState = {
   selectedPriceRange: { minPrice: 0, maxPrice: 0 },
   selectedSize: [],
   selectedQty: [],
-  item:[]
+  item:[],
+  itemFav: [],
 };
+
+
+const storedUser = localStorage.getItem("loginUser");
+const storedToken = localStorage.getItem("token");
+
+const userFromStorage = storedUser
+  ? JSON.parse(storedUser)
+  : initialState.loginUser;
+const tokenFromStorage = storedToken ? storedToken : "";
+
+initialState.loginUser = userFromStorage;
+initialState.loginUser.token = tokenFromStorage;
+
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -59,39 +75,60 @@ function rootReducer(state = initialState, action) {
         prodRender: action.payload,
       };
       case POST_INGRESO:
+        const userIngreso = action.payload;
+        localStorage.setItem("token", userIngreso.token);
+        localStorage.setItem("loginUser", JSON.stringify(userIngreso));
+        const expirationDateIngreso = new Date(new Date().getTime() + 3600 * 1000);
+        localStorage.setItem("expirationDate", expirationDateIngreso);
         return {
           ...state,
           loginUser: {
-            id: action.payload.id,
-            email: action.payload.email,
-            rol: action.payload.rol,
-            token: action.payload.token,
+              id: userIngreso.id,
+              email: userIngreso.email,
+              rol: userIngreso.rol,
+              state: userIngreso.state,
+              token: userIngreso.token,
           },
         };
   
       case POST_REGISTRO:
+        const userRegistro = action.payload;
+        localStorage.setItem("token", userRegistro.token);
+        localStorage.setItem("loginUser", JSON.stringify(userRegistro));
+        const expirationDateRegistro = new Date(new Date().getTime() + 3600 * 1000);
+        localStorage.setItem("expirationDate", expirationDateRegistro);
         return {
           ...state,
           loginUser: {
-            id: action.payload.id,
-            email: action.payload.email,
-            rol: action.payload.rol,
-            token: action.payload.token,
+              id: userRegistro.id,
+              email: userRegistro.email,
+              rol: userRegistro.rol,
+              state: userRegistro.state,
+              token: userRegistro.token,
           },
         };
   
-      case POST_GOOGLE:
-        return {
-          ...state,
-          loginUser: {
-            id: action.payload.id,
-            email: action.payload.email,
-            rol: action.payload.rol,
-            token: action.payload.token,
-          },
-        };
+        case POST_GOOGLE:
+          const user = action.payload;
+          localStorage.setItem("token", user.token);
+          localStorage.setItem("loginUser", JSON.stringify(user));
+          const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+          localStorage.setItem("expirationDate", expirationDate);
+          return {
+            ...state,
+            loginUser: {
+              id: user.id,
+              email: user.email,
+              rol: user.rol,
+              state: user.state,
+              token: user.token,
+            },
+          };
   
       case BORRAR_TOKEN:
+        localStorage.removeItem('token');
+        localStorage.removeItem("loginUser");
+        localStorage.removeItem("expirationDate");
         return {
           ...state,
           loginUser: {
@@ -219,7 +256,7 @@ function rootReducer(state = initialState, action) {
       let priceProd = state.prodRender;
       let nuevoPrecio = [];
       if (minPrice && maxPrice) {
-        priceProd && priceProd.filter((product) => {
+        priceProd && priceProd.filter((product)  => {
           if (
             Number(product.price) >= minPrice &&
             Number(product.price) <= maxPrice
@@ -255,6 +292,12 @@ function rootReducer(state = initialState, action) {
           return {
             ...state,
             item: [...state.item, action.payload],
+          };
+
+          case ADD_FAV:
+          return {
+            ...state,
+            itemFav: [...state.itemFav, action.payload],
           };
 
     default:

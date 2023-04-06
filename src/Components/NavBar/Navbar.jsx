@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
 import { useSelector, useDispatch } from "react-redux";
 import {borrarToken} from "../../Redux/Actions/index"
-
+import swal from 'sweetalert';
 
 
 
@@ -14,9 +14,11 @@ export default function Navbar() {
 
 const user = useSelector((state) => state.loginUser);
 const lcdtmab = useSelector((state) => state.item)
+const lcdtmabFav = useSelector((state) => state.itemFav)
 const dispatch = useDispatch();
 
 const eliminarLocalStore = () => {
+  swal("Hasta luego!", "Te esperamos cuando quieras!", "info");
   dispatch(borrarToken())
 }
 
@@ -32,7 +34,7 @@ const eliminarLocalStore = () => {
       {user && user.email ? (
         <div className="bienvenido">
            <p><b>BIENVENIDO!</b></p>
-          <p>{user.email}</p>
+          <NavLink to="/userpanel"><p>{user.email}</p></NavLink>
           <button className="cerrar-sesion" onClick={eliminarLocalStore}>cerrar sesión</button>
         </div>
       ) : (
@@ -40,8 +42,11 @@ const eliminarLocalStore = () => {
           Ingresa / <br /> Registrate <span>{">"}</span>
         </NavLink>
       )}
-      <NavLink to={"/"}>
+      <NavLink to={"/userpanel"}>
         <img src={corazon} alt="" />
+        {lcdtmabFav && lcdtmabFav.length > 0 && (
+          <span className="cant-carro">{lcdtmabFav.length}</span>
+        )}
       </NavLink>
       <NavLink to={"/cart"}>
         <img src={carro} alt="" />

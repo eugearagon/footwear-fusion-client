@@ -22,6 +22,7 @@ import {
   ADD_TO_CART,
   ADD_QUANTITY,
   ADD_SIZE,
+  ADD_FAV,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
@@ -324,9 +325,8 @@ export function addToCart(item, loginUserId) {
     } catch (error) {
       console.log(error);
     }
-  };
-  }
-
+}
+}
 
 export function addSize(payload) {
   return {
@@ -344,6 +344,10 @@ export function addQty(payload) {
 
 export const saveCartToLocalStorage = (cart) => {
   localStorage.setItem('cart', JSON.stringify(cart));
+};
+
+export const saveFavsToLocalStorage = (fav) => {
+  localStorage.setItem('zapato-fav', JSON.stringify(fav));
 };
 
 

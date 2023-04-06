@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getDetail, addQty, addSize, addToCart } from "../../Redux/Actions";
-import swal from 'sweetalert';
 
 export default function Detail() {
   const { prodId } = useParams();
@@ -22,12 +21,12 @@ export default function Detail() {
     dispatch(getDetail(prodId));
   }, [dispatch, prodId]);
 
-  useEffect(() => {
-    dispatch(addSize())
-  }, [dispatch])
+useEffect(()=>{
+  dispatch(addSize())
+},[dispatch])
 
   const prod = useSelector((state) => state.detail);
-
+  
 
 
   const marca = prod.MarcaProducts
@@ -46,11 +45,11 @@ export default function Detail() {
 
   const talle = prod.TalleProducts
     ? prod.TalleProducts.filter((m) => m && m.talle)
-      .map((m) => m.talle)
-      .toString()
+    .map((m) => m.talle)
+    .toString()
     : "talle";
 
-  const nuevoTalle = talle.split(",").map(numero => parseInt(numero));
+    const nuevoTalle = talle.split(",").map(numero => parseInt(numero));
   const handleMouseOver = () => {
     setIsHovering(true);
   };
@@ -72,9 +71,8 @@ export default function Detail() {
     setMousePosition({ x, y });
   };
 
-  const selectedSize = useSelector((state) => state.selectedSize)
-  const selectedQty = useSelector((state) => state.selectedQty)
-
+  const selectedSize = useSelector((state) => state.selectedSize);
+  const selectedQty = useSelector((state) => state.selectedQty);
 
   const item = {
     id: prod.id,
@@ -84,10 +82,9 @@ export default function Detail() {
     price: prod.price,
     marca: marca,
     size: selectedSize,
-    qty: selectedQty,
-    // color: color
+    qty:selectedQty
   }
-  console.log("este es el console.log de item", item);
+console.log("este es el console.log de item",item);
 
   const handleSizeSelect = (e) => {
     dispatch(addSize(e.target.value));
@@ -96,28 +93,26 @@ export default function Detail() {
     dispatch(addQty(e.target.value));
   };
 
-  const navigate = useNavigate()
+const navigate = useNavigate()
   const token = localStorage.getItem("token")
 
 
 
   const handleAddToCart = () => {
-    if (!token) return navigate("/login");
-    swal("Error", "Logueate para continuar!", "error");
+    if (!token) navigate("/login");
     if (!selectedSize || !selectedQty) {
-      swal("Error", "Para agregar este producto al carrito debe seleccionar un talle y la cantidad", "error");
+      alert("Para agregar este producto al carrito debe seleccionar un talle y la cantidad");
       return;
     }
     const newItem = {
       ...item,
       description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
     };
-    dispatch(addToCart(newItem, loginUserId));
-    swal("Excelente!", "Producto agregado al carrito!", "success");
+    dispatch(addToCart(newItem));
   };
 
-  const loginUser = useSelector(state => state.loginUser)
-  console.log("credenciales", loginUser)
+const loginUser= useSelector(state => state.loginUser)
+console.log("credenciales", loginUser)
 
   return (
     <div className="detail">
@@ -139,38 +134,38 @@ export default function Detail() {
         <h2>{prod.title}</h2>
         <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">
-          <div className="cantidades">
-            <h5>Cantidad</h5>
-            <select defaultValue="Cantidad" onChange={handleQtySelect}>
-              <option disabled value="Cantidad">
-                Cantidad
-              </option>
-              {valores?.map((s) => (
-                <option value={s} key={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
-          </div>
-          <h5>TALLES</h5>
-          <select defaultValue="Seleccione un talle" onChange={handleSizeSelect}>
-            <option disabled value="Seleccione un talle">
-              Seleccione un talle
-            </option>
-            {nuevoTalle?.map((talle) => (
-              <option key={talle} value={talle}>
-                {talle}
-              </option>
-            ))}
-          </select>
-          <button className="comprar" onClick={handleAddToCart}>¡Agregar al Carrito!</button>
-          <button className="favs"> ❤️ Agregar a favoritos</button>
-        </div>
-        <div className="description">
-          <h5>DETALLES DEL PRODUCTO</h5>
-          <p>{prod.description}</p>
-        </div>
+    <div className="cantidades">
+      <h5>Cantidad</h5>
+      <select defaultValue="Cantidad" onChange={handleQtySelect}>
+      <option disabled value="Cantidad">
+      Cantidad
+      </option>
+        {valores?.map((s) => (
+          <option value={s} key={s}>
+            {s}
+          </option>
+        ))}
+      </select>
+    </div>
+    <h5>TALLES</h5>
+    <select defaultValue="Seleccione un talle" onChange={handleSizeSelect}>
+      <option disabled value="Seleccione un talle">
+        Seleccione un talle
+      </option>
+      {nuevoTalle?.map((talle) => (
+        <option key={talle} value={talle}>
+          {talle}
+        </option>
+      ))}
+    </select>
+    <button className="comprar" onClick={handleAddToCart}>¡Agregar al Carrito!</button>
+    <button className="favs"> ❤️ Agregar a favoritos</button>
+  </div>
+      <div className="description">
+        <h5>DETALLES DEL PRODUCTO</h5>
+        <p>{prod.description}</p>
       </div>
+    </div>
     </div>
   );
 }

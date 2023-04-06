@@ -14,13 +14,18 @@ export default function Searchbar() {
     e.preventDefault();
     dispatch(getProductsByName(name.toLowerCase().trim())); //lo pasamos a minusculas y elminiamos los espacios en blanco
     }
-
+    function handleKeyDown(e) {
+      if (e.keyCode === 13) {
+        handleSubmit(e);
+      }
+    }
 
   return (
     <div className="searchbar">
       <input
         value={name}
         onChange={(e) => handleInputChange(e)}
+        onKeyDown={handleKeyDown}
         type="text"
         placeholder="Buscá tus zapas!"
       />

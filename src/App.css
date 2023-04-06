@@ -13,7 +13,8 @@ li::selection,
 label::selection,
 input::selection,
 a::selection,
-strong::selection {
+strong::selection,
+small::selection {
   background-color: #17e1e7;
   color: #001e40;
 }
@@ -83,6 +84,12 @@ li {
   list-style: none;
 }
 
+select{
+  padding: 5px 10px;
+  background-color: #f5f5f5;
+  font-size: 8pt;
+}
+
 .App {
   text-align: center;
 }
@@ -109,7 +116,6 @@ li {
 }
 
 /* register landing */
-
 
 .register-landing {
   display: flex;
@@ -143,7 +149,7 @@ li {
   text-align: center;
 }
 
-.form-lab{
+.form-lab {
   display: flex;
   justify-content: space-around;
   flex-wrap: nowrap;
@@ -155,7 +161,7 @@ li {
   padding: 5px 20px !important;
 }
 
-.register-landing button{
+.register-landing button {
   padding: 10px 0;
 }
 
@@ -164,30 +170,28 @@ li {
   padding: 30px 0;
 }
 
-
 .register-landing a {
   color: aliceblue;
 }
 
-.log-admin{
+.log-admin {
   display: flex;
   justify-content: center;
   gap: 10px;
-
 }
 
-.error{
+.error {
   font-weight: 900;
   color: #c82c2c;
   background-color: #d9d9d9;
   padding: 10px 20px;
 }
 
-.google-btn{
+.google-btn {
   background: none;
 }
 
-.ya-estas{
+.ya-estas {
   font-size: 12pt;
 }
 
@@ -271,14 +275,18 @@ li {
   padding: 6px;
 }
 
-.bienvenido{
+.bienvenido, .bienvenido a {
   color: #fff;
 }
-.bienvenido p{
+.bienvenido p {
   margin: 0;
 }
 
-.cant-carro{
+.bienvenido a:hover{
+ opacity: 0.8;
+}
+
+.cant-carro {
   color: #fff;
   background-color: #c82c2c;
   font-size: 6pt;
@@ -289,10 +297,9 @@ li {
 }
 /* navbar */
 
-
 /* categorias */
 
-.categorias{
+.categorias {
   margin: 0 auto;
   display: flex;
   color: #001e40;
@@ -302,10 +309,9 @@ li {
   justify-content: space-between;
   align-items: center;
   border-bottom: #d9d9d9 1px solid;
- 
 }
 
-.cat-ul{
+.cat-ul {
   margin: 0 auto;
   display: flex;
   width: 60vw;
@@ -314,16 +320,16 @@ li {
   align-items: center;
 }
 
-.categorias button{
-  font-size:9pt;
+.categorias button {
+  font-size: 9pt;
   padding: 15px 35px;
-  color:#001e40;
+  color: #001e40;
   background: none;
 }
 
-.categorias button:hover{
+.categorias button:hover {
   opacity: 1;
-  background-color:#17e1e7;
+  background-color: #17e1e7;
   color: #001e40 !important;
 }
 
@@ -580,9 +586,9 @@ li {
   font-size: 10pt;
 }
 
-.comprar button{
+.comprar button {
   background: none;
-  
+
   color: #d9d9d9;
 }
 .favs {
@@ -599,13 +605,13 @@ li {
   margin-top: 10px;
 }
 
-.cantidades{
+.cantidades {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.cantidades h5{
+.cantidades h5 {
   font-size: 11pt;
 }
 /* detail */
@@ -647,13 +653,17 @@ li {
   color: #d9d9d9 !important;
 }
 
-.dark-mode .cart button{
+.dark-mode .cart button {
   background-color: #17e1e7;
   color: #0e2b4d;
 }
 
-.dark-mode .categorias button{
+.dark-mode .categorias button {
   color: #17e1e7;
+}
+
+.dark-mode .user-menu{
+  color: #fff !important;
 }
 
 /* DARK MODE */
@@ -684,7 +694,7 @@ li {
   align-items: center;
 }
 .cart-header,
-.zapato {
+.zapato, .zapato-fav {
   display: flex;
   align-items: center;
   text-align: left;
@@ -709,7 +719,7 @@ li {
   padding: 10px 100px;
 }
 
-.zapato img {
+.zapato img, .zapato-fav img {
   width: 123px;
   height: auto;
 }
@@ -748,7 +758,6 @@ li {
 .cart-footer,
 .ahora-si {
   display: flex;
-  
 }
 
 .ahora-si {
@@ -756,15 +765,16 @@ li {
   gap: 10px;
   text-align: left;
 }
-.ahora-si h1{
+.ahora-si h1 {
   font-weight: 300;
   font-size: 20pt;
 }
 
-.ahora-si span{
+.ahora-si span {
   font-size: 8pt;
 }
-.eliminar, .cerrar-sesion{
+.eliminar,
+.cerrar-sesion {
   background: none !important;
   color: #646464 !important;
   text-align: left;
@@ -773,45 +783,140 @@ li {
 
 /* CARRITO DE COMPRAS */
 
-
 /*  ----   ADMIN   ---- */
 
 .login-admin {
   color: #d9d9d9 !important;
-    background-image: url("./Components/images/bg-admin.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    text-align: center;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    align-items: center;
-  }
+  background-image: url("./Components/images/bg-admin.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  align-items: center;
+}
 
-  .login-admin h1{
-    font-weight: 300;
-    margin: 40px 0;
-  }
+.login-admin h1 {
+  font-weight: 300;
+  margin: 40px 0;
+}
 
-  .img-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -1;
-  }
+.img-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+}
 
-.form-admin{
+.form-admin {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
 /*  ----   ADMIN   ---- */
+
+.swal-overlay {
+  background-color: #001e40cc !important;
+}
+
+.swal-text {
+  text-align: center !important;
+
+  padding: 0 85px !important;
+}
+
+
+/*  ----   panel de usuario   ---- */
+
+.user-panel{
+  border:#a2a2a2 1px solid ;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.user-menu{
+  font-size: 9pt;
+  color: #001e40 !important;
+  font-weight: 900;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  border-bottom:#a2a2a2 1px solid ;
+}
+
+.user-menu li{
+  padding: 30px 10px;
+  width: 33%;
+  
+}
+
+.user-menu li:hover, .user-active{
+  color: #ffffff;
+  background-color: #001e40;
+}
+
+
+.user-content{
+  display: flex;
+  flex-direction: row;
+  /* width: 80%; */
+  align-items: flex-start;
+  padding: 50px;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.user-data{
+  display: flex;
+  line-height: 13pt;
+  flex-direction: row;
+  text-align: left;
+  margin: 0 50px;
+  align-items: flex-start;
+}
+
+.user-data h6{
+  margin: 0;
+}
+
+.data-list{
+  margin: 0 50px;
+}
+
+.zapato-fav{
+  width: 100% !important;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 70px;
+}
+
+.botonera{
+  display: flex;
+  flex-direction: column;
+}
+
+.botonera button{
+  padding: 5px 20px;
+  margin: 5px 0;
+}
+
+.selecciones select{
+  margin: 0 10px;
+}
+
+/*  ----   panel de usuario   ---- */

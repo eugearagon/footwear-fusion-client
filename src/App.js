@@ -30,6 +30,7 @@ function App() {
   useEffect(() => {
     if (token && new Date(expirationDate) <= new Date()) {
       localStorage.removeItem('token');
+      localStorage.removeItem("loginUser");
       localStorage.removeItem('expirationDate');
       navigate('/login');
       alert('Credenciales expiradas. Por favor, inicie sesión de nuevo.');

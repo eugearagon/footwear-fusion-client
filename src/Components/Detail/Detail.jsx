@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getDetail, addQty, addSize, addToCart } from "../../Redux/Actions";
-import swal from 'sweetalert';
-
+import {
+  getDetail,
+  addQty,
+  addSize,
+  addToCart,
+  addFav,
+} from "../../Redux/Actions";
+import swal from "sweetalert";
 
 export default function Detail() {
   const { prodId } = useParams();
@@ -91,29 +96,74 @@ export default function Detail() {
     dispatch(addQty(e.target.value));
   };
 
-const navigate = useNavigate()
-  const token = localStorage.getItem("token")
-
-
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   const handleAddToCart = () => {
     if (!token) {
       swal("Error", "Logueate para continuar!", "error");
-      return navigate("/login")
-    };
+      return navigate("/login");
+    }
     if (!selectedSize || !selectedQty) {
-      swal("Error", "Para agregar este producto al carrito debe seleccionar un talle y la cantidad", "error");
-      navigate("/product/:prodId")
+      swal(
+        "Error",
+        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
+        "error"
+      );
+      navigate("/product/:prodId");
       return;
     }
     const newItem = {
       ...item,
       description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
     };
-   
+
     dispatch(addToCart(newItem));
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };
+
+
+  // favoritos //
+
+  const itemFav = {
+    id: prod.id,
+    code: prod.code,
+    title: prod.title,
+    image: prod.image,
+    price: prod.price,
+    marca: marca,
+    size: selectedSize,
+    qty: selectedQty,
+  };
+
+  const handleAddFav = () => {
+    if (!token) {
+      swal("Error", "Logueate para continuar!", "error");
+      return navigate("/login");
+    }
+    if (!selectedSize || !selectedQty) {
+      swal(
+        "Error",
+        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
+        "error"
+      );
+      navigate("/product/:prodId");
+      return;
+    }
+    const newItemFav = {
+      ...itemFav,
+      description: `${itemFav.title}-${itemFav.id} ${itemFav.code}- ${itemFav.marca}- ${itemFav.image}- ${itemFav.price} - ${itemFav.size} - ${itemFav.qty}`,
+    };
+
+    dispatch(addFav(newItemFav));
+    swal("Excelente!", "Producto agregado a favoritos!", "success");
+  };
+
+
+    // favoritos //
+
+
+    
 
   const loginUser = useSelector((state) => state.loginUser);
   console.log("credenciales", loginUser);
@@ -169,14 +219,13 @@ const navigate = useNavigate()
           <button className="comprar" onClick={handleAddToCart}>
             ¡Agregar al Carrito!
           </button>
-          <button className="favs"> ❤️ Agregar a favoritos</button>
+          <button className="favs" onClick={handleAddFav}> ❤️ Agregar a favoritos</button>
         </div>
-       
       </div>
       <div className="description">
-          <h5>DETALLES DEL PRODUCTO</h5>
-          <p>{prod.description}</p>
-        </div>
+        <h5>DETALLES DEL PRODUCTO</h5>
+        <p>{prod.description}</p>
+      </div>
     </div>
   );
 }

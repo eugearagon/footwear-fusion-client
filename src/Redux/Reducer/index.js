@@ -17,6 +17,7 @@ import {
   ADD_QUANTITY,
   ADD_SIZE,
   ADD_TO_CART,
+  ADD_FAV,
   POST_INGRESO,
   BORRAR_TOKEN,
   //   SET_USUARIO,
@@ -49,6 +50,7 @@ const initialState = {
   selectedSize: [],
   selectedQty: [],
   item:[],
+  itemFav: [],
 };
 
 
@@ -290,6 +292,12 @@ function rootReducer(state = initialState, action) {
           return {
             ...state,
             item: [...state.item, action.payload],
+          };
+
+          case ADD_FAV:
+          return {
+            ...state,
+            itemFav: [...state.itemFav, action.payload],
           };
 
     default:

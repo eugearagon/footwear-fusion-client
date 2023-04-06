@@ -14,6 +14,7 @@ export default function Navbar() {
 
 const user = useSelector((state) => state.loginUser);
 const lcdtmab = useSelector((state) => state.item)
+const lcdtmabFav = useSelector((state) => state.itemFav)
 const dispatch = useDispatch();
 
 const eliminarLocalStore = () => {
@@ -43,6 +44,9 @@ const eliminarLocalStore = () => {
       )}
       <NavLink to={"/userpanel"}>
         <img src={corazon} alt="" />
+        {lcdtmabFav && lcdtmabFav.length > 0 && (
+          <span className="cant-carro">{lcdtmabFav.length}</span>
+        )}
       </NavLink>
       <NavLink to={"/cart"}>
         <img src={carro} alt="" />

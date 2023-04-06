@@ -44,7 +44,7 @@ export default function Register() {
         setError("correo invalido")
       }
       if(error.code === "auth/weak-password"){
-        setError("contraseña incorrecta")
+        setError("la contraseña debe contener 6 caracteres")
       }
       if(error.code === "auth/email-already-in-use"){
         setError("este correo ya se encuentra registrado")

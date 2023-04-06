@@ -12,6 +12,7 @@ import Detail from "./Components/Detail/Detail";
 import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
+import UserPanel from "./Components/UserPanel/UserPanel";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
 
@@ -23,9 +24,9 @@ function App() {
     setDarkMode(!darkMode);
   }
 
-  const navigate = useNavigate()
-  const token = localStorage.getItem("token")
-  const expirationDate = localStorage.getItem('expirationDate');
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const expirationDate = localStorage.getItem("expirationDate");
 
   useEffect(() => {
     if (token && new Date(expirationDate) <= new Date()) {
@@ -41,13 +42,14 @@ function App() {
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
-      {location.pathname !== "/login" && location.pathname !== "/login-admin"  && location.pathname !== "/register" && (
-        <>
-          <Navbar />
-          <Categories />
-         
-        </>
-      )}
+      {location.pathname !== "/login" &&
+        location.pathname !== "/login-admin" &&
+        location.pathname !== "/register" && (
+          <>
+            <Navbar />
+            <Categories />
+          </>
+        )}
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -56,18 +58,20 @@ function App() {
           <Route path="/login-admin" element={<LoginAdmin />} />
           <Route path="/product/:prodId" element={<Detail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/userpanel" element={<UserPanel />} />
         </Routes>
-        {location.pathname !== "/login" && location.pathname !== "/login-admin"  && location.pathname !== "/register" && (
-        <>
-          <DarkMode toggleDarkMode={toggleDarkMode} />
-          <Whatsapp />
-          <Footer />
-        </>
-      )}
+        {location.pathname !== "/login" &&
+          location.pathname !== "/login-admin" &&
+          location.pathname !== "/register" && (
+            <>
+              <DarkMode toggleDarkMode={toggleDarkMode} />
+              <Whatsapp />
+              <Footer />
+            </>
+          )}
       </AuthProvider>
     </div>
   );
-  
 
   // return (
   //   <div className={`App ${darkMode ? "dark-mode" : ""}`}>

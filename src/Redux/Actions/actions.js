@@ -22,7 +22,7 @@ export const GET_NEWSLETTER="GET_NEWSLETTER";
 export const ADD_QUANTITY="ADD_QUANTITY";
 export const ADD_SIZE="ADD SIZE";
 export const ADD_TO_CART="ADD_TO_CART";
-export const POST_USERS_FAVORITES="POST_USERS_FAVORITES";
+//accion Favoritos
 export const GET_USERS_FAVORITES="GET_USERS_FAVORITES";
 export const ADD_FAV="ADD_FAV";
 //acciones del carrito

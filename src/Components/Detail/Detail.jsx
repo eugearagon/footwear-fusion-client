@@ -76,6 +76,7 @@ export default function Detail() {
 
   const selectedSize = useSelector((state) => state.selectedSize);
   const selectedQty = useSelector((state) => state.selectedQty);
+  const userId = useSelector((state) => state.loginUser.id)
 
   const item = {
     id: prod.id,
@@ -110,9 +111,9 @@ export default function Detail() {
         "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
         "error"
       );
-      navigate("/product/:prodId");
-      return;
+      return navigate("/product/:prodId");
     }
+
     const newItem = {
       ...item,
       description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
@@ -125,16 +126,16 @@ export default function Detail() {
 
   // favoritos //
 
-  const itemFav = {
-    id: prod.id,
-    code: prod.code,
-    title: prod.title,
-    image: prod.image,
-    price: prod.price,
-    marca: marca,
-    size: selectedSize,
-    qty: selectedQty,
-  };
+  // const itemFav = {
+  //   id: prod.id,
+  //   code: prod.code,
+  //   title: prod.title,
+  //   image: prod.image,
+  //   price: prod.price,
+  //   marca: marca,
+  //   size: selectedSize,
+  //   qty: selectedQty,
+  // };
 
   const handleAddFav = () => {
     if (!token) {
@@ -150,23 +151,22 @@ export default function Detail() {
       navigate("/product/:prodId");
       return;
     }
-    const newItemFav = {
-      ...itemFav,
-      description: `${itemFav.title}-${itemFav.id} ${itemFav.code}- ${itemFav.marca}- ${itemFav.image}- ${itemFav.price} - ${itemFav.size} - ${itemFav.qty}`,
-    };
+    // const newItemFav = {
+    //   ...itemFav,
+    //   description: `${itemFav.title}-${itemFav.id} ${itemFav.code}- ${itemFav.marca}- ${itemFav.image}- ${itemFav.price} - ${itemFav.size} - ${itemFav.qty}`,
+    // };
 
-    dispatch(addFav(newItemFav));
+    dispatch(addFav(userId,prodId));
     swal("Excelente!", "Producto agregado a favoritos!", "success");
   };
-
 
     // favoritos //
 
 
     
 
-  const loginUser = useSelector((state) => state.loginUser);
-  console.log("credenciales", loginUser);
+  // const loginUser = useSelector((state) => state.loginUser);
+  // console.log("credenciales", loginUser);
 
   return (
     <div className="detail">

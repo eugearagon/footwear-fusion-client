@@ -16,10 +16,15 @@ import UserPanel from "./Components/UserPanel/UserPanel";
 import UserFavs from "./Components/UserPanel/UserFavs";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
+import { useDispatch, useSelector } from "react-redux";
+import { getFav } from "./Redux/Actions";
 
 function App() {
   const location = useLocation();
   const [darkMode, setDarkMode] = useState(false);
+  const dispatch = useDispatch()
+  const userId = useSelector((state) => state.loginUser.id)
+  const itemFav = useSelector((state) => state.itemFav);
 
   function toggleDarkMode() {
     setDarkMode(!darkMode);
@@ -39,6 +44,17 @@ function App() {
     }
   }, [token, expirationDate, navigate]);
 
+   
+    useEffect(()=>{
+      const favoritos = async () =>{
+        try {
+          await dispatch(getFav(userId))
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+      favoritos()
+    },[userId, dispatch])
   
 
   return (

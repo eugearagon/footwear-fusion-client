@@ -1,10 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import fav from "../images/cora.png";
+import { useEffect } from "react";
+import { getFav } from "../../Redux/Actions";
 
 
 export default function UserFavs() {
-    const itemFav = useSelector((state) => state.itemFav);
 
+    // const dispatch = useDispatch()
+    // const userId = useSelector((state) => state.loginUser.id)
+
+    // useEffect(()=>{
+    //   const favoritos = async () =>{
+    //     await dispatch(getFav(userId))
+    //   }
+    //   favoritos()
+    // },[userId, dispatch])
+
+    const itemFav = useSelector((state) => state.itemFav);
+    console.log("itemFav", itemFav);
   return (
     <div className="user-content">
       <div className="user-data">
@@ -15,7 +28,7 @@ export default function UserFavs() {
         
         {itemFav && itemFav.length > 0 ? (
             itemFav.map((e) => (
-                <div className="zapato-fav" key={e.code}>
+                <div className="zapato-fav" key={e.id}>
                 <img src={e.image} alt={e.title} />
                 <div className="zapato-datos-fav">
                   <p>
@@ -23,13 +36,13 @@ export default function UserFavs() {
                     <br />
                     {e.title}
                   </p>
-                  <small>Código del artículo: {e.code}</small>
+                  {/* <small>Código del artículo: {e.code}</small> */}
                   <p>Precio ${e.price.toLocaleString("de-De")}</p>
                 </div>
                 <div>
                   <div className="selecciones">
-                   <p>Cantidad: {e.qty}</p>
-                   <p>Talle: {e.qty}</p>
+                   {/* <p>Cantidad: {e.qty}</p>
+                   <p>Talle: {e.qty}</p> */}
                   </div>
                   <br />
                   <div className="botonera">

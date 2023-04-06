@@ -80,22 +80,22 @@ export function getCategory() {
     try {
       var category = await axios.get("http://localhost:3001/filter/category");
       return dispatch({
-        type : GET_CATEGORY,
+        type: GET_CATEGORY,
         payload: category.data,
       });
-      
+
     } catch (error) {
       console.log("no se encontraron categorias");
     }
   };
-} 
+}
 
 export function getSize() {
   return async function (dispatch) {
     try {
       var size = await axios.get("http://localhost:3001/filter/talle");
       return dispatch({
-        type : GET_SIZE,
+        type: GET_SIZE,
         payload: size.data,
       });
     } catch (error) {
@@ -109,7 +109,7 @@ export function getBrand() {
     try {
       var brand = await axios.get("http://localhost:3001/filter/marca");
       return dispatch({
-        type : GET_BRAND,
+        type: GET_BRAND,
         payload: brand.data,
       });
     } catch (error) {
@@ -123,7 +123,7 @@ export function getColor() {
     try {
       var color = await axios.get("http://localhost:3001/filter/color");
       return dispatch({
-        type : GET_COLOR,
+        type: GET_COLOR,
         payload: color.data,
       });
     } catch (error) {
@@ -137,7 +137,7 @@ export function getPrice() {
     try {
       var price = await axios.get("http://localhost:3001/precios");
       return dispatch({
-        type : GET_PRICE,
+        type: GET_PRICE,
         payload: price.data,
       });
     } catch (error) {
@@ -190,7 +190,7 @@ export const ingreso = (email) => {
       });
       return usuario;
     } catch (error) {
-      
+
     }
   };
 };
@@ -214,7 +214,7 @@ export const registros = (email) => {
       });
       return usuario;
     } catch (error) {
-     
+
     }
   };
 };
@@ -238,7 +238,7 @@ export const loginUserGoogle = (email) => {
       });
       return usuario;
     } catch (error) {
-      
+
     }
   };
 };
@@ -267,22 +267,22 @@ export function filterBySize(payload) {
     payload,
   };
 }
-  
+
 export function filterByCategory(payload) {
-    return {
-      type: FILTER_BY_CATEGORY,
-      payload: payload.toLowerCase(),
-    };
-  }
+  return {
+    type: FILTER_BY_CATEGORY,
+    payload: payload.toLowerCase(),
+  };
+}
 
 export function filterByBrand(brand) {
-    return async (dispatch) => {
-      dispatch({
-        type: FILTER_BY_BRAND,
-        payload: brand,
-      });
-    };
-  }
+  return async (dispatch) => {
+    dispatch({
+      type: FILTER_BY_BRAND,
+      payload: brand,
+    });
+  };
+}
 
 export function filterByColor(payload) {
   return {
@@ -299,29 +299,44 @@ export function orderByBestSelling(payload) {
 }
 
 export function priceRangeSelector(payload) {
-  
+
   return {
     type: PRICE_RANGE_SELECTOR,
     payload,
   };
 
 }
-  export function addToCart(item) {
-    return{
-      type: ADD_TO_CART,
-      payload: item
+export function addToCart(item, loginUserId) {
+  // console.log('actions', item);
+  // console.log('actions', loginUserId);
+  return async function (dispatch) {
+    console.log('actions', item);
+    console.log('actions', loginUserId);  
+    try {
+      var userCart = await axios.post(
+        `http://localhost:3001/cart/${loginUserId}`,
+        item
+      );
+      return dispatch({
+        type: ADD_TO_CART,
+        payload: item
+      });
+    } catch (error) {
+      console.log(error);
     }
-}
+  };
+  }
+
 
 export function addSize(payload) {
-  return{
-    type:ADD_SIZE,
+  return {
+    type: ADD_SIZE,
     payload
   }
 }
 
 export function addQty(payload) {
-  return{
+  return {
     type: ADD_QUANTITY,
     payload
   }

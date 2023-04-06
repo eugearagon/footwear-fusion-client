@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
 import promos from "../images/promos.jpg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { deleteItem } from "../../Redux/Actions"; 
 
 
 
 export default function Cart() {
   const item = useSelector((state) => state.item);
-
+  const dispatch = useDispatch();
 
   const totalPrice = item.reduce(
     (total, item) => total + item.price * item.qty,
@@ -52,7 +53,9 @@ export default function Cart() {
                   Cantidad <b>{e.qty}</b>
                 </p>
               </div>
-              <button className="eliminar"><small>eliminar</small></button>
+              <button className="eliminar">
+                    <small>eliminar</small>
+                  </button>
             </div>
             <div className="zapato-precio">
               <h2>Precio</h2>

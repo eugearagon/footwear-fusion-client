@@ -26,7 +26,9 @@ import {
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
-  POST_GOOGLE
+  POST_GOOGLE,
+  REMOVE_ITEM,
+  CHANGE_PRODUCT
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -341,6 +343,14 @@ export const saveCartToLocalStorage = (cart) => {
 export const saveFavsToLocalStorage = (fav) => {
   localStorage.setItem('zapato-fav', JSON.stringify(fav));
 };
+
+export const deleteItem = (prodId) => {
+  return {
+    type: REMOVE_ITEM,
+    payload:prodId,
+  };
+};
+
 
 
 

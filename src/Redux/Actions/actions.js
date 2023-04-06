@@ -26,9 +26,9 @@ export const POST_USERS_FAVORITES="POST_USERS_FAVORITES";
 export const GET_USERS_FAVORITES="GET_USERS_FAVORITES";
 export const ADD_FAV="ADD_FAV";
 //acciones del carrito
-export const CHANGE_PRODUCT="CHANGE_PRODUCT";
+export const CHANGE_ITEM="CHANGE_ITEM";
 export const BUY="BUY";
-export const DELETE_PRODUCT="DELETE_PRODUCT";
+export const REMOVE_ITEM="REMOVE_ITEM";
 //acciones del usuario
 export const LOG_IN="LOG_IN";
 export const GET_USERS="GET_USERS";

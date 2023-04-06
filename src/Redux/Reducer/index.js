@@ -20,11 +20,9 @@ import {
   ADD_FAV,
   POST_INGRESO,
   BORRAR_TOKEN,
-  //   SET_USUARIO,
   POST_REGISTRO,
   POST_GOOGLE,
-  //   GET_USUARIOS,
-  //   GET_PRODUCT,
+ REMOVE_ITEM
 } from "../Actions/actions";
 
 
@@ -294,11 +292,16 @@ function rootReducer(state = initialState, action) {
             item: [...state.item, action.payload],
           };
 
-          case ADD_FAV:
+   case ADD_FAV:
           return {
             ...state,
             itemFav: [...state.itemFav, action.payload],
           };
+
+   case REMOVE_ITEM:
+        return {
+       
+        };
 
     default:
       return state;

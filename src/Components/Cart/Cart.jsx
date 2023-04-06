@@ -2,14 +2,12 @@ import { NavLink } from "react-router-dom";
 import promos from "../images/promos.jpg";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { useEffect, useState } from "react";
+
 
 
 export default function Cart() {
   const item = useSelector((state) => state.item);
-  console.log("a ver este otro ", item);
-  
-  
+
 
   const totalPrice = item.reduce(
     (total, item) => total + item.price * item.qty,
@@ -17,7 +15,11 @@ export default function Cart() {
   );
 
   const mercadoPago = () => {
-    axios.post("http://localhost:3001/mp/create_preference", item)
+    const token = localStorage.getItem("token");
+        const headers = { 
+          'x-access-token': token,
+      };
+    axios.post("http://localhost:3001/mp/create_preference",item,{headers})
       .then((res) => (window.location.href = res.data.global.init_point))
       .catch((error) => console.log(error))
   }
@@ -44,7 +46,7 @@ export default function Cart() {
                 {e.title}
               </p>
               <span>Código del artículo: {e.code}</span>
-              <p>Talle: {e.size}</p>
+              <p>Talle: {e.qty}</p>
               <div className="sel-cant">
                 <p>
                   Cantidad <b>{e.qty}</b>

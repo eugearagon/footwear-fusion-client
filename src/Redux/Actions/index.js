@@ -22,6 +22,7 @@ import {
   ADD_TO_CART,
   ADD_QUANTITY,
   ADD_SIZE,
+  ADD_FAV,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
@@ -312,6 +313,12 @@ export function priceRangeSelector(payload) {
       payload: item
     }
 }
+  export function addFav(item) {
+    return{
+      type: ADD_FAV,
+      payload: item
+    }
+}
 
 export function addSize(payload) {
   return{
@@ -329,6 +336,10 @@ export function addQty(payload) {
 
 export const saveCartToLocalStorage = (cart) => {
   localStorage.setItem('cart', JSON.stringify(cart));
+};
+
+export const saveFavsToLocalStorage = (fav) => {
+  localStorage.setItem('zapato-fav', JSON.stringify(fav));
 };
 
 

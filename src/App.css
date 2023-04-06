@@ -667,6 +667,10 @@ select {
   color: #fff !important;
 }
 
+.dark-mode .zapato-fav{
+  color: #ffffff !important;
+}
+
 /* DARK MODE */
 
 /* whatsapp*/
@@ -923,6 +927,10 @@ select {
 
 .btn-fav {
   background: none;
+}
+
+.favs{
+  z-index: 9999999;
 }
 
 /*  ----   panel de usuario   ---- */

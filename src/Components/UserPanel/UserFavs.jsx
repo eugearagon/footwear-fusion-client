@@ -1,21 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import fav from "../images/cora.png";
-import { useEffect } from "react";
-import { getFav } from "../../Redux/Actions";
+import { deletFav } from "../../Redux/Actions";
+import { useParams } from "react-router-dom";
 
 export default function UserFavs() {
-  const dispatch = useDispatch();
-  const userId = useSelector((state) => state.loginUser.id);
-
-  useEffect(() => {
-    const favoritos = async () => {
-      await dispatch(getFav(userId));
-    };
-    favoritos();
-  }, [userId, dispatch]);
-
   const itemFav = useSelector((state) => state.itemFav);
-  console.log("itemFav", itemFav);
+  const userId = useSelector((state) => state.loginUser.id);
+  const dispatch = useDispatch();
+  const deleteOneFav = async (userId, prodId) => {
+    await dispatch(deletFav(userId, prodId));
+  };
+
   return (
     <div className="user-content">
       <div className="user-data">
@@ -34,12 +29,20 @@ export default function UserFavs() {
                       <br />
                       {e.title}
                     </p>
-
+                 
                     <p>Precio ${e.price.toLocaleString("de-De")}</p>
                   </div>
                   <div>
+                  
+                    <br />
                     <div className="botonera">
-                      <button className="favs">Quitar de Favoritos</button>
+                    
+                      <button
+                        className="favs"
+                        onClick={() => deleteOneFav(userId, e.id)}
+                      >
+                        Eliminar producto
+                      </button>
                     </div>
                   </div>
                 </div>

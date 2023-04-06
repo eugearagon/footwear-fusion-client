@@ -3,11 +3,8 @@ import promos from "../images/promos.jpg";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-
-
 export default function Cart() {
   const item = useSelector((state) => state.item);
-
 
   const totalPrice = item.reduce(
     (total, item) => total + item.price * item.qty,
@@ -16,17 +13,17 @@ export default function Cart() {
 
   const mercadoPago = () => {
     const token = localStorage.getItem("token");
-        const headers = { 
-          'x-access-token': token,
-      };
-    axios.post("http://localhost:3001/mp/create_preference",item,{headers})
+    const headers = {
+      "x-access-token": token,
+    };
+    axios
+      .post("http://localhost:3001/mp/create_preference", item, { headers })
       .then((res) => (window.location.href = res.data.global.init_point))
-      .catch((error) => console.log(error))
-  }
-
+      .catch((error) => console.log(error));
+  };
 
   return (
-     <div className="cart">
+    <div className="cart">
       <div className="cart-header">
         <div>
           <h3>CARRITO DE COMPRAS</h3>
@@ -52,7 +49,9 @@ export default function Cart() {
                   Cantidad <b>{e.qty}</b>
                 </p>
               </div>
-              <button className="eliminar"><small>eliminar</small></button>
+              <button className="eliminar">
+                <small>eliminar</small>
+              </button>
             </div>
             <div className="zapato-precio">
               <h2>Precio</h2>
@@ -69,7 +68,7 @@ export default function Cart() {
       <div className="cart-footer">
         <img src={promos} alt="" />
         <div className="ahora-si">
-        <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
+          <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
           <button onClick={mercadoPago}>COMPRAR</button>
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>

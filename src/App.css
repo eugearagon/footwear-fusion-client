@@ -84,7 +84,7 @@ li {
   list-style: none;
 }
 
-select{
+select {
   padding: 5px 10px;
   background-color: #f5f5f5;
   font-size: 8pt;
@@ -275,15 +275,16 @@ select{
   padding: 6px;
 }
 
-.bienvenido, .bienvenido a {
+.bienvenido,
+.bienvenido a {
   color: #fff;
 }
 .bienvenido p {
   margin: 0;
 }
 
-.bienvenido a:hover{
- opacity: 0.8;
+.bienvenido a:hover {
+  opacity: 0.8;
 }
 
 .cant-carro {
@@ -662,7 +663,7 @@ select{
   color: #17e1e7;
 }
 
-.dark-mode .user-menu{
+.dark-mode .user-menu {
   color: #fff !important;
 }
 
@@ -694,7 +695,8 @@ select{
   align-items: center;
 }
 .cart-header,
-.zapato, .zapato-fav {
+.zapato,
+.zapato-fav {
   display: flex;
   align-items: center;
   text-align: left;
@@ -719,7 +721,8 @@ select{
   padding: 10px 100px;
 }
 
-.zapato img, .zapato-fav img {
+.zapato img,
+.zapato-fav img {
   width: 123px;
   height: auto;
 }
@@ -835,18 +838,16 @@ select{
   padding: 0 85px !important;
 }
 
-
 /*  ----   panel de usuario   ---- */
 
-.user-panel{
-  border:#a2a2a2 1px solid ;
+.user-panel {
+  border: #a2a2a2 1px solid;
   margin: 50px;
   display: flex;
   flex-direction: column;
-
 }
 
-.user-menu{
+.user-menu {
   font-size: 9pt;
   color: #001e40 !important;
   font-weight: 900;
@@ -856,22 +857,21 @@ select{
   width: 100%;
   margin: 0;
   cursor: pointer;
-  border-bottom:#a2a2a2 1px solid ;
+  border-bottom: #a2a2a2 1px solid;
 }
 
-.user-menu li{
+.user-menu li {
   padding: 30px 10px;
   width: 33%;
-  
 }
 
-.user-menu li:hover, .user-active{
+.user-menu li:hover,
+.user-active {
   color: #ffffff;
   background-color: #001e40;
 }
 
-
-.user-content{
+.user-content {
   display: flex;
   flex-direction: row;
   /* width: 80%; */
@@ -881,7 +881,7 @@ select{
   min-height: 300px;
 }
 
-.user-data{
+.user-data {
   display: flex;
   line-height: 13pt;
   flex-direction: row;
@@ -890,33 +890,39 @@ select{
   align-items: flex-start;
 }
 
-.user-data h6{
+.user-data h6 {
   margin: 0;
 }
 
-.data-list{
+.data-list {
   margin: 0 50px;
+  display: flex;
+  flex-direction: column;
 }
 
-.zapato-fav{
+.zapato-fav {
   width: 100% !important;
   display: flex;
   flex-wrap: wrap;
   gap: 70px;
 }
 
-.botonera{
+.botonera {
   display: flex;
   flex-direction: column;
 }
 
-.botonera button{
+.botonera button {
   padding: 5px 20px;
   margin: 5px 0;
 }
 
-.selecciones select{
+.selecciones select {
   margin: 0 10px;
+}
+
+.btn-fav {
+  background: none;
 }
 
 /*  ----   panel de usuario   ---- */

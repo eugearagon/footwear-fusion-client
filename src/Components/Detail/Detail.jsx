@@ -112,7 +112,7 @@ export default function Detail() {
         "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
         "error"
       );
-      return navigate("/product/:prodId");
+      return navigate("/");
     }
 
     const newItem = {
@@ -149,8 +149,7 @@ export default function Detail() {
         "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
         "error"
       );
-      navigate("/product/:prodId");
-      return;
+      return navigate("/");
     }
     // const newItemFav = {
     //   ...itemFav,

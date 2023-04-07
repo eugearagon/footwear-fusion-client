@@ -30,7 +30,7 @@ useEffect(() => {
     await dispatch(getUserCart(loginUserId))
   }
   userCart()
-}, [prodId, items]);
+}, []);
 
   const prod = useSelector((state) => state.detail);
   
@@ -105,17 +105,14 @@ const navigate = useNavigate()
 
 
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!token) navigate("/login");
     if (!selectedSize || !selectedQty) {
       alert("Para agregar este producto al carrito debe seleccionar un talle y la cantidad");
       return;
     }
-    // const newItem = {
-    //   ...item,
-    //   // description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
-    // };
-    dispatch(addToCart(item, loginUserId));
+    await dispatch(addToCart(item, loginUserId));
+    await dispatch(getUserCart(loginUserId))
   };
 
 const loginUser= useSelector(state => state.loginUser)

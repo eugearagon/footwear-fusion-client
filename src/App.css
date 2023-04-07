@@ -132,6 +132,9 @@ select {
 
 .register-landing .form .zapas {
   width: 40%;
+  max-width: 80%;
+  overflow: hidden;
+  height: auto;
 }
 
 .register-landing form {
@@ -194,6 +197,18 @@ select {
 .ya-estas {
   font-size: 12pt;
 }
+
+
+@media only screen and (max-width: 1000px)  {
+  .zapas{
+    display: none;
+  }
+  .register-landing .form{
+    width: 100vw;
+    min-height: 800px;
+  }
+}
+
 
 /* register landing */
 

@@ -18,16 +18,13 @@ import {
   ADD_SIZE,
   ADD_TO_CART,
   GET_CART_BY_ID,
-  ADD_FAV,
+  DELETE_FAV,
+  GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
-  //   SET_USUARIO,
   POST_REGISTRO,
   POST_GOOGLE,
-  //   GET_USUARIOS,
-  //   GET_PRODUCT,
 } from "../Actions/actions";
-
 
 const initialState = {
   products: [],
@@ -52,9 +49,8 @@ const initialState = {
   selectedQty: [],
   item: [],
   itemFav: [],
-  productoAgregado: []
+  productoAgregado: [],
 };
-
 
 const storedUser = localStorage.getItem("loginUser");
 const storedToken = localStorage.getItem("token");
@@ -66,7 +62,6 @@ const tokenFromStorage = storedToken ? storedToken : "";
 
 initialState.loginUser = userFromStorage;
 initialState.loginUser.token = tokenFromStorage;
-
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -80,7 +75,9 @@ function rootReducer(state = initialState, action) {
       const userIngreso = action.payload;
       localStorage.setItem("token", userIngreso.token);
       localStorage.setItem("loginUser", JSON.stringify(userIngreso));
-      const expirationDateIngreso = new Date(new Date().getTime() + 3600 * 1000);
+      const expirationDateIngreso = new Date(
+        new Date().getTime() + 3600 * 1000
+      );
       localStorage.setItem("expirationDate", expirationDateIngreso);
       return {
         ...state,
@@ -97,7 +94,9 @@ function rootReducer(state = initialState, action) {
       const userRegistro = action.payload;
       localStorage.setItem("token", userRegistro.token);
       localStorage.setItem("loginUser", JSON.stringify(userRegistro));
-      const expirationDateRegistro = new Date(new Date().getTime() + 3600 * 1000);
+      const expirationDateRegistro = new Date(
+        new Date().getTime() + 3600 * 1000
+      );
       localStorage.setItem("expirationDate", expirationDateRegistro);
       return {
         ...state,
@@ -128,7 +127,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case BORRAR_TOKEN:
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
       return {
@@ -258,14 +257,15 @@ function rootReducer(state = initialState, action) {
       let priceProd = state.prodRender;
       let nuevoPrecio = [];
       if (minPrice && maxPrice) {
-        priceProd && priceProd.filter((product) => {
-          if (
-            Number(product.price) >= minPrice &&
-            Number(product.price) <= maxPrice
-          ) {
-            nuevoPrecio.push(product);
-          }
-        });
+        priceProd &&
+          priceProd.filter((product) => {
+            if (
+              Number(product.price) >= minPrice &&
+              Number(product.price) <= maxPrice
+            ) {
+              nuevoPrecio.push(product);
+            }
+          });
       }
 
       return {
@@ -275,20 +275,20 @@ function rootReducer(state = initialState, action) {
       };
 
     case ADD_SIZE:
-      const size = action.payload
+      const size = action.payload;
       console.log("console.log add_size", size);
       return {
         ...state,
-        selectedSize: size
-      }
+        selectedSize: size,
+      };
 
     case ADD_QUANTITY:
-      const qty = action.payload
-      console.log("console.log add_qty", qty)
+      const qty = action.payload;
+      console.log("console.log add_qty", qty);
       return {
         ...state,
-        selectedQty: qty
-      }
+        selectedQty: qty,
+      };
 
     case ADD_TO_CART:
       return {
@@ -297,16 +297,22 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_CART_BY_ID:
-      console.log(action.payload, 'payload reducer');
+      console.log(action.payload, "payload reducer");
       return {
         ...state,
         item: action.payload,
       };
 
-    case ADD_FAV:
+    case GET_USERS_FAVORITES:
       return {
         ...state,
-        itemFav: [...state.itemFav, action.payload],
+        itemFav: action.payload,
+      };
+
+    case DELETE_FAV:
+      return {
+        ...state,
+        itemFav: action.payload,
       };
 
     default:

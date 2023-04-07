@@ -16,20 +16,19 @@ import {
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   ORDER_BY_BEST_SELLING,
-  PUT_USERS_FAVORITES,
   GET_PRICE,
   PRICE_RANGE_SELECTOR,
   ADD_TO_CART,
   ADD_QUANTITY,
   ADD_SIZE,
   ADD_FAV,
+  DELETE_FAV,
+  GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
   GET_CART_BY_ID,
-  GET_USERS_FAVORITES,
-  DELETE_FAV
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -361,13 +360,6 @@ export function addQty(payload) {
   }
 }
 
-export const saveCartToLocalStorage = (cart) => {
-  localStorage.setItem('cart', JSON.stringify(cart));
-};
-
-export const saveFavsToLocalStorage = (fav) => {
-  localStorage.setItem('zapato-fav', JSON.stringify(fav));
-};
 
 export function addFav(userId,prodId) {
   return async function(dispatch){

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getDetail, addQty, addSize, addToCart, getUserCart } from "../../Redux/Actions";
+import { getDetail, addQty, addSize, addToCart, getUserCart, addFav, getFav } from "../../Redux/Actions";
+import swal from "sweetalert";
 
 export default function Detail() {
   const { prodId } = useParams();
@@ -108,15 +109,39 @@ const navigate = useNavigate()
   const handleAddToCart = async () => {
     if (!token) navigate("/login");
     if (!selectedSize || !selectedQty) {
-      alert("Para agregar este producto al carrito debe seleccionar un talle y la cantidad");
-      return;
+      swal(
+        "Error",
+        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
+        "error"
+      );
+      return navigate(`/product/${prodId}`);
     }
     await dispatch(addToCart(item, loginUserId));
     await dispatch(getUserCart(loginUserId))
+    swal("Excelente!", "Producto agregado al carrito!", "success");
   };
 
 const loginUser= useSelector(state => state.loginUser)
 console.log("credenciales", loginUser)
+
+const handleAddFav = async () => {
+  if (!token) {
+    swal("Error", "Logueate para continuar!", "error");
+    return navigate("/login");
+  }
+  if (!selectedSize || !selectedQty) {
+    swal(
+      "Error",
+      "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
+      "error"
+    );
+    navigate("/product/:prodId");
+    return;
+  }
+  await dispatch(addFav(loginUserId,prodId));
+  await dispatch(getFav(loginUserId))
+  swal("Excelente!", "Producto agregado a favoritos!", "success");
+};
 
   return (
     <div className="detail">
@@ -163,7 +188,7 @@ console.log("credenciales", loginUser)
       ))}
     </select>
     <button className="comprar" onClick={handleAddToCart}>¡Agregar al Carrito!</button>
-    <button className="favs"> ❤️ Agregar a favoritos</button>
+    <button className="favs" onClick={handleAddFav}> ❤️ Agregar a favoritos</button>
   </div>
       <div className="description">
         <h5>DETALLES DEL PRODUCTO</h5>

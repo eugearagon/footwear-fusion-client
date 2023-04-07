@@ -13,7 +13,6 @@ import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
-import UserFavs from "./Components/UserPanel/UserFavs";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +23,6 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const dispatch = useDispatch()
   const userId = useSelector((state) => state.loginUser.id)
-  const itemFav = useSelector((state) => state.itemFav);
 
   function toggleDarkMode() {
     setDarkMode(!darkMode);

@@ -294,12 +294,6 @@ function rootReducer(state = initialState, action) {
             item: [...state.item, action.payload],
           };
 
-          case ADD_FAV:
-          return {
-            ...state,
-            itemFav: [...state.itemFav, action.payload],
-          };
-
     default:
       return state;
   }

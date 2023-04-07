@@ -17,11 +17,11 @@ import UserFavs from "./Components/UserPanel/UserFavs";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthProvider } from "./Components/Register/authContext";
+import { getUserCart } from "./Redux/Actions";
 
 function App() {
   const location = useLocation();
   const [darkMode, setDarkMode] = useState(false);
-  const dispatch = useDispatch()
   const userId = useSelector((state) => state.loginUser.id)
   const itemFav = useSelector((state) => state.itemFav);
 
@@ -46,7 +46,13 @@ function App() {
     }
   }, [token, expirationDate, navigate]);
 
-  
+  useEffect(() => {
+    const userCart = async () => {
+      await dispatch(getUserCart(loginUserId))
+    }
+    userCart()
+  }, []);
+
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>

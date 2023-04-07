@@ -328,12 +328,15 @@ export function addToCart(item, loginUserId) {
       console.log(error);
     }
 }
-  export function addFav(item) {
+}
+
+export function addFav(item) {
     return{
       type: ADD_FAV,
       payload: item
     }
 }
+
 
 export function getFav(userId) {
   return async function(dispatch){
@@ -386,7 +389,7 @@ export function addQty(payload) {
     type: ADD_QUANTITY,
     payload
   }
-}
+};
 
 export const saveCartToLocalStorage = (cart) => {
   localStorage.setItem('cart', JSON.stringify(cart));

@@ -49,7 +49,7 @@ function App() {
       await dispatch(getUserCart(loginUserId))
     }
     userCart()
-  }, [dispatch]);
+  }, []);
 
   //Para Favoritos
   useEffect(()=>{
@@ -61,7 +61,7 @@ function App() {
       }
     }
     favoritos()
-  },[dispatch])
+  },[])
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>

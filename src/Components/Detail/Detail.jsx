@@ -1,18 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getDetail,
-  addQty,
-  addSize,
-  addToCart,
-  addFav,
-  getFav,
-} from "../../Redux/Actions";
-import swal from "sweetalert";
+import { getDetail, addQty, addSize, addToCart, getUserCart } from "../../Redux/Actions";
 
 export default function Detail() {
   const { prodId } = useParams();
+  const loginUserId = useSelector(state => state.loginUser.id);
+  const items = useSelector(state => state.item);
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -27,16 +21,25 @@ export default function Detail() {
     dispatch(getDetail(prodId));
   }, [dispatch, prodId]);
 
-  useEffect(() => {
-    dispatch(addSize());
-  }, [dispatch]);
+useEffect(()=>{
+  dispatch(addSize())
+},[dispatch])
+
+useEffect(() => {
+  const userCart = async () => {
+    await dispatch(getUserCart(loginUserId))
+  }
+  userCart()
+}, [prodId, items]);
 
   const prod = useSelector((state) => state.detail);
+  
+
 
   const marca = prod.MarcaProducts
     ? prod.MarcaProducts.filter((m) => m && m.name)
-        .map((m) => m.name)
-        .toString()
+      .map((m) => m.name)
+      .toString()
     : "Zapatillas";
 
   const stock = Number(prod.stock);
@@ -49,11 +52,11 @@ export default function Detail() {
 
   const talle = prod.TalleProducts
     ? prod.TalleProducts.filter((m) => m && m.talle)
-        .map((m) => m.talle)
-        .toString()
+    .map((m) => m.talle)
+    .toString()
     : "talle";
 
-  const nuevoTalle = talle.split(",").map((numero) => parseInt(numero));
+    const nuevoTalle = talle.split(",").map(numero => parseInt(numero));
   const handleMouseOver = () => {
     setIsHovering(true);
   };
@@ -77,7 +80,6 @@ export default function Detail() {
 
   const selectedSize = useSelector((state) => state.selectedSize);
   const selectedQty = useSelector((state) => state.selectedQty);
-  const userId = useSelector((state) => state.loginUser.id)
 
   const item = {
     id: prod.id,
@@ -87,9 +89,9 @@ export default function Detail() {
     price: prod.price,
     marca: marca,
     size: selectedSize,
-    qty: selectedQty,
-  };
-  
+    qty:selectedQty
+  }
+console.log("este es el console.log de item",item);
 
   const handleSizeSelect = (e) => {
     dispatch(addSize(e.target.value));
@@ -98,66 +100,26 @@ export default function Detail() {
     dispatch(addQty(e.target.value));
   };
 
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+const navigate = useNavigate()
+  const token = localStorage.getItem("token")
+
+
 
   const handleAddToCart = () => {
-    if (!token) {
-      swal("Error", "Logueate para continuar!", "error");
-      return navigate("/login");
-    }
+    if (!token) navigate("/login");
     if (!selectedSize || !selectedQty) {
-      swal(
-        "Error",
-        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
-        "error"
-      );
-      return navigate("/product/:prodId");
-    }
-
-    const newItem = {
-      ...item,
-      description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
-    };
-
-    dispatch(addToCart(newItem));
-    swal("Excelente!", "Producto agregado al carrito!", "success");
-  };
-
-
-  // favoritos //
-
-  // const itemFav = {
-  //   id: prod.id,
-  //   code: prod.code,
-  //   title: prod.title,
-  //   image: prod.image,
-  //   price: prod.price,
-  //   marca: marca,
-  //   size: selectedSize,
-  //   qty: selectedQty,
-  // };
-
-  const handleAddFav = async () => {
-    if (!token) {
-      swal("Error", "Logueate para continuar!", "error");
-      return navigate("/login");
-    }
-    if (!selectedSize || !selectedQty) {
-      swal(
-        "Error",
-        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
-        "error"
-      );
-      navigate("/product/:prodId");
+      alert("Para agregar este producto al carrito debe seleccionar un talle y la cantidad");
       return;
     }
-    await dispatch(addFav(userId,prodId));
-    await dispatch(getFav(userId))
-    swal("Excelente!", "Producto agregado a favoritos!", "success");
+    // const newItem = {
+    //   ...item,
+    //   // description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
+    // };
+    dispatch(addToCart(item, loginUserId));
   };
 
-    
+const loginUser= useSelector(state => state.loginUser)
+console.log("credenciales", loginUser)
 
   return (
     <div className="detail">
@@ -168,9 +130,8 @@ export default function Detail() {
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
           style={{
-            transform: `scale(${isHovering ? 2.8 : 1}) translate(${
-              mousePosition.x
-            }px, ${mousePosition.y}px)`,
+            transform: `scale(${isHovering ? 2.8 : 1}) translate(${mousePosition.x
+              }px, ${mousePosition.y}px)`,
             transition: isLeaving ? "transform 0.3s ease-out" : "",
           }}
         />
@@ -180,43 +141,38 @@ export default function Detail() {
         <h2>{prod.title}</h2>
         <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">
-          <div className="cantidades">
-            <h5>Cantidad</h5>
-            <select defaultValue="Cantidad" onChange={handleQtySelect}>
-              <option disabled value="Cantidad">
-                Cantidad
-              </option>
-              {valores?.map((s) => (
-                <option value={s} key={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
-          </div>
-          <h5>TALLES</h5>
-          <select
-            defaultValue="Seleccione un talle"
-            onChange={handleSizeSelect}
-          >
-            <option disabled value="Seleccione un talle">
-              Seleccione un talle
-            </option>
-            {nuevoTalle?.map((talle) => (
-              <option key={talle} value={talle}>
-                {talle}
-              </option>
-            ))}
-          </select>
-          <button className="comprar" onClick={handleAddToCart}>
-            ¡Agregar al Carrito!
-          </button>
-          <button className="favs" onClick={handleAddFav}> ❤️ Agregar a favoritos</button>
-        </div>
-      </div>
+    <div className="cantidades">
+      <h5>Cantidad</h5>
+      <select defaultValue="Cantidad" onChange={handleQtySelect}>
+      <option disabled value="Cantidad">
+      Cantidad
+      </option>
+        {valores?.map((s) => (
+          <option value={s} key={s}>
+            {s}
+          </option>
+        ))}
+      </select>
+    </div>
+    <h5>TALLES</h5>
+    <select defaultValue="Seleccione un talle" onChange={handleSizeSelect}>
+      <option disabled value="Seleccione un talle">
+        Seleccione un talle
+      </option>
+      {nuevoTalle?.map((talle) => (
+        <option key={talle} value={talle}>
+          {talle}
+        </option>
+      ))}
+    </select>
+    <button className="comprar" onClick={handleAddToCart}>¡Agregar al Carrito!</button>
+    <button className="favs"> ❤️ Agregar a favoritos</button>
+  </div>
       <div className="description">
         <h5>DETALLES DEL PRODUCTO</h5>
         <p>{prod.description}</p>
       </div>
+    </div>
     </div>
   );
 }

@@ -16,18 +16,20 @@ import {
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   ORDER_BY_BEST_SELLING,
+  PUT_USERS_FAVORITES,
   GET_PRICE,
   PRICE_RANGE_SELECTOR,
   ADD_TO_CART,
   ADD_QUANTITY,
   ADD_SIZE,
   ADD_FAV,
-  DELETE_FAV,
-  GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
+  GET_CART_BY_ID,
+  GET_USERS_FAVORITES,
+  DELETE_FAV
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -82,22 +84,22 @@ export function getCategory() {
     try {
       var category = await axios.get("http://localhost:3001/filter/category");
       return dispatch({
-        type : GET_CATEGORY,
+        type: GET_CATEGORY,
         payload: category.data,
       });
-      
+
     } catch (error) {
       console.log("no se encontraron categorias");
     }
   };
-} 
+}
 
 export function getSize() {
   return async function (dispatch) {
     try {
       var size = await axios.get("http://localhost:3001/filter/talle");
       return dispatch({
-        type : GET_SIZE,
+        type: GET_SIZE,
         payload: size.data,
       });
     } catch (error) {
@@ -111,7 +113,7 @@ export function getBrand() {
     try {
       var brand = await axios.get("http://localhost:3001/filter/marca");
       return dispatch({
-        type : GET_BRAND,
+        type: GET_BRAND,
         payload: brand.data,
       });
     } catch (error) {
@@ -125,7 +127,7 @@ export function getColor() {
     try {
       var color = await axios.get("http://localhost:3001/filter/color");
       return dispatch({
-        type : GET_COLOR,
+        type: GET_COLOR,
         payload: color.data,
       });
     } catch (error) {
@@ -139,7 +141,7 @@ export function getPrice() {
     try {
       var price = await axios.get("http://localhost:3001/precios");
       return dispatch({
-        type : GET_PRICE,
+        type: GET_PRICE,
         payload: price.data,
       });
     } catch (error) {
@@ -192,7 +194,7 @@ export const ingreso = (email) => {
       });
       return usuario;
     } catch (error) {
-      
+
     }
   };
 };
@@ -216,7 +218,7 @@ export const registros = (email) => {
       });
       return usuario;
     } catch (error) {
-     
+
     }
   };
 };
@@ -240,7 +242,7 @@ export const loginUserGoogle = (email) => {
       });
       return usuario;
     } catch (error) {
-      
+
     }
   };
 };
@@ -269,22 +271,22 @@ export function filterBySize(payload) {
     payload,
   };
 }
-  
+
 export function filterByCategory(payload) {
-    return {
-      type: FILTER_BY_CATEGORY,
-      payload: payload.toLowerCase(),
-    };
-  }
+  return {
+    type: FILTER_BY_CATEGORY,
+    payload: payload.toLowerCase(),
+  };
+}
 
 export function filterByBrand(brand) {
-    return async (dispatch) => {
-      dispatch({
-        type: FILTER_BY_BRAND,
-        payload: brand,
-      });
-    };
-  }
+  return async (dispatch) => {
+    dispatch({
+      type: FILTER_BY_BRAND,
+      payload: brand,
+    });
+  };
+}
 
 export function filterByColor(payload) {
   return {
@@ -301,87 +303,59 @@ export function orderByBestSelling(payload) {
 }
 
 export function priceRangeSelector(payload) {
-  
+
   return {
     type: PRICE_RANGE_SELECTOR,
     payload,
   };
 
 }
-  export function addToCart(item) {
-    return{
-      type: ADD_TO_CART,
-      payload: item
-    }
-}
-
-export function addFav(userId,prodId) {
-    return async function(dispatch){
-      const token = localStorage.getItem("token");
-        const headers = { 
-          'x-access-token': token,
-      };
-      try {
-        const apiData = await axios.post(`http://localhost:3001/favorite/${userId}/${prodId}`,{},{headers})
-        const favorito = apiData.data;
-        dispatch({
-          type: ADD_FAV,
-          payload: favorito
-        })
-      } catch (error) {
-        console.log(error.request.response);
-      }
-    }
-}
-
-export function getFav(userId) {
-  return async function(dispatch){
-    const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
-    };
+export function addToCart(item, loginUserId) {
+  // console.log('actions', item);
+  // console.log('actions', loginUserId);
+  return async function (dispatch) {
+    console.log('actions', item);
+    console.log('actions', loginUserId);  
     try {
-      const apiData = await axios.get(`http://localhost:3001/favorite/${userId}`,{headers})
-      const favorito = apiData.data;
-      dispatch({
-        type: GET_USERS_FAVORITES,
-        payload: favorito
-      })
+      var userCart = await axios.post(
+        `http://localhost:3001/cart/${loginUserId}`,
+        item
+      );
+      return dispatch({
+        type: ADD_TO_CART,
+        payload: userCart
+      });
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error);
     }
-  }
+}
 }
 
-export function deletFav(userId,prodId) {
-  return async function(dispatch){
-    const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
-    };
+export function getUserCart(loginUserId) {
+  return async function (dispatch) {
     try {
-      const apiData = await axios.delete(`http://localhost:3001/favorite/${userId}/${prodId}`,{headers})
-      const favorito = apiData.data;
-      dispatch({
-        type: DELETE_FAV,
-        payload: favorito
-      })
+      var userCart = await axios.get(`http://localhost:3001/cart/${loginUserId}`);
+      const userCartData = userCart.data;
+      console.log(userCartData, 'actions');
+      return dispatch({
+        type: GET_CART_BY_ID,
+        payload: userCartData
+      });
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error);
     }
-  }
 }
-
+}
 
 export function addSize(payload) {
-  return{
-    type:ADD_SIZE,
+  return {
+    type: ADD_SIZE,
     payload
   }
 }
 
 export function addQty(payload) {
-  return{
+  return {
     type: ADD_QUANTITY,
     payload
   }
@@ -395,5 +369,59 @@ export const saveFavsToLocalStorage = (fav) => {
   localStorage.setItem('zapato-fav', JSON.stringify(fav));
 };
 
+export function addFav(userId,prodId) {
+  return async function(dispatch){
+    const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+    };
+    try {
+      const apiData = await axios.post(`http://localhost:3001/favorite/${userId}/${prodId}`,{},{headers})
+      const favorito = apiData.data;
+      dispatch({
+        type: ADD_FAV,
+        payload: favorito
+      })
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  }
+}
 
+export function getFav(userId) {
+return async function(dispatch){
+  const token = localStorage.getItem("token");
+    const headers = { 
+      'x-access-token': token,
+  };
+  try {
+    const apiData = await axios.get(`http://localhost:3001/favorite/${userId}`,{headers})
+    const favorito = apiData.data;
+    dispatch({
+      type: GET_USERS_FAVORITES,
+      payload: favorito
+    })
+  } catch (error) {
+    console.log(error.request.response);
+  }
+}
+}
 
+export function deletFav(userId,prodId) {
+return async function(dispatch){
+  const token = localStorage.getItem("token");
+    const headers = { 
+      'x-access-token': token,
+  };
+  try {
+    const apiData = await axios.delete(`http://localhost:3001/favorite/${userId}/${prodId}`,{headers})
+    const favorito = apiData.data;
+    dispatch({
+      type: DELETE_FAV,
+      payload: favorito
+    })
+  } catch (error) {
+    console.log(error.request.response);
+  }
+}
+}

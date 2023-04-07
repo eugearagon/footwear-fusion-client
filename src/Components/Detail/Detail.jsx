@@ -1,19 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getDetail,
-  addQty,
-  addSize,
-  addToCart,
-  addFav,
-} from "../../Redux/Actions";
-import swal from "sweetalert";
+import { getDetail, addQty, addSize, addToCart } from "../../Redux/Actions";
 
 export default function Detail() {
   const { prodId } = useParams();
   const loginUserId = useSelector(state => state.loginUser.id);
-  const items = useSelector(state => state.item);
+  console.log("loginUserId", loginUserId);
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -31,13 +24,6 @@ export default function Detail() {
 useEffect(()=>{
   dispatch(addSize())
 },[dispatch])
-
-useEffect(() => {
-  const userCart = async () => {
-    await dispatch(getUserCart(loginUserId))
-  }
-  userCart()
-}, [prodId, items]);
 
   const prod = useSelector((state) => state.detail);
   
@@ -161,13 +147,11 @@ const navigate = useNavigate()
       navigate("/product/:prodId");
       return;
     }
-    const newItemFav = {
-      ...itemFav,
-      description: `${itemFav.title}-${itemFav.id} ${itemFav.code}- ${itemFav.marca}- ${itemFav.image}- ${itemFav.price} - ${itemFav.size} - ${itemFav.qty}`,
+    const newItem = {
+      ...item,
+      description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
     };
-
-    dispatch(addFav(newItemFav));
-    swal("Excelente!", "Producto agregado a favoritos!", "success");
+    dispatch(addToCart(newItem));
   };
 
 

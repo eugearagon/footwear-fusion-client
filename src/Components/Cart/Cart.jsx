@@ -5,7 +5,6 @@ import axios from "axios";
 
 export default function Cart() {
   const item = useSelector((state) => state.item);
-  console.log(item, 'item del cart');
 
   const totalPrice = item.reduce(
     (total, item) => total + item.price * item.qty,
@@ -44,7 +43,7 @@ export default function Cart() {
                 {e.title}
               </p>
               <span>Código del artículo: {e.code}</span>
-              <p>Talle: {e.talle}</p>
+              <p>Talle: {e.qty}</p>
               <div className="sel-cant">
                 <p>
                   Cantidad <b>{e.qty}</b>

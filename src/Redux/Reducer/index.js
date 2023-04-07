@@ -17,7 +17,6 @@ import {
   ADD_QUANTITY,
   ADD_SIZE,
   ADD_TO_CART,
-  GET_CART_BY_ID,
   DELETE_FAV,
   GET_USERS_FAVORITES,
   POST_INGRESO,
@@ -50,9 +49,8 @@ const initialState = {
   selectedPriceRange: { minPrice: 0, maxPrice: 0 },
   selectedSize: [],
   selectedQty: [],
-  item: [],
+  item:[],
   itemFav: [],
-  productoAgregado: []
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -292,6 +290,12 @@ function rootReducer(state = initialState, action) {
           return {
             ...state,
             item: [...state.item, action.payload],
+          };
+
+          case ADD_FAV:
+          return {
+            ...state,
+            itemFav: [...state.itemFav, action.payload],
           };
 
     default:

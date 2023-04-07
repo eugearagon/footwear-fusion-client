@@ -86,7 +86,6 @@ export function getCategory() {
         type: GET_CATEGORY,
         payload: category.data,
       });
-
     } catch (error) {
       console.log("no se encontraron categorias");
     }
@@ -177,72 +176,63 @@ export function postUsers(payload) {
 export const ingreso = (email) => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.post(
-        "http://localhost:3001/user/login",
-        { email }
-      );
+      const apiData = await axios.post("http://localhost:3001/user/login", {
+        email,
+      });
       const usuario = apiData.data;
       // localStorage.setItem("token", usuario.token);
       // localStorage.setItem("loginUser", JSON.stringify(usuario));
       // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
+      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas
       // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_INGRESO,
         payload: usuario,
       });
       return usuario;
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 };
 
 export const registros = (email) => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.post(
-        "http://localhost:3001/user/registro",
-        { email }
-      );
+      const apiData = await axios.post("http://localhost:3001/user/registro", {
+        email,
+      });
       const usuario = apiData.data;
       // localStorage.setItem("token", usuario.token);
       // localStorage.setItem("loginUser", JSON.stringify(usuario));
       // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
+      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas
       // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_REGISTRO,
         payload: usuario,
       });
       return usuario;
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 };
 
 export const loginUserGoogle = (email) => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.post(
-        "http://localhost:3001/user/google",
-        { email }
-      );
+      const apiData = await axios.post("http://localhost:3001/user/google", {
+        email,
+      });
       const usuario = apiData.data;
       // localStorage.setItem("token", usuario.token);
       // localStorage.setItem("loginUser", JSON.stringify(usuario));
       // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
+      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas
       // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_GOOGLE,
         payload: usuario,
       });
       return usuario;
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 };
 
@@ -252,9 +242,9 @@ export const borrarToken = () => {
     payload: {
       email: "",
       rol: "",
-      token: ""
-    }
-  }
+      token: "",
+    },
+  };
 };
 
 export function orderByPrice(payload) {
@@ -302,19 +292,17 @@ export function orderByBestSelling(payload) {
 }
 
 export function priceRangeSelector(payload) {
-
   return {
     type: PRICE_RANGE_SELECTOR,
     payload,
   };
-
 }
 export function addToCart(item, loginUserId) {
   // console.log('actions', item);
   // console.log('actions', loginUserId);
   return async function (dispatch) {
-    console.log('actions', item);
-    console.log('actions', loginUserId);  
+    console.log("actions", item);
+    console.log("actions", loginUserId);
     try {
       var userCart = await axios.post(
         `http://localhost:3001/cart/${loginUserId}`,
@@ -322,98 +310,109 @@ export function addToCart(item, loginUserId) {
       );
       return dispatch({
         type: ADD_TO_CART,
-        payload: userCart
+        payload: userCart,
       });
     } catch (error) {
       console.log(error);
     }
-}
+  };
 }
 
 export function getUserCart(loginUserId) {
   return async function (dispatch) {
     try {
-      var userCart = await axios.get(`http://localhost:3001/cart/${loginUserId}`);
+      var userCart = await axios.get(
+        `http://localhost:3001/cart/${loginUserId}`
+      );
       const userCartData = userCart.data;
-      console.log(userCartData, 'actions');
+      console.log(userCartData, "actions");
       return dispatch({
         type: GET_CART_BY_ID,
-        payload: userCartData
+        payload: userCartData,
       });
     } catch (error) {
       console.log(error);
     }
-}
+  };
 }
 
 export function addSize(payload) {
   return {
     type: ADD_SIZE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function addQty(payload) {
   return {
     type: ADD_QUANTITY,
-    payload
-  }
+    payload,
+  };
 }
 
-
-export function addFav(userId,prodId) {
-  return async function(dispatch){
+export function addFav(userId, prodId) {
+  return async function (dispatch) {
     const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+    const headers = {
+      "x-access-token": token,
     };
     try {
-      const apiData = await axios.post(`http://localhost:3001/favorite/${userId}/${prodId}`,{},{headers})
+      const apiData = await axios.post(
+        `http://localhost:3001/favorite/${userId}/${prodId}`,
+        {},
+        { headers }
+      );
       const favorito = apiData.data;
       dispatch({
         type: ADD_FAV,
-        payload: favorito
-      })
+        payload: favorito,
+      });
     } catch (error) {
       console.log(error.request.response);
     }
-  }
+  };
 }
 
 export function getFav(userId) {
-return async function(dispatch){
-  const token = localStorage.getItem("token");
-    const headers = { 
-      'x-access-token': token,
+  return async function (dispatch) {
+    const token = localStorage.getItem("token");
+    const headers = {
+      "x-access-token": token,
+    };
+    try {
+      const apiData = await axios.get(
+        `http://localhost:3001/favorite/${userId}`,
+        { headers }
+      );
+      const favorito = apiData.data;
+      dispatch({
+        type: GET_USERS_FAVORITES,
+        payload: favorito,
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
   };
-  try {
-    const apiData = await axios.get(`http://localhost:3001/favorite/${userId}`,{headers})
-    const favorito = apiData.data;
-    dispatch({
-      type: GET_USERS_FAVORITES,
-      payload: favorito
-    })
-  } catch (error) {
-    console.log(error.request.response);
-  }
-}
 }
 
-export function deletFav(userId,prodId) {
-return async function(dispatch){
-  const token = localStorage.getItem("token");
-    const headers = { 
-      'x-access-token': token,
+export function deletFav(userId, prodId) {
+  return async function (dispatch) {
+    const token = localStorage.getItem("token");
+    const headers = {
+      "x-access-token": token,
+    };
+    try {
+      const apiData = await axios.delete(
+        `http://localhost:3001/favorite/${userId}/${prodId}`,
+        { headers }
+      );
+      const favorito = apiData.data;
+      dispatch({
+        type: DELETE_FAV,
+        payload: favorito,
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
   };
-  try {
-    const apiData = await axios.delete(`http://localhost:3001/favorite/${userId}/${prodId}`,{headers})
-    const favorito = apiData.data;
-    dispatch({
-      type: DELETE_FAV,
-      payload: favorito
-    })
-  } catch (error) {
-    console.log(error.request.response);
-  }
-}
 }

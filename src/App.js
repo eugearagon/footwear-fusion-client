@@ -51,22 +51,22 @@ function App() {
   //Para el card
   useEffect(() => {
     const userCart = async () => {
-      await dispatch(getUserCart(loginUserId))
-    }
-    userCart()
+      await dispatch(getUserCart(loginUserId));
+    };
+    userCart();
   }, [dispatch]);
 
   //Para Favoritos
-  useEffect(()=>{
-    const favoritos = async () =>{
+  useEffect(() => {
+    const favoritos = async () => {
       try {
-        await dispatch(getFav(loginUserId))
+        await dispatch(getFav(loginUserId));
       } catch (error) {
         console.log(error.message);
       }
-    }
-    favoritos()
-  },[dispatch])
+    };
+    favoritos();
+  }, [dispatch]);
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>

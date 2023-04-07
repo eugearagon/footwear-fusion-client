@@ -13,36 +13,41 @@ import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
-import UserFavs from "./Components/UserPanel/UserFavs";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthProvider } from "./Components/Register/authContext";
+import { getUserCart } from "./Redux/Actions";
 
 function App() {
   const location = useLocation();
   const [darkMode, setDarkMode] = useState(false);
-  const userId = useSelector((state) => state.loginUser.id)
-  const itemFav = useSelector((state) => state.itemFav);
 
   function toggleDarkMode() {
     setDarkMode(!darkMode);
   }
 
+  const loginUser = useSelector((state) => state.loginUser);
+  const loginUserId = loginUser.id;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const expirationDate = localStorage.getItem("expirationDate");
 
   useEffect(() => {
     if (token && new Date(expirationDate) <= new Date()) {
-      localStorage.removeItem('token');
-      localStorage.removeItem("loginUser");
-      localStorage.removeItem('expirationDate');
-      navigate('/login');
-      alert('Credenciales expiradas. Por favor, inicie sesión de nuevo.');
+      localStorage.removeItem("token");
+      localStorage.removeItem("expirationDate");
+      navigate("/login");
+      alert("Credenciales expiradas. Por favor, inicie sesión de nuevo.");
     }
   }, [token, expirationDate, navigate]);
 
-  
-
+  useEffect(() => {
+    const userCart = async () => {
+      await dispatch(getUserCart(loginUserId))
+    }
+    userCart()
+  }, []);
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>

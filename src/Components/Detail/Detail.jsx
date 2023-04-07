@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getDetail, addQty, addSize, addToCart } from "../../Redux/Actions";
+import { getDetail, addQty, addSize, addToCart, getUserCart } from "../../Redux/Actions";
 
 export default function Detail() {
   const { prodId } = useParams();
   const loginUserId = useSelector(state => state.loginUser.id);
-  console.log("loginUserId", loginUserId);
+  const items = useSelector(state => state.item);
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -24,6 +24,13 @@ export default function Detail() {
 useEffect(()=>{
   dispatch(addSize())
 },[dispatch])
+
+useEffect(() => {
+  const userCart = async () => {
+    await dispatch(getUserCart(loginUserId))
+  }
+  userCart()
+}, [prodId, items]);
 
   const prod = useSelector((state) => state.detail);
   
@@ -73,7 +80,6 @@ useEffect(()=>{
 
   const selectedSize = useSelector((state) => state.selectedSize);
   const selectedQty = useSelector((state) => state.selectedQty);
-  const userId = useSelector((state) => state.loginUser.id)
 
   const item = {
     id: prod.id,
@@ -83,9 +89,9 @@ useEffect(()=>{
     price: prod.price,
     marca: marca,
     size: selectedSize,
-    qty: selectedQty,
-  };
-  console.log("este es el console.log de item", item);
+    qty:selectedQty
+  }
+console.log("este es el console.log de item",item);
 
   const handleSizeSelect = (e) => {
     dispatch(addSize(e.target.value));
@@ -102,66 +108,18 @@ const navigate = useNavigate()
   const handleAddToCart = () => {
     if (!token) navigate("/login");
     if (!selectedSize || !selectedQty) {
-      swal(
-        "Error",
-        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
-        "error"
-      );
-      navigate("/product/:prodId");
+      alert("Para agregar este producto al carrito debe seleccionar un talle y la cantidad");
       return;
     }
-    const newItem = {
-      ...item,
-      description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
-    };
-
-    dispatch(addToCart(newItem));
-    swal("Excelente!", "Producto agregado al carrito!", "success");
+    // const newItem = {
+    //   ...item,
+    //   // description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
+    // };
+    dispatch(addToCart(item, loginUserId));
   };
 
-
-  // favoritos //
-
-  const itemFav = {
-    id: prod.id,
-    code: prod.code,
-    title: prod.title,
-    image: prod.image,
-    price: prod.price,
-    marca: marca,
-    size: selectedSize,
-    qty: selectedQty,
-  };
-
-  const handleAddFav = () => {
-    if (!token) {
-      swal("Error", "Logueate para continuar!", "error");
-      return navigate("/login");
-    }
-    if (!selectedSize || !selectedQty) {
-      swal(
-        "Error",
-        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
-        "error"
-      );
-      navigate("/product/:prodId");
-      return;
-    }
-    const newItem = {
-      ...item,
-      description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
-    };
-    dispatch(addToCart(newItem));
-  };
-
-
-    // favoritos //
-
-
-    
-
-  const loginUser = useSelector((state) => state.loginUser);
-  console.log("credenciales", loginUser);
+const loginUser= useSelector(state => state.loginUser)
+console.log("credenciales", loginUser)
 
   return (
     <div className="detail">

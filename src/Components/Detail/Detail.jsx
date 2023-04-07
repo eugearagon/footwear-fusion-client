@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getDetail, addQty, addSize, addToCart } from "../../Redux/Actions";
+import { getDetail, addQty, addSize, addToCart, getUserCart } from "../../Redux/Actions";
 
 export default function Detail() {
   const { prodId } = useParams();
   const loginUserId = useSelector(state => state.loginUser.id);
-  console.log("loginUserId", loginUserId);
+  const items = useSelector(state => state.item);
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -24,6 +24,13 @@ export default function Detail() {
 useEffect(()=>{
   dispatch(addSize())
 },[dispatch])
+
+useEffect(() => {
+  const userCart = async () => {
+    await dispatch(getUserCart(loginUserId))
+  }
+  userCart()
+}, [prodId, items]);
 
   const prod = useSelector((state) => state.detail);
   
@@ -104,11 +111,11 @@ const navigate = useNavigate()
       alert("Para agregar este producto al carrito debe seleccionar un talle y la cantidad");
       return;
     }
-    const newItem = {
-      ...item,
-      description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
-    };
-    dispatch(addToCart(newItem));
+    // const newItem = {
+    //   ...item,
+    //   // description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
+    // };
+    dispatch(addToCart(item, loginUserId));
   };
 
 const loginUser= useSelector(state => state.loginUser)

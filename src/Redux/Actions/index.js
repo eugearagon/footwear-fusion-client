@@ -26,7 +26,8 @@ import {
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
-  POST_GOOGLE
+  POST_GOOGLE,
+  GET_CART_BY_ID
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -320,7 +321,23 @@ export function addToCart(item, loginUserId) {
       );
       return dispatch({
         type: ADD_TO_CART,
-        payload: item
+        payload: userCart
+      });
+    } catch (error) {
+      console.log(error);
+    }
+}
+}
+
+export function getUserCart(loginUserId) {
+  return async function (dispatch) {
+    try {
+      var userCart = await axios.get(`http://localhost:3001/cart/${loginUserId}`);
+      const userCartData = userCart.data;
+      console.log(userCartData, 'actions');
+      return dispatch({
+        type: GET_CART_BY_ID,
+        payload: userCartData
       });
     } catch (error) {
       console.log(error);

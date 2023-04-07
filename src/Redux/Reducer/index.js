@@ -17,6 +17,7 @@ import {
   ADD_QUANTITY,
   ADD_SIZE,
   ADD_TO_CART,
+  GET_CART_BY_ID,
   ADD_FAV,
   POST_INGRESO,
   BORRAR_TOKEN,
@@ -49,8 +50,9 @@ const initialState = {
   selectedPriceRange: { minPrice: 0, maxPrice: 0 },
   selectedSize: [],
   selectedQty: [],
-  item:[],
+  item: [],
   itemFav: [],
+  productoAgregado: []
 };
 
 
@@ -74,71 +76,71 @@ function rootReducer(state = initialState, action) {
         products: action.payload,
         prodRender: action.payload,
       };
-      case POST_INGRESO:
-        const userIngreso = action.payload;
-        localStorage.setItem("token", userIngreso.token);
-        localStorage.setItem("loginUser", JSON.stringify(userIngreso));
-        const expirationDateIngreso = new Date(new Date().getTime() + 3600 * 1000);
-        localStorage.setItem("expirationDate", expirationDateIngreso);
-        return {
-          ...state,
-          loginUser: {
-              id: userIngreso.id,
-              email: userIngreso.email,
-              rol: userIngreso.rol,
-              state: userIngreso.state,
-              token: userIngreso.token,
-          },
-        };
-  
-      case POST_REGISTRO:
-        const userRegistro = action.payload;
-        localStorage.setItem("token", userRegistro.token);
-        localStorage.setItem("loginUser", JSON.stringify(userRegistro));
-        const expirationDateRegistro = new Date(new Date().getTime() + 3600 * 1000);
-        localStorage.setItem("expirationDate", expirationDateRegistro);
-        return {
-          ...state,
-          loginUser: {
-              id: userRegistro.id,
-              email: userRegistro.email,
-              rol: userRegistro.rol,
-              state: userRegistro.state,
-              token: userRegistro.token,
-          },
-        };
-  
-        case POST_GOOGLE:
-          const user = action.payload;
-          localStorage.setItem("token", user.token);
-          localStorage.setItem("loginUser", JSON.stringify(user));
-          const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-          localStorage.setItem("expirationDate", expirationDate);
-          return {
-            ...state,
-            loginUser: {
-              id: user.id,
-              email: user.email,
-              rol: user.rol,
-              state: user.state,
-              token: user.token,
-            },
-          };
-  
-      case BORRAR_TOKEN:
-        localStorage.removeItem('token');
-        localStorage.removeItem("loginUser");
-        localStorage.removeItem("expirationDate");
-        return {
-          ...state,
-          loginUser: {
-            id: "",
-            email: "",
-            rol: "",
-            token: "",
-          },
-        };
-  
+    case POST_INGRESO:
+      const userIngreso = action.payload;
+      localStorage.setItem("token", userIngreso.token);
+      localStorage.setItem("loginUser", JSON.stringify(userIngreso));
+      const expirationDateIngreso = new Date(new Date().getTime() + 3600 * 1000);
+      localStorage.setItem("expirationDate", expirationDateIngreso);
+      return {
+        ...state,
+        loginUser: {
+          id: userIngreso.id,
+          email: userIngreso.email,
+          rol: userIngreso.rol,
+          state: userIngreso.state,
+          token: userIngreso.token,
+        },
+      };
+
+    case POST_REGISTRO:
+      const userRegistro = action.payload;
+      localStorage.setItem("token", userRegistro.token);
+      localStorage.setItem("loginUser", JSON.stringify(userRegistro));
+      const expirationDateRegistro = new Date(new Date().getTime() + 3600 * 1000);
+      localStorage.setItem("expirationDate", expirationDateRegistro);
+      return {
+        ...state,
+        loginUser: {
+          id: userRegistro.id,
+          email: userRegistro.email,
+          rol: userRegistro.rol,
+          state: userRegistro.state,
+          token: userRegistro.token,
+        },
+      };
+
+    case POST_GOOGLE:
+      const user = action.payload;
+      localStorage.setItem("token", user.token);
+      localStorage.setItem("loginUser", JSON.stringify(user));
+      const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+      localStorage.setItem("expirationDate", expirationDate);
+      return {
+        ...state,
+        loginUser: {
+          id: user.id,
+          email: user.email,
+          rol: user.rol,
+          state: user.state,
+          token: user.token,
+        },
+      };
+
+    case BORRAR_TOKEN:
+      localStorage.removeItem('token');
+      localStorage.removeItem("loginUser");
+      localStorage.removeItem("expirationDate");
+      return {
+        ...state,
+        loginUser: {
+          id: "",
+          email: "",
+          rol: "",
+          token: "",
+        },
+      };
+
     case GET_PRODUCTS_BY_NAME:
       return {
         ...state,
@@ -256,7 +258,7 @@ function rootReducer(state = initialState, action) {
       let priceProd = state.prodRender;
       let nuevoPrecio = [];
       if (minPrice && maxPrice) {
-        priceProd && priceProd.filter((product)  => {
+        priceProd && priceProd.filter((product) => {
           if (
             Number(product.price) >= minPrice &&
             Number(product.price) <= maxPrice
@@ -272,33 +274,40 @@ function rootReducer(state = initialState, action) {
         products: nuevoPrecio,
       };
 
-      case ADD_SIZE:
-        const size = action.payload
-        console.log("console.log add_size",size);
-        return{
-          ...state,
-          selectedSize:size
-        }
+    case ADD_SIZE:
+      const size = action.payload
+      console.log("console.log add_size", size);
+      return {
+        ...state,
+        selectedSize: size
+      }
 
-      case ADD_QUANTITY:
-        const qty = action.payload
-        console.log("console.log add_qty",qty)
-        return{
-          ...state,
-          selectedQty: qty
-        }
+    case ADD_QUANTITY:
+      const qty = action.payload
+      console.log("console.log add_qty", qty)
+      return {
+        ...state,
+        selectedQty: qty
+      }
 
-        case ADD_TO_CART:
-          return {
-            ...state,
-            item: [...state.item, action.payload],
-          };
+    case ADD_TO_CART:
+      return {
+        ...state,
+        productoAgregado: [...action.payload],
+      };
 
-          case ADD_FAV:
-          return {
-            ...state,
-            itemFav: [...state.itemFav, action.payload],
-          };
+    case GET_CART_BY_ID:
+      console.log(action.payload, 'payload reducer');
+      return {
+        ...state,
+        item: action.payload,
+      };
+
+    case ADD_FAV:
+      return {
+        ...state,
+        itemFav: [...state.itemFav, action.payload],
+      };
 
     default:
       return state;

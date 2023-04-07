@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getDetail, addQty, addSize, addToCart, getUserCart } from "../../Redux/Actions";
+import {
+  getDetail,
+  addQty,
+  addSize,
+  addToCart,
+  addFav,
+} from "../../Redux/Actions";
+import swal from "sweetalert";
 
 export default function Detail() {
   const { prodId } = useParams();
@@ -80,6 +87,7 @@ useEffect(() => {
 
   const selectedSize = useSelector((state) => state.selectedSize);
   const selectedQty = useSelector((state) => state.selectedQty);
+  const userId = useSelector((state) => state.loginUser.id)
 
   const item = {
     id: prod.id,
@@ -89,9 +97,9 @@ useEffect(() => {
     price: prod.price,
     marca: marca,
     size: selectedSize,
-    qty:selectedQty
-  }
-console.log("este es el console.log de item",item);
+    qty: selectedQty,
+  };
+  console.log("este es el console.log de item", item);
 
   const handleSizeSelect = (e) => {
     dispatch(addSize(e.target.value));
@@ -108,18 +116,68 @@ const navigate = useNavigate()
   const handleAddToCart = () => {
     if (!token) navigate("/login");
     if (!selectedSize || !selectedQty) {
-      alert("Para agregar este producto al carrito debe seleccionar un talle y la cantidad");
+      swal(
+        "Error",
+        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
+        "error"
+      );
+      navigate("/product/:prodId");
       return;
     }
-    // const newItem = {
-    //   ...item,
-    //   // description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
-    // };
-    dispatch(addToCart(item, loginUserId));
+    const newItem = {
+      ...item,
+      description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
+    };
+
+    dispatch(addToCart(newItem));
+    swal("Excelente!", "Producto agregado al carrito!", "success");
   };
 
-const loginUser= useSelector(state => state.loginUser)
-console.log("credenciales", loginUser)
+
+  // favoritos //
+
+  const itemFav = {
+    id: prod.id,
+    code: prod.code,
+    title: prod.title,
+    image: prod.image,
+    price: prod.price,
+    marca: marca,
+    size: selectedSize,
+    qty: selectedQty,
+  };
+
+  const handleAddFav = () => {
+    if (!token) {
+      swal("Error", "Logueate para continuar!", "error");
+      return navigate("/login");
+    }
+    if (!selectedSize || !selectedQty) {
+      swal(
+        "Error",
+        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
+        "error"
+      );
+      navigate("/product/:prodId");
+      return;
+    }
+    const newItemFav = {
+      ...itemFav,
+      description: `${itemFav.title}-${itemFav.id} ${itemFav.code}- ${itemFav.marca}- ${itemFav.image}- ${itemFav.price} - ${itemFav.size} - ${itemFav.qty}`,
+    };
+
+    dispatch(addFav(newItemFav));
+    swal("Excelente!", "Producto agregado a favoritos!", "success");
+  };
+
+
+    // favoritos //
+
+
+    
+
+  const loginUser = useSelector((state) => state.loginUser);
+  console.log("credenciales", loginUser);
 
   return (
     <div className="detail">

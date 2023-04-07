@@ -16,18 +16,19 @@ import {
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   ORDER_BY_BEST_SELLING,
-  PUT_USERS_FAVORITES,
   GET_PRICE,
   PRICE_RANGE_SELECTOR,
   ADD_TO_CART,
   ADD_QUANTITY,
   ADD_SIZE,
   ADD_FAV,
+  DELETE_FAV,
+  GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
-  GET_CART_BY_ID
+  GET_CART_BY_ID,
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -327,23 +328,51 @@ export function addToCart(item, loginUserId) {
       console.log(error);
     }
 }
-}
-
-export function getUserCart(loginUserId) {
-  return async function (dispatch) {
-    try {
-      var userCart = await axios.get(`http://localhost:3001/cart/${loginUserId}`);
-      const userCartData = userCart.data;
-      console.log(userCartData, 'actions');
-      return dispatch({
-        type: GET_CART_BY_ID,
-        payload: userCartData
-      });
-    } catch (error) {
-      console.log(error);
+  export function addFav(item) {
+    return{
+      type: ADD_FAV,
+      payload: item
     }
 }
+
+export function getFav(userId) {
+  return async function(dispatch){
+    const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+    };
+    try {
+      const apiData = await axios.get(`http://localhost:3001/favorite/${userId}`,{headers})
+      const favorito = apiData.data;
+      dispatch({
+        type: GET_USERS_FAVORITES,
+        payload: favorito
+      })
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  }
 }
+
+export function deletFav(userId,prodId) {
+  return async function(dispatch){
+    const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+    };
+    try {
+      const apiData = await axios.delete(`http://localhost:3001/favorite/${userId}/${prodId}`,{headers})
+      const favorito = apiData.data;
+      dispatch({
+        type: DELETE_FAV,
+        payload: favorito
+      })
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  }
+}
+
 
 export function addSize(payload) {
   return {

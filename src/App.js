@@ -14,46 +14,54 @@ import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
 import { useState, useEffect } from "react";
-import { AuthProvider } from "./Components/Register/authContext";
 import { useDispatch, useSelector } from "react-redux";
-import { getFav } from "./Redux/Actions";
+import { AuthProvider } from "./Components/Register/authContext";
+import { getFav, getUserCart } from "./Redux/Actions";
 
 function App() {
   const location = useLocation();
   const [darkMode, setDarkMode] = useState(false);
-  const dispatch = useDispatch()
-  const userId = useSelector((state) => state.loginUser.id)
 
   function toggleDarkMode() {
     setDarkMode(!darkMode);
   }
 
+  const loginUser = useSelector((state) => state.loginUser);
+  const loginUserId = loginUser.id;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const expirationDate = localStorage.getItem("expirationDate");
 
   useEffect(() => {
     if (token && new Date(expirationDate) <= new Date()) {
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
-      localStorage.removeItem('expirationDate');
-      navigate('/login');
-      alert('Credenciales expiradas. Por favor, inicie sesión de nuevo.');
+      localStorage.removeItem("expirationDate");
+      navigate("/login");
+      alert("Credenciales expiradas. Por favor, inicie sesión de nuevo.");
     }
   }, [token, expirationDate, navigate]);
 
-   
-    useEffect(()=>{
-      const favoritos = async () =>{
-        try {
-          await dispatch(getFav(userId))
-        } catch (error) {
-          console.log(error.message);
-        }
+  //Para el card
+  useEffect(() => {
+    const userCart = async () => {
+      await dispatch(getUserCart(loginUserId))
+    }
+    userCart()
+  }, [dispatch]);
+
+  //Para Favoritos
+  useEffect(()=>{
+    const favoritos = async () =>{
+      try {
+        await dispatch(getFav(loginUserId))
+      } catch (error) {
+        console.log(error.message);
       }
-      favoritos()
-    },[userId, dispatch])
-  
+    }
+    favoritos()
+  },[dispatch])
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>

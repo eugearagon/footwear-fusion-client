@@ -17,15 +17,13 @@ import {
   ADD_QUANTITY,
   ADD_SIZE,
   ADD_TO_CART,
+  GET_CART_BY_ID,
   DELETE_FAV,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
-  //   SET_USUARIO,
   POST_REGISTRO,
   POST_GOOGLE,
-  //   GET_USUARIOS,
-  //   GET_PRODUCT,
 } from "../Actions/actions";
 
 const initialState = {
@@ -51,6 +49,7 @@ const initialState = {
   selectedQty: [],
   item: [],
   itemFav: [],
+  productoAgregado: [],
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -294,21 +293,27 @@ function rootReducer(state = initialState, action) {
     case ADD_TO_CART:
       return {
         ...state,
-        item: [...state.item, action.payload],
+        productoAgregado: [...action.payload],
+      };
+
+    case GET_CART_BY_ID:
+      console.log(action.payload, "payload reducer");
+      return {
+        ...state,
+        item: action.payload,
       };
 
     case GET_USERS_FAVORITES:
       return {
         ...state,
-        itemFav: action.payload ,
+        itemFav: action.payload,
       };
-    
-      case DELETE_FAV:
-        return {
-          ...state,
-          itemFav: action.payload ,
-        };
-    
+
+    case DELETE_FAV:
+      return {
+        ...state,
+        itemFav: action.payload,
+      };
 
     default:
       return state;

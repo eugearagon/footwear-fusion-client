@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import fav from "../images/cora.png";
-import { deletFav } from "../../Redux/Actions";
+import { deletFav, getFav } from "../../Redux/Actions";
 import { useParams } from "react-router-dom";
 
 
@@ -12,6 +12,7 @@ export default function UserFavs() {
     const dispatch = useDispatch()
     const deleteOneFav = async (userId,prodId) => {
       await dispatch(deletFav(userId, prodId))
+      await dispatch(getFav(userId))
     }
 
   return (

@@ -138,7 +138,7 @@ export default function Detail() {
   //   qty: selectedQty,
   // };
 
-  const handleAddFav = () => {
+  const handleAddFav = async () => {
     if (!token) {
       swal("Error", "Logueate para continuar!", "error");
       return navigate("/login");
@@ -152,27 +152,11 @@ export default function Detail() {
       navigate("/product/:prodId");
       return;
     }
-    // const newItemFav = {
-    //   ...itemFav,
-    //   description: `${itemFav.title}-${itemFav.id} ${itemFav.code}- ${itemFav.marca}- ${itemFav.image}- ${itemFav.price} - ${itemFav.size} - ${itemFav.qty}`,
-    // };
-
-    dispatch(addFav(userId,prodId));
+    await dispatch(addFav(userId,prodId));
+    await dispatch(getFav(userId))
     swal("Excelente!", "Producto agregado a favoritos!", "success");
   };
 
-    // favoritos //
-    const itemFav = useSelector((state) => state.itemFav);
-    useEffect(()=>{
-      const favoritos = async () =>{
-        try {
-          await dispatch(getFav(userId))
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
-      favoritos()
-    },[userId, dispatch, itemFav])
     
 
   return (

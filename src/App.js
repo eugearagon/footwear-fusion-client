@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthProvider } from "./Components/Register/authContext";
 import { getFav, getUserCart } from "./Redux/Actions";
+import swal from "sweetalert";
 
 function App() {
   const location = useLocation();
@@ -39,7 +40,11 @@ function App() {
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
       navigate("/login");
-      alert("Credenciales expiradas. Por favor, inicie sesión de nuevo.");
+      swal(
+        "Error",
+        "Credenciales expiradas. Por favor, inicie sesión de nuevo.",
+        "error"
+      );
     }
   }, [token, expirationDate, navigate]);
 

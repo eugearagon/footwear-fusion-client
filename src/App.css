@@ -877,10 +877,12 @@ select {
 .admin-menu button{
   background: none;
   color: #fff;
+  padding: 20px 80px 10px 80px;
 }
 
 .admin-menu{
   height: 100vh;
+  max-width: 180px;
   background-color: #1d232c;
   position: fixed;
   left: 0;
@@ -889,12 +891,23 @@ select {
   flex-wrap: nowrap;
   align-items: center;
   padding: 20px;
-  gap: 50px;
+  gap: 10px;
+}
+
+.admin-panel h1{
+  font-weight: 300;
+  font-size: 16pt;
+}
+
+.admin-active{
+  background-color: #0d0f12 !important;
+
 }
 
 .admin-content{
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   width: 60%;
   height: 100vh;
   margin: 0 auto;

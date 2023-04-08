@@ -25,7 +25,9 @@ export default function AdminPanel() {
       </div>
       <div className="admin-menu">
         <img width="150" src={logo} alt="Footwear Fusion" />
-
+        <br />
+        <h1>PORTAL DEL ADMINISTRADOR</h1>
+    <br />
         <button
           className={activeTab === "users" ? "admin-active" : ""}
           onClick={() => handleTabClick("users")}

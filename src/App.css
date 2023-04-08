@@ -855,12 +855,15 @@ select {
 }
 
 .admin-panel{
-  color: #fff;
   background-color: #425866;
+  color: #fff;
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  height: 100vw;
+  padding-bottom: 200px;
+}
+
+.admin-panel a{
+  color:#17e1e7;
 }
 
 .saludo-admin{
@@ -907,11 +910,11 @@ select {
 }
 
 .admin-menu::-webkit-scrollbar {
-  background-color: #425866;
+  background-color: #0d0f1200;
   width: 3px;
 }
 .admin-menu::-webkit-scrollbar-thumb {
- background-color: #090a0a;
+ background-color: #0d0f1200;
 }
 
 .admin-panel h1{
@@ -925,16 +928,34 @@ select {
 }
 
 .admin-content{
+  background-color: #425866;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   width: 60%;
-  height: 100vh;
   margin: 0 auto;
   position: relative;
-  left: 100px;
+  left: 220px;
   top: 80px;
+  justify-content: center;
+  align-content: flex-start;
+  gap: 30px;
 }
+
+.content-prod{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  text-align: left;
+  
+}
+
+
+
+
+
+
 /*  ----   ADMIN   ---- */
 
 .swal-overlay {

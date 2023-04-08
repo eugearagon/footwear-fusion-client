@@ -48,25 +48,6 @@ function App() {
     }
   }, [token, expirationDate, navigate]);
 
-  //Para el card
-  useEffect(() => {
-    const userCart = async () => {
-      await dispatch(getUserCart(loginUserId));
-    };
-    userCart();
-  }, [dispatch]);
-
-  //Para Favoritos
-  useEffect(() => {
-    const favoritos = async () => {
-      try {
-        await dispatch(getFav(loginUserId));
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    favoritos();
-  }, [dispatch]);
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>

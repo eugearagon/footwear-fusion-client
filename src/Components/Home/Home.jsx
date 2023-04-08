@@ -1,17 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "../Slider/Slider.jsx";
 import Filters from "../Filters/Filters.jsx";
 import CardsContainer from "../CardsContainer/CardsContainer.jsx";
 import OrderPaginate from "../OrderPaginate/OrderPaginate.jsx";
 import { CookiesProvider, useCookies } from 'react-cookie';
 import popup from "../images/popup.jpg"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getFav, getUserCart } from "../../Redux/Actions/index.js";
 
 
 export default function Home() {
 
   const user = useSelector((state) => state.usuario)
+  const loginUserId = useSelector((state) => state.loginUser.id);
+  const dispatch = useDispatch();
   console.log("home", user);
+  //Para el card
+  useEffect(() => {
+    const userCart = async () => {
+      await dispatch(getUserCart(loginUserId));
+    };
+    userCart();
+  }, [dispatch]);
+
+  //Para Favoritos
+  useEffect(() => {
+    const favoritos = async () => {
+      try {
+        await dispatch(getFav(loginUserId));
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    favoritos();
+  }, [dispatch]);
+
   const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
   const [cookies, setCookie] = useCookies(['visited']);
   if (!cookies.visited) {

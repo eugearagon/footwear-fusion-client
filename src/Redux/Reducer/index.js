@@ -26,6 +26,7 @@ import {
   POST_REGISTRO,
   POST_GOOGLE,
   CLOSE_SESSION,
+  GET_NEWSLETTER
 } from "../Actions/actions";
 
 const initialState = {
@@ -52,6 +53,7 @@ const initialState = {
   item: [],
   itemFav: [],
   productoAgregado: [],
+  newsletter: []
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -328,6 +330,12 @@ function rootReducer(state = initialState, action) {
         itemFav: action.payload,
         item: action.payload
       };
+
+    case GET_NEWSLETTER:
+      return {
+        ...state,
+        newsletter: action.payload
+      }
 
     default:
       return state;

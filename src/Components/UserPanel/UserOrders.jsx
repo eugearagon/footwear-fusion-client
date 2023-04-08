@@ -8,11 +8,10 @@ export default function UserOrders() {
         <div className="data-list">
           <h6>MIS PEDIDOS REALIZADOS</h6>
           <div className="zapato-fav">
-              <h1>TODAVIA NO HAY PEDIDOS REALIZADOS</h1>
-            </div>
+            <h1>TODAVIA NO HAY PEDIDOS REALIZADOS</h1>
+          </div>
         </div>
       </div>
-      
     </div>
   );
 }

@@ -23,12 +23,14 @@ import {
   ADD_SIZE,
   ADD_FAV,
   DELETE_FAV,
+  DELETE_CART,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
   GET_CART_BY_ID,
+  CLOSE_SESSION,
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -417,3 +419,10 @@ return async function(dispatch){
   }
 }
 }
+export function closeSession(){
+return{
+  type: CLOSE_SESSION,
+  payload: []
+}
+}
+

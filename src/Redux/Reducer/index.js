@@ -19,11 +19,13 @@ import {
   ADD_TO_CART,
   GET_CART_BY_ID,
   DELETE_FAV,
+  DELETE_CART,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
+  CLOSE_SESSION,
 } from "../Actions/actions";
 
 const initialState = {
@@ -313,6 +315,18 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         itemFav: action.payload,
+      };
+    case DELETE_CART:
+      return {
+        ...state,
+        itemFav: action.payload,
+      };
+
+    case CLOSE_SESSION:
+      return {
+        ...state,
+        itemFav: action.payload,
+        item: action.payload
       };
 
     default:

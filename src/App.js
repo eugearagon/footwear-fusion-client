@@ -43,25 +43,25 @@ function App() {
     }
   }, [token, expirationDate, navigate]);
 
-  //Para el card
-  useEffect(() => {
-    const userCart = async () => {
-      await dispatch(getUserCart(loginUserId))
-    }
-    userCart()
-  }, []);
+  // //Para el card
+  // useEffect(() => {
+  //   const userCart = async () => {
+  //     await dispatch(getUserCart(loginUserId))
+  //   }
+  //   userCart()
+  // }, []);
 
-  //Para Favoritos
-  useEffect(()=>{
-    const favoritos = async () =>{
-      try {
-        await dispatch(getFav(loginUserId))
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-    favoritos()
-  },[])
+  // //Para Favoritos
+  // useEffect(()=>{
+  //   const favoritos = async () =>{
+  //     try {
+  //       await dispatch(getFav(loginUserId))
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   }
+  //   favoritos()
+  // },[])
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>

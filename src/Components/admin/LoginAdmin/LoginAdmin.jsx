@@ -1,5 +1,16 @@
+import { useState } from "react";
 import logo from "../../images/logo.png";
+import { useNavigate } from "react-router-dom";
+
+
 export default function LoginAdmin() {
+
+const [loginAdmin, setLoginAdmin] = useState({
+  email: "pt10henry@gmail.com",
+  password: "footwear2023"
+})
+const navigate = useNavigate();
+
   return (
     <div className="login-admin">
       <img src={logo} alt="" />

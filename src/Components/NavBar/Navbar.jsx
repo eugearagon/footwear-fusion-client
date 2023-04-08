@@ -66,6 +66,6 @@ const handleGetUserCart = () => {
           <span className="cant-carro">{lcdtmab.length}</span>
         )}
       </NavLink>
-    </div>
-  );
+    </div>
+  );
 }

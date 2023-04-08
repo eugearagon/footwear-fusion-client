@@ -13,11 +13,10 @@ import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
+import AdminPanel from "./Components/admin/Panel/AdminPanel";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { AuthProvider } from "./Components/Register/authContext";
-import { getFav, getUserCart } from "./Redux/Actions";
-import swal from "sweetalert";
+import swal from "sweetalert"
 
 function App() {
   const location = useLocation();
@@ -27,9 +26,7 @@ function App() {
     setDarkMode(!darkMode);
   }
 
-  const loginUser = useSelector((state) => state.loginUser);
-  const loginUserId = loginUser.id;
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const expirationDate = localStorage.getItem("expirationDate");
@@ -39,20 +36,16 @@ function App() {
       localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
-      navigate("/login");
-      swal(
-        "Error",
-        "Credenciales expiradas. Por favor, inicie sesión de nuevo.",
-        "error"
-      );
+      swal("Cuidado", "Credenciales expiradas. Por favor, inicie sesión de nuevo!", "info");
+      window.location.reload();
     }
   }, [token, expirationDate, navigate]);
-
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/login" &&
         location.pathname !== "/login-admin" &&
+        location.pathname !== "/adminpanel" &&
         location.pathname !== "/register" && (
           <>
             <Navbar />
@@ -68,9 +61,11 @@ function App() {
           <Route path="/product/:prodId" element={<Detail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/userpanel" element={<UserPanel />} />
+          <Route path="/adminpanel" element={<AdminPanel />} />
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&
+          location.pathname !== "/adminpanel" &&
           location.pathname !== "/register" && (
             <>
               <DarkMode toggleDarkMode={toggleDarkMode} />

@@ -13,9 +13,11 @@ import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
-import UserFavs from "./Components/UserPanel/UserFavs";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthProvider } from "./Components/Register/authContext";
+import { getFav, getUserCart } from "./Redux/Actions";
+import swal from "sweetalert";
 
 function App() {
   const location = useLocation();
@@ -25,6 +27,9 @@ function App() {
     setDarkMode(!darkMode);
   }
 
+  const loginUser = useSelector((state) => state.loginUser);
+  const loginUserId = loginUser.id;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const expirationDate = localStorage.getItem("expirationDate");
@@ -32,13 +37,36 @@ function App() {
   useEffect(() => {
     if (token && new Date(expirationDate) <= new Date()) {
       localStorage.removeItem("token");
+      localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
       navigate("/login");
-      alert("Credenciales expiradas. Por favor, inicie sesión de nuevo.");
+      swal(
+        "Error",
+        "Credenciales expiradas. Por favor, inicie sesión de nuevo.",
+        "error"
+      );
     }
   }, [token, expirationDate, navigate]);
 
-  
+  //Para el card
+  useEffect(() => {
+    const userCart = async () => {
+      await dispatch(getUserCart(loginUserId));
+    };
+    userCart();
+  }, [dispatch]);
+
+  //Para Favoritos
+  useEffect(() => {
+    const favoritos = async () => {
+      try {
+        await dispatch(getFav(loginUserId));
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    favoritos();
+  }, [dispatch]);
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>

@@ -6,12 +6,16 @@ import {
   addQty,
   addSize,
   addToCart,
+  getUserCart,
   addFav,
+  getFav,
 } from "../../Redux/Actions";
 import swal from "sweetalert";
 
 export default function Detail() {
   const { prodId } = useParams();
+  const loginUserId = useSelector((state) => state.loginUser.id);
+  const items = useSelector((state) => state.item);
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -29,6 +33,13 @@ export default function Detail() {
   useEffect(() => {
     dispatch(addSize());
   }, [dispatch]);
+
+  useEffect(() => {
+    const userCart = async () => {
+      await dispatch(getUserCart(loginUserId));
+    };
+    userCart();
+  }, []);
 
   const prod = useSelector((state) => state.detail);
 
@@ -99,44 +110,25 @@ export default function Detail() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  const handleAddToCart = () => {
-    if (!token) {
-      swal("Error", "Logueate para continuar!", "error");
-      return navigate("/login");
-    }
+  const handleAddToCart = async () => {
+    if (!token) navigate("/login");
     if (!selectedSize || !selectedQty) {
       swal(
         "Error",
         "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
         "error"
       );
-      navigate("/product/:prodId");
-      return;
+      return navigate(`/product/${prodId}`);
     }
-    const newItem = {
-      ...item,
-      description: `${item.title}-${item.id} ${item.code}- ${item.marca}- ${item.image}- ${item.price} - ${item.size} - ${item.qty}`,
-    };
-
-    dispatch(addToCart(newItem));
+    await dispatch(addToCart(item, loginUserId));
+    await dispatch(getUserCart(loginUserId));
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };
 
+  const loginUser = useSelector((state) => state.loginUser);
+  console.log("credenciales", loginUser);
 
-  // favoritos //
-
-  const itemFav = {
-    id: prod.id,
-    code: prod.code,
-    title: prod.title,
-    image: prod.image,
-    price: prod.price,
-    marca: marca,
-    size: selectedSize,
-    qty: selectedQty,
-  };
-
-  const handleAddFav = () => {
+  const handleAddFav = async () => {
     if (!token) {
       swal("Error", "Logueate para continuar!", "error");
       return navigate("/login");
@@ -150,23 +142,10 @@ export default function Detail() {
       navigate("/product/:prodId");
       return;
     }
-    const newItemFav = {
-      ...itemFav,
-      description: `${itemFav.title}-${itemFav.id} ${itemFav.code}- ${itemFav.marca}- ${itemFav.image}- ${itemFav.price} - ${itemFav.size} - ${itemFav.qty}`,
-    };
-
-    dispatch(addFav(newItemFav));
+    await dispatch(addFav(loginUserId, prodId));
+    await dispatch(getFav(loginUserId));
     swal("Excelente!", "Producto agregado a favoritos!", "success");
   };
-
-
-    // favoritos //
-
-
-    
-
-  const loginUser = useSelector((state) => state.loginUser);
-  console.log("credenciales", loginUser);
 
   return (
     <div className="detail">
@@ -219,12 +198,15 @@ export default function Detail() {
           <button className="comprar" onClick={handleAddToCart}>
             ¡Agregar al Carrito!
           </button>
-          <button className="favs" onClick={handleAddFav}> ❤️ Agregar a favoritos</button>
+          <button className="favs" onClick={handleAddFav}>
+            {" "}
+            ❤️ Agregar a favoritos
+          </button>
         </div>
-      </div>
-      <div className="description">
-        <h5>DETALLES DEL PRODUCTO</h5>
-        <p>{prod.description}</p>
+        <div className="description">
+          <h5>DETALLES DEL PRODUCTO</h5>
+          <p>{prod.description}</p>
+        </div>
       </div>
     </div>
   );

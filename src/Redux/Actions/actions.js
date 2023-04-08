@@ -27,6 +27,7 @@ export const GET_CART_BY_ID='GET_CART_BY_ID';
 export const GET_USERS_FAVORITES="GET_USERS_FAVORITES";
 export const ADD_FAV="ADD_FAV";
 export const DELETE_FAV="DELETE_FAV";
+export const DELETE_CART="DELETE_CART";
 //acciones del carrito
 export const CHANGE_PRODUCT="CHANGE_PRODUCT";
 export const BUY="BUY";
@@ -39,3 +40,4 @@ export const POST_INGRESO = "POST_INFRESO";
 export const BORRAR_TOKEN = "BORRAR_TOKEN";
 export const POST_REGISTRO = "POST_REGISTRO";
 export const POST_GOOGLE = "POST_GOOGLE";
+export const CLOSE_SESSION = "CLOSE_SESSION";

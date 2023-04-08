@@ -29,6 +29,7 @@ import {
   POST_REGISTRO,
   POST_GOOGLE,
   GET_CART_BY_ID,
+  CLOSE_SESSION
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -415,4 +416,12 @@ export function deletFav(userId, prodId) {
       console.log(error.request.response);
     }
   };
+}
+
+export function closeSession(){
+  return{
+    type: CLOSE_SESSION,
+    payload: []
+    
+  }
 }

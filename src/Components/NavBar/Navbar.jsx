@@ -4,7 +4,7 @@ import carro from "../images/carro.png";
 import { NavLink } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
 import { useSelector, useDispatch } from "react-redux";
-import {borrarToken, getUserCart} from "../../Redux/Actions/index"
+import {borrarToken, getUserCart, closeSession} from "../../Redux/Actions/index"
 import swal from 'sweetalert';
 
 
@@ -20,7 +20,10 @@ const loginUserId = user.id;
 
 const eliminarLocalStore = () => {
   swal("Hasta luego!", "Te esperamos cuando quieras!", "info");
-  dispatch(borrarToken())
+  dispatch(borrarToken(), closeSession())
+ setTimeout(() => {
+  window.location.reload();
+ }, 3000);
 }
 
 const handleGetUserCart = () => {
@@ -63,6 +66,6 @@ const handleGetUserCart = () => {
           <span className="cant-carro">{lcdtmab.length}</span>
         )}
       </NavLink>
-    </div>
-  );
+    </div>
+  );
 }

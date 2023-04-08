@@ -3,60 +3,56 @@ import Slider from "../Slider/Slider.jsx";
 import Filters from "../Filters/Filters.jsx";
 import CardsContainer from "../CardsContainer/CardsContainer.jsx";
 import OrderPaginate from "../OrderPaginate/OrderPaginate.jsx";
-import { CookiesProvider, useCookies } from 'react-cookie';
-import popup from "../images/popup.jpg"
+import { CookiesProvider, useCookies } from "react-cookie";
+import popup from "../images/popup.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getFav, getUserCart } from "../../Redux/Actions/index.js";
-
+import { getFav, getUserCart } from "../../Redux/Actions";
 
 export default function Home() {
+  const loginUser = useSelector((state) => state.loginUser);
+  const loginUserId = loginUser.id;
 
-  const user = useSelector((state) => state.usuario)
-  const loginUserId = useSelector((state) => state.loginUser.id);
   const dispatch = useDispatch();
-  console.log("home", user);
-  //Para el card
-  useEffect(() => {
-    const userCart = async () => {
-      await dispatch(getUserCart(loginUserId));
-    };
-    userCart();
-  }, [dispatch]);
 
-  //Para Favoritos
+// unificamos los useEffect del cart y fav
   useEffect(() => {
-    const favoritos = async () => {
+    const iniciarTodo = async () => {
       try {
+        await dispatch(getUserCart(loginUserId));
         await dispatch(getFav(loginUserId));
       } catch (error) {
         console.log(error.message);
       }
     };
-    favoritos();
-  }, [dispatch]);
+    iniciarTodo();
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
-  const [cookies, setCookie] = useCookies(['visited']);
+  const [cookies, setCookie] = useCookies(["visited"]);
   if (!cookies.visited) {
     return (
       <div className="popup">
-       <a href="#" onClick={() => setCookie('visited', true)}>
-        <img src={popup} alt="oferta"></img>
-       </a>
+        <a href="#" onClick={() => setCookie("visited", true)}>
+          <img src={popup} alt="oferta"></img>
+        </a>
       </div>
     );
   }
   return (
     <CookiesProvider>
-    <div className="home">
-      <Slider />
-      <OrderPaginate currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      <div className="home-adentro">
-        <Filters />
-        <CardsContainer currentPage={currentPage} /> {/* pasar currentPage como prop */}
+      <div className="home">
+        <Slider />
+        <OrderPaginate
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+        <div className="home-adentro">
+          <Filters />
+          <CardsContainer currentPage={currentPage} />{" "}
+          {/* pasar currentPage como prop */}
+        </div>
       </div>
-    </div>
     </CookiesProvider>
-  );
+  );
 }
 

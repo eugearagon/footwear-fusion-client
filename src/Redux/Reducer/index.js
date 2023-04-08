@@ -19,11 +19,13 @@ import {
   ADD_TO_CART,
   GET_CART_BY_ID,
   DELETE_FAV,
+  DELETE_CART,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
+  CLOSE_SESSION,
 } from "../Actions/actions";
 
 const initialState = {
@@ -114,7 +116,6 @@ function rootReducer(state = initialState, action) {
       localStorage.setItem("token", user.token);
       localStorage.setItem("loginUser", JSON.stringify(user));
       const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // const expirationDate = new Date(new Date().getTime() + 60 * 1000);
       localStorage.setItem("expirationDate", expirationDate);
       return {
         ...state,
@@ -315,10 +316,22 @@ function rootReducer(state = initialState, action) {
         ...state,
         itemFav: action.payload,
       };
+    case DELETE_CART:
+      return {
+        ...state,
+        itemFav: action.payload,
+      };
+
+    case CLOSE_SESSION:
+      return {
+        ...state,
+        itemFav: action.payload,
+        item: action.payload
+      };
 
     default:
       return state;
   }
 }
 
-export default rootReducer;
+export default rootReducer;

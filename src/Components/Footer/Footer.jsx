@@ -4,7 +4,7 @@ import medios from "../images/mediosdepago.png";
 import { useState } from "react";
 import { correoRegistroNewsletter, postNewsletter } from "../../Redux/Actions";
 import { html } from "./correo";
-
+import swal from "sweetalert";
 
 export default function Footer() {
   const dispatch = useDispatch()
@@ -28,11 +28,12 @@ export default function Footer() {
   };
 
   const newEmail = async ()=> {
+    swal("Ya estas registrado!", "Vas a recibir un correo de confirmacion","success")
+    setTimeout(() => {
+      window.location.reload()
+    }, 3000);
     await dispatch(postNewsletter(email))
     await dispatch(correoRegistroNewsletter(correo))
-    // setEmail({
-    //   email: ""
-    // })
   }
   
   return (

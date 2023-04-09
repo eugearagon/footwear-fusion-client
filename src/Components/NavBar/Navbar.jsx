@@ -4,7 +4,7 @@ import carro from "../images/carro.png";
 import { NavLink } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
 import { useSelector, useDispatch } from "react-redux";
-import {borrarToken} from "../../Redux/Actions/index"
+import {borrarToken, getUserCart} from "../../Redux/Actions/index"
 import swal from 'sweetalert';
 
 
@@ -13,14 +13,23 @@ export default function Navbar() {
 
 
 const user = useSelector((state) => state.loginUser);
-const lcdtmab = useSelector((state) => state.item)
+const lcdtmab = useSelector((state) => state.item.flat())
 const lcdtmabFav = useSelector((state) => state.itemFav)
 const dispatch = useDispatch();
+const loginUserId = user.id;
 
 const eliminarLocalStore = () => {
   swal("Hasta luego!", "Te esperamos cuando quieras!", "info");
   dispatch(borrarToken())
 }
+
+const handleGetUserCart = () => {
+  // if (!lcdtmab || lcdtmab.length === 0) {
+  //   alert("Todavía no hay productos en su carrito");
+  //   return;
+  // }
+  dispatch(getUserCart(loginUserId));
+};
 
   return (
     <div className="navbar">
@@ -48,7 +57,7 @@ const eliminarLocalStore = () => {
           <span className="cant-carro">{lcdtmabFav.length}</span>
         )}
       </NavLink>
-      <NavLink to={"/cart"}>
+      <NavLink onClick={handleGetUserCart} to={"/cart"}>
         <img src={carro} alt="" />
         {lcdtmab && lcdtmab.length > 0 && (
           <span className="cant-carro">{lcdtmab.length}</span>

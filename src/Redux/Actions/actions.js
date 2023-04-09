@@ -22,13 +22,15 @@ export const GET_NEWSLETTER="GET_NEWSLETTER";
 export const ADD_QUANTITY="ADD_QUANTITY";
 export const ADD_SIZE="ADD SIZE";
 export const ADD_TO_CART="ADD_TO_CART";
-export const POST_USERS_FAVORITES="POST_USERS_FAVORITES";
+export const GET_CART_BY_ID='GET_CART_BY_ID';
+//acccion Favoritos
 export const GET_USERS_FAVORITES="GET_USERS_FAVORITES";
 export const ADD_FAV="ADD_FAV";
+export const DELETE_FAV="DELETE_FAV";
 //acciones del carrito
-export const CHANGE_ITEM="CHANGE_ITEM";
+export const CHANGE_PRODUCT="CHANGE_PRODUCT";
 export const BUY="BUY";
-export const REMOVE_ITEM="REMOVE_ITEM";
+export const DELETE_PRODUCT="DELETE_PRODUCT";
 //acciones del usuario
 export const LOG_IN="LOG_IN";
 export const GET_USERS="GET_USERS";

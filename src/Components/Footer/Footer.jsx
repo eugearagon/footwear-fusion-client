@@ -1,3 +1,4 @@
+
 import medios from "../images/mediosdepago.png";
 
 export default function Footer() {

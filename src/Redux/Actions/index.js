@@ -34,7 +34,8 @@ import {
   CLOSE_SESSION,
   POST_NEWSLETTER,
   GET_NEWSLETTER,
-  REGISTRO_NEWSLETTER
+  REGISTRO_NEWSLETTER,
+  POST_MERCADO_PAGO
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -490,3 +491,25 @@ export const correoRegistroNewsletter = (correo) => {
     }
   }
 }
+
+export const mercadoPago = (item) => {
+  return async function(dispatch){
+    try {
+      const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+      };
+      console.log(item);
+      const response = await axios.post(`http://localhost:3001/mp/create_preference`, item, {headers});
+      const apiData = response.data
+      const initPoint = apiData.global.init_point;
+      window.location.href = initPoint;
+      dispatch({
+        type: POST_MERCADO_PAGO,
+        payload: apiData
+      })
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  }
+};

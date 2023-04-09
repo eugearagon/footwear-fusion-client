@@ -14,9 +14,10 @@ import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
 import AdminPanel from "./Components/admin/Panel/AdminPanel";
+import DetailAdmin from "./Components/admin/Panel/DetailAdmin/DetailAdmin";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
-import swal from "sweetalert"
+import swal from "sweetalert";
 
 function App() {
   const location = useLocation();
@@ -25,7 +26,6 @@ function App() {
   function toggleDarkMode() {
     setDarkMode(!darkMode);
   }
-
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -36,7 +36,11 @@ function App() {
       localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
-      swal("Cuidado", "Credenciales expiradas. Por favor, inicie sesión de nuevo!", "info");
+      swal(
+        "Cuidado",
+        "Credenciales expiradas. Por favor, inicie sesión de nuevo!",
+        "info"
+      );
       window.location.reload();
     }
   }, [token, expirationDate, navigate]);
@@ -46,10 +50,13 @@ function App() {
       {location.pathname !== "/login" &&
         location.pathname !== "/login-admin" &&
         location.pathname !== "/adminpanel" &&
+        location.pathname !== "/admin/product" &&
+        location.pathname !== "/admin/product/:prodId" &&
         location.pathname !== "/register" && (
           <>
             <Navbar />
             <Categories />
+            
           </>
         )}
       <AuthProvider>
@@ -58,14 +65,17 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
-          <Route path="/product/:prodId" element={<Detail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/userpanel" element={<UserPanel />} />
-          <Route path="/adminpanel" element={<AdminPanel />} />
+          <Route path="/product/:prodId" element={<Detail />} />
+          <Route exact path="/adminpanel" element={<AdminPanel />} />
+          <Route exact path="/admin/product/:prodId" element={<DetailAdmin />} />
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&
           location.pathname !== "/adminpanel" &&
+          location.pathname !== "/admin/product" &&
+          location.pathname !== "/admin/product/:prodId" &&
           location.pathname !== "/register" && (
             <>
               <DarkMode toggleDarkMode={toggleDarkMode} />

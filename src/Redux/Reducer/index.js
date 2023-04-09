@@ -2,6 +2,7 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
+  GET_PRODUCT_DETAIL_ADMIN,
   GET_CATEGORY,
   GET_SIZE,
   GET_BRAND,
@@ -33,6 +34,7 @@ const initialState = {
   products: [],
   prodRender: [],
   detail: [],
+  detailAdmin: [],
   categories: [],
   filteredProducts: [],
   users: [],
@@ -154,6 +156,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         detail: action.payload,
+      };
+      
+    case GET_PRODUCT_DETAIL_ADMIN:
+      return {
+        ...state,
+        detailAdmin: action.payload,
       };
 
     case GET_CATEGORY:

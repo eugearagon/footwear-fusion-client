@@ -3,6 +3,7 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
+  GET_PRODUCT_DETAIL_ADMIN,
   GET_CATEGORY,
   GET_BRAND,
   GET_COLOR,
@@ -76,6 +77,22 @@ export function getDetail(prodId) {
       return dispatch({
         type: GET_PRODUCT_DETAIL,
         payload: productDetail.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export function getDetailAdmin(prodId) {
+  return async function (dispatch) {
+    try {
+      var productDetailAdmin = await axios.get(
+        `http://localhost:3001/admin/product/${prodId}`,
+        prodId
+      );
+      return dispatch({
+        type: GET_PRODUCT_DETAIL_ADMIN,
+        payload: productDetailAdmin.data,
       });
     } catch (error) {
       console.log(error);

@@ -45,18 +45,18 @@ function App() {
     }
   }, [token, expirationDate, navigate]);
 
+  const isAdminDetail = location.pathname.includes("/admin/");
+
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/login" &&
         location.pathname !== "/login-admin" &&
-        location.pathname !== "/adminpanel" &&
-        location.pathname !== "/admin/product" &&
-        location.pathname !== "/admin/product/:prodId" &&
+        location.pathname !== "/admin" &&
+        !isAdminDetail && // No renderizar navbar, categories, darkmode, whatsapp y footer en la página de detalle de administrador
         location.pathname !== "/register" && (
           <>
             <Navbar />
             <Categories />
-            
           </>
         )}
       <AuthProvider>
@@ -68,14 +68,14 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/userpanel" element={<UserPanel />} />
           <Route path="/product/:prodId" element={<Detail />} />
-          <Route exact path="/adminpanel" element={<AdminPanel />} />
-          <Route exact path="/admin/product/:prodId" element={<DetailAdmin />} />
+
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin/product/:prodId" element={<DetailAdmin />} />
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&
-          location.pathname !== "/adminpanel" &&
-          location.pathname !== "/admin/product" &&
-          location.pathname !== "/admin/product/:prodId" &&
+          location.pathname !== "/admin" &&
+          !isAdminDetail && // No renderizar darkmode, whatsapp y footer en la página de detalle de administrador
           location.pathname !== "/register" && (
             <>
               <DarkMode toggleDarkMode={toggleDarkMode} />
@@ -86,27 +86,6 @@ function App() {
       </AuthProvider>
     </div>
   );
-
-  // return (
-  //   <div className={`App ${darkMode ? "dark-mode" : ""}`}>
-  //     {location.pathname !== "/register" && <Navbar />}
-  //     {location.pathname !== "/register" && <Categories />}
-  //     <AuthProvider>
-  //       <Routes>
-  //         <Route path="/" element={<Home />} />
-  //         <Route path="/register" element={<Register />} />
-  //         <Route path="/login" element={<Login />} />
-  //         <Route path="/product/:prodId" element={<Detail />} />
-  //         <Route path="/cart" element={<Cart />} />
-  //       </Routes>
-  //     </AuthProvider>
-  //     {location.pathname !== "/register" && (
-  //       <DarkMode toggleDarkMode={toggleDarkMode} />
-  //     )}
-  //     {location.pathname !== "/register" && <Whatsapp />}
-  //     {location.pathname !== "/register" && <Footer />}
-  //   </div>
-  // );
 }
 
 export default App;

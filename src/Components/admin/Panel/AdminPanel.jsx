@@ -12,6 +12,7 @@ export default function AdminPanel() {
 
   function handleTabClick(tabName) {
     setActiveTab(tabName);
+    
   }
   return (
     <div className="admin-panel">

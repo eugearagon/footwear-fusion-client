@@ -17,7 +17,7 @@ export default function ProductManage() {
       <div className="content-prod">
       {allProducts?.map((p) => {
         return (
-         <NavLink to={`/admin/product/${p.id}`} key={p.id}>
+         <NavLink onClick={" window.scrollTo(0, 0); "} to={`/admin/product/${p.id}`} key={p.id}>
            <CardAdmin
             key={p.id}
             id={p.id}

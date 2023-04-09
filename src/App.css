@@ -943,7 +943,7 @@ select {
   gap: 30px;
 }
 
-.content-prod{
+.content-prod, .detail-admin{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -954,8 +954,30 @@ select {
   
 }
 
+.detail-admin{
+  position: relative;
+  top: 150px;
+  margin: 0 auto;
+  padding-bottom: 300px;
+}
 
+.detail-admin .img-cont{
+  width: 170px;
+  height: auto;
+  float: left;
+  margin-right: 50px;
+}
 
+.detail-admin img{
+  width: 100%;
+}
+.detail-admin img:hover{
+  cursor: initial;
+}
+
+.detail-admin .detail-der{
+  float: left;
+}
 
 
 

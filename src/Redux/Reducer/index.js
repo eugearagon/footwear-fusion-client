@@ -2,6 +2,7 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
+  GET_PRODUCT_DETAIL_ADMIN,
   GET_CATEGORY,
   GET_SIZE,
   GET_BRAND,
@@ -19,17 +20,21 @@ import {
   ADD_TO_CART,
   GET_CART_BY_ID,
   DELETE_FAV,
+  DELETE_CART,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
+  CLOSE_SESSION,
+  GET_NEWSLETTER
 } from "../Actions/actions";
 
 const initialState = {
   products: [],
   prodRender: [],
   detail: [],
+  detailAdmin: [],
   categories: [],
   filteredProducts: [],
   users: [],
@@ -50,6 +55,7 @@ const initialState = {
   item: [],
   itemFav: [],
   productoAgregado: [],
+  newsletter: []
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -114,7 +120,6 @@ function rootReducer(state = initialState, action) {
       localStorage.setItem("token", user.token);
       localStorage.setItem("loginUser", JSON.stringify(user));
       const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // const expirationDate = new Date(new Date().getTime() + 60 * 1000);
       localStorage.setItem("expirationDate", expirationDate);
       return {
         ...state,
@@ -151,6 +156,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         detail: action.payload,
+      };
+      
+    case GET_PRODUCT_DETAIL_ADMIN:
+      return {
+        ...state,
+        detailAdmin: action.payload,
       };
 
     case GET_CATEGORY:
@@ -315,6 +326,24 @@ function rootReducer(state = initialState, action) {
         ...state,
         itemFav: action.payload,
       };
+    case DELETE_CART:
+      return {
+        ...state,
+        itemFav: action.payload,
+      };
+
+    case CLOSE_SESSION:
+      return {
+        ...state,
+        itemFav: action.payload,
+        item: action.payload
+      };
+
+    case GET_NEWSLETTER:
+      return {
+        ...state,
+        newsletter: action.payload
+      }
 
     default:
       return state;

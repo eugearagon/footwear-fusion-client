@@ -13,10 +13,10 @@ import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
+import AdminPanel from "./Components/admin/Panel/AdminPanel";
+import DetailAdmin from "./Components/admin/Panel/DetailAdmin/DetailAdmin";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { AuthProvider } from "./Components/Register/authContext";
-import { getFav, getUserCart } from "./Redux/Actions";
 import swal from "sweetalert";
 
 function App() {
@@ -27,9 +27,6 @@ function App() {
     setDarkMode(!darkMode);
   }
 
-  const loginUser = useSelector((state) => state.loginUser);
-  const loginUserId = loginUser.id;
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const expirationDate = localStorage.getItem("expirationDate");
@@ -39,43 +36,27 @@ function App() {
       localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
-      navigate("/login");
       swal(
-        "Error",
-        "Credenciales expiradas. Por favor, inicie sesión de nuevo.",
-        "error"
+        "Cuidado",
+        "Credenciales expiradas. Por favor, inicie sesión de nuevo!",
+        "info"
       );
+      window.location.reload();
     }
   }, [token, expirationDate, navigate]);
-
-  //Para el card
-  useEffect(() => {
-    const userCart = async () => {
-      await dispatch(getUserCart(loginUserId));
-    };
-    userCart();
-  }, [dispatch]);
-
-  //Para Favoritos
-  useEffect(() => {
-    const favoritos = async () => {
-      try {
-        await dispatch(getFav(loginUserId));
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    favoritos();
-  }, [dispatch]);
 
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/login" &&
         location.pathname !== "/login-admin" &&
+        location.pathname !== "/adminpanel" &&
+        location.pathname !== "/admin/product" &&
+        location.pathname !== "/admin/product/:prodId" &&
         location.pathname !== "/register" && (
           <>
             <Navbar />
             <Categories />
+            
           </>
         )}
       <AuthProvider>
@@ -84,12 +65,17 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
-          <Route path="/product/:prodId" element={<Detail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/userpanel" element={<UserPanel />} />
+          <Route path="/product/:prodId" element={<Detail />} />
+          <Route exact path="/adminpanel" element={<AdminPanel />} />
+          <Route exact path="/admin/product/:prodId" element={<DetailAdmin />} />
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&
+          location.pathname !== "/adminpanel" &&
+          location.pathname !== "/admin/product" &&
+          location.pathname !== "/admin/product/:prodId" &&
           location.pathname !== "/register" && (
             <>
               <DarkMode toggleDarkMode={toggleDarkMode} />

@@ -3,6 +3,7 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
+  GET_PRODUCT_DETAIL_ADMIN,
   GET_CATEGORY,
   GET_BRAND,
   GET_COLOR,
@@ -23,12 +24,17 @@ import {
   ADD_SIZE,
   ADD_FAV,
   DELETE_FAV,
+  DELETE_CART,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
   GET_CART_BY_ID,
+  CLOSE_SESSION,
+  POST_NEWSLETTER,
+  GET_NEWSLETTER,
+  REGISTRO_NEWSLETTER
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -71,6 +77,22 @@ export function getDetail(prodId) {
       return dispatch({
         type: GET_PRODUCT_DETAIL,
         payload: productDetail.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export function getDetailAdmin(prodId) {
+  return async function (dispatch) {
+    try {
+      var productDetailAdmin = await axios.get(
+        `http://localhost:3001/admin/product/${prodId}`,
+        prodId
+      );
+      return dispatch({
+        type: GET_PRODUCT_DETAIL_ADMIN,
+        payload: productDetailAdmin.data,
       });
     } catch (error) {
       console.log(error);
@@ -415,4 +437,56 @@ export function deletFav(userId, prodId) {
       console.log(error.request.response);
     }
   };
+}
+export function closeSession() {
+  return {
+    type: CLOSE_SESSION,
+    payload: [],
+  };
+}
+
+export const postNewsletter = (email) => {
+  return async function (dispatch) {
+    try {
+      await axios.post("http://localhost:3001/newsletter", email);
+
+      dispatch({
+        type: POST_NEWSLETTER,
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  };
+};
+
+export const getNewsletter = () => {
+  return async function (dispatch) {
+    const token = localStorage.getItem("token");
+    const headers = {
+      "x-access-token": token,
+    };
+    try {
+      const apiGet = await axios.get("http://localhost:3001/newsletter",{headers});
+      const apiData = apiGet.data
+      dispatch({
+        type: GET_NEWSLETTER,
+        payload: apiData
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  };
+};
+
+export const correoRegistroNewsletter = (correo) => {
+  return async function(dispatch){
+    try {
+      await axios.post("http://localhost:3001/correo/registroNewsletter",correo)
+      dispatch({
+        type: REGISTRO_NEWSLETTER
+      })
+    } catch (error) {
+      
+    }
+  }
 }

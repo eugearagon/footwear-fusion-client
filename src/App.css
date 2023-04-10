@@ -979,7 +979,15 @@ select {
   float: left;
 }
 
-
+.rol-block{
+  font-weight: 800;
+  background-color:#c82c2c;
+  color: #d9d9d9;
+  padding: 5px 10px;
+  border-radius: 20px;
+  position: relative;
+  top: 10px;
+}
 
 /*  ----   ADMIN   ---- */
 
@@ -1061,6 +1069,22 @@ select {
   flex-wrap: wrap;
   gap: 70px;
 }
+
+.account{
+  flex-direction: column;
+  gap: 0;
+  align-items: flex-start;
+}
+
+.account h6{
+  margin: 5px 0;
+}
+
+.account h5, .account p{
+  margin: 0;
+}
+
+
 
 .botonera {
   display: flex;

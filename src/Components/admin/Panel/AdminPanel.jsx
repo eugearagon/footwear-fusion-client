@@ -10,11 +10,12 @@ import SalesManage from "./SalesManage";
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("account");
+  const [showNovedades, setShowNovedades] = useState(true);
 
   function handleTabClick(tabName) {
     setActiveTab(tabName);
+    setShowNovedades(false);
   }
-
   return (
     <div className="admin-panel">
       <div className="saludo-admin">
@@ -54,6 +55,23 @@ export default function AdminPanel() {
           <h5>VENTAS</h5>
         </button>
       </div>
+      {showNovedades && (
+        <div className="detail-admin" >
+        <h1>NOVEDADES</h1>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim vitae rerum reprehenderit quisquam. Sequi quibusdam mollitia animi optio ducimus! Laborum repudiandae itaque magnam aperiam expedita! Unde quae nobis consectetur. Saepe?
+        Odio suscipit aspernatur molestias, iure esse repellat pariatur quas cupiditate, enim ipsum maiores voluptatibus libero commodi ad delectus possimus architecto exercitationem excepturi voluptas. Soluta eligendi sapiente voluptate ea esse unde?
+        Exercitationem voluptatibus ea expedita, et assumenda facere dolor voluptas, vero animi reprehenderit porro nulla dignissimos, doloribus fuga molestias esse ut tempore deleniti maxime quidem recusandae consequatur repellat natus quod. Deserunt?</p>
+        <br />
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim vitae rerum reprehenderit quisquam. Sequi quibusdam mollitia animi optio ducimus! Laborum repudiandae itaque magnam aperiam expedita! Unde quae nobis consectetur. Saepe?
+        Odio suscipit aspernatur molestias, iure esse repellat pariatur quas cupiditate, enim ipsum maiores voluptatibus libero commodi ad delectus possimus architecto exercitationem excepturi voluptas. Soluta eligendi sapiente voluptate ea esse unde?
+        Exercitationem voluptatibus ea expedita, et assumenda facere dolor voluptas, vero animi reprehenderit porro nulla dignissimos, doloribus fuga molestias esse ut tempore deleniti maxime quidem recusandae consequatur repellat natus quod. Deserunt?</p>
+        <br />
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim vitae rerum reprehenderit quisquam. Sequi quibusdam mollitia animi optio ducimus! Laborum repudiandae itaque magnam aperiam expedita! Unde quae nobis consectetur. Saepe?
+        Odio suscipit aspernatur molestias, iure esse repellat pariatur quas cupiditate, enim ipsum maiores voluptatibus libero commodi ad delectus possimus architecto exercitationem excepturi voluptas. Soluta eligendi sapiente voluptate ea esse unde?
+        Exercitationem voluptatibus ea expedita, et assumenda facere dolor voluptas, vero animi reprehenderit porro nulla dignissimos, doloribus fuga molestias esse ut tempore deleniti maxime quidem recusandae consequatur repellat natus quod. Deserunt?</p>
+        
+      </div>
+      )}
       {activeTab === "users" && <UserManage />}
       {activeTab === "products" && <ProductManage />}
       {activeTab === "sales" && <SalesManage />}

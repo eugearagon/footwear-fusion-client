@@ -959,25 +959,13 @@ select {
   top: 150px;
   margin: 0 auto;
   padding-bottom: 300px;
+  width: 50%;
+  line-height: 15pt;
 }
 
-.detail-admin .img-cont{
-  width: 170px;
-  height: auto;
-  float: left;
-  margin-right: 50px;
-}
 
-.detail-admin img{
-  width: 100%;
-}
-.detail-admin img:hover{
-  cursor: initial;
-}
 
-.detail-admin .detail-der{
-  float: left;
-}
+
 
 .rol-block{
   font-weight: 800;
@@ -987,6 +975,24 @@ select {
   border-radius: 20px;
   position: relative;
   top: 10px;
+}
+
+.admin-card{
+  width: 290px;
+}
+
+.modif-prod{
+  display: flex;
+  flex-wrap: nowrap;
+  width: 50%;
+}
+
+.modif-prod button{
+  padding: 0;
+  color: #17e1e7;
+  background: none;
+  width: 50%;
+  margin: 0 4px;
 }
 
 /*  ----   ADMIN   ---- */

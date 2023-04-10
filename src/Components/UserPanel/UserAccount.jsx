@@ -13,16 +13,16 @@ export default function UserAccount() {
     <div className="user-content">
       <div className="user-data">
         <img src={cuenta} alt="footwear-fusion" />
+        <div className="data-list">
+        <h6>MI CUENTA</h6>
         {user && user.email ? (
-          <div className="data-list">
-            <h6>INFORMACIÓN DE LA CUENTA</h6>
-
-            <p>{user.email}</p>
-            <br />
+           <div className="zapato-fav account">
+             <p>{user.email}</p>
+            
 
             <h6>SUSCRIPCIONES</h6>
             <p>Todavía no está suscripto al newsletter</p>
-            <br />
+           
 
             <h6>DATOS DE CONTACTO</h6>
             <p>
@@ -71,12 +71,13 @@ export default function UserAccount() {
                 Modificar Dirección
               </button>
             </p>
-          </div>
+           </div>
         ) : (
           <div className="zapato-fav">
             <h1>NO HAY NADIE</h1>
           </div>
         )}
+        </div>
       </div>
     </div>
   );

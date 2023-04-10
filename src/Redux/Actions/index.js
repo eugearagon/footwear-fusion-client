@@ -173,7 +173,7 @@ export function getPrice() {
 export function getUsers() {
   return async function (dispatch) {
     try {
-      var users = await axios.get("http://localhost:3001/users");
+      var users = await axios.get("http://localhost:3001/user");
       return dispatch({
         type: GET_USERS,
         payload: users.data,

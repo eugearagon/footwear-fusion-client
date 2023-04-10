@@ -66,6 +66,13 @@ const handleGetUserCart = () => {
           <span className="cant-carro">{lcdtmab.length}</span>
         )}
       </NavLink>
+       
+      {user.rol === 'admin' && (
+        <NavLink to="/admin">
+          <button>Ver panel admin</button>
+        </NavLink>) }
+
+
     </div>
   );
 }

@@ -3,6 +3,7 @@ import usericon from "../../images/admin-user-icon.png";
 import prodicon from "../../images/admin-prod-icon.png";
 import salesicon from "../../images/admin-sales-icon.png";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import UserManage from "./UserManage";
 import ProductManage from "./ProductManage";
 import SalesManage from "./SalesManage";
@@ -12,8 +13,8 @@ export default function AdminPanel() {
 
   function handleTabClick(tabName) {
     setActiveTab(tabName);
-    
   }
+
   return (
     <div className="admin-panel">
       <div className="saludo-admin">
@@ -25,7 +26,9 @@ export default function AdminPanel() {
         <div></div>
       </div>
       <div className="admin-menu">
-        <img width="150" src={logo} alt="Footwear Fusion" />
+        <Link to="/">
+          <img width="150" src={logo} alt="Footwear Fusion" />
+        </Link>
         <br />
         <h1>PORTAL DEL ADMINISTRADOR</h1>
         <br />

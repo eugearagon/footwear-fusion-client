@@ -10,7 +10,6 @@ import {
   POST_USERS,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
-  FILTER_BY_COLOR,
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   GET_PRICE,
@@ -250,10 +249,7 @@ function rootReducer(state = initialState, action) {
         products: brandProd,
       };
 
-    case FILTER_BY_COLOR:
-      return {};
-
-    case ORDER_BY_PRICE:
+     case ORDER_BY_PRICE:
       const { payload } = action;
       const { products } = state;
       const sortedProducts = [...products].sort((a, b) => a.price - b.price);

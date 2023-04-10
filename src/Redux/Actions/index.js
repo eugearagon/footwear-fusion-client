@@ -6,14 +6,12 @@ import {
   GET_PRODUCT_DETAIL_ADMIN,
   GET_CATEGORY,
   GET_BRAND,
-  GET_COLOR,
   GET_SIZE,
   GET_PUNCTUATION,
   GET_USERS,
   POST_USERS,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
-  FILTER_BY_COLOR,
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   ORDER_BY_BEST_SELLING,
@@ -138,20 +136,6 @@ export function getBrand() {
       });
     } catch (error) {
       console.log("no se encontraron marcas");
-    }
-  };
-}
-
-export function getColor() {
-  return async function (dispatch) {
-    try {
-      var color = await axios.get("http://localhost:3001/filter/color");
-      return dispatch({
-        type: GET_COLOR,
-        payload: color.data,
-      });
-    } catch (error) {
-      console.log("no se encontraron colores");
     }
   };
 }
@@ -296,13 +280,6 @@ export function filterByBrand(brand) {
       type: FILTER_BY_BRAND,
       payload: brand,
     });
-  };
-}
-
-export function filterByColor(payload) {
-  return {
-    type: FILTER_BY_COLOR,
-    payload,
   };
 }
 

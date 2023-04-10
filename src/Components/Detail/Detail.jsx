@@ -15,7 +15,7 @@ import swal from "sweetalert";
 export default function Detail() {
   const { prodId } = useParams();
   const loginUserId = useSelector((state) => state.loginUser.id);
-  const items = useSelector((state) => state.item);
+  // const items = useSelector((state) => state.item);
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -39,7 +39,7 @@ export default function Detail() {
       await dispatch(getUserCart(loginUserId));
     };
     userCart();
-  }, []);
+  }, [dispatch]);
 
   const prod = useSelector((state) => state.detail);
 
@@ -88,17 +88,17 @@ export default function Detail() {
   const selectedSize = useSelector((state) => state.selectedSize);
   const selectedQty = useSelector((state) => state.selectedQty);
 
-  const item = {
-    id: prod.id,
-    code: prod.code,
-    title: prod.title,
-    image: prod.image,
-    price: prod.price,
-    marca: marca,
-    size: selectedSize,
-    qty: selectedQty,
-  };
-  console.log("este es el console.log de item", item);
+  // const item = {
+  //   id: prod.id,
+  //   code: prod.code,
+  //   title: prod.title,
+  //   image: prod.image,
+  //   price: prod.price,
+  //   marca: marca,
+  //   size: selectedSize,
+  //   qty: selectedQty,
+  // };
+  // console.log("este es el console.log de item", item);
 
   const handleSizeSelect = (e) => {
     dispatch(addSize(e.target.value));
@@ -111,7 +111,10 @@ export default function Detail() {
   const token = localStorage.getItem("token");
 
   const handleAddToCart = async () => {
-    if (!token) navigate("/login");
+    if (!token) {
+      swal("Error", "Logueate para continuar!", "error");
+      return navigate("/login");
+    }
     if (!selectedSize || !selectedQty) {
       swal(
         "Error",
@@ -120,7 +123,7 @@ export default function Detail() {
       );
       return navigate(`/product/${prodId}`);
     }
-    await dispatch(addToCart(item, loginUserId));
+    await dispatch(addToCart(loginUserId, prodId));
     await dispatch(getUserCart(loginUserId));
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };
@@ -139,8 +142,7 @@ export default function Detail() {
         "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
         "error"
       );
-      navigate("/product/:prodId");
-      return;
+      return navigate(`/product/${prodId}`);
     }
     await dispatch(addFav(loginUserId, prodId));
     await dispatch(getFav(loginUserId));

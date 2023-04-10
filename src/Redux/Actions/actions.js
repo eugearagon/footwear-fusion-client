@@ -2,6 +2,7 @@
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCTS_BY_NAME = " GET_PRODUCTS_BY_NAME"; 
 export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL";
+export const GET_PRODUCT_DETAIL_ADMIN = "GET_PRODUCT_DETAIL_ADMIN";
 export const GET_CATEGORY = "GET_CATEGORY"
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
 export const GET_BRAND= "GET_BRAND";// recibe id 
@@ -18,6 +19,7 @@ export const ORDER_BY_BEST_RATING= "ORDER_BY_BEST_RATING";
 export const ORDER_BY_BEST_SELLING="ORDER_BY_BEST_SELLING"
 export const POST_NEWSLETTER="POST_NEWSLETTER";
 export const GET_NEWSLETTER="GET_NEWSLETTER";
+export const REGISTRO_NEWSLETTER = "REGISTRO_NEWSLETTER"
 //acciones del detail 
 export const ADD_QUANTITY="ADD_QUANTITY";
 export const ADD_SIZE="ADD SIZE";
@@ -27,6 +29,7 @@ export const GET_CART_BY_ID='GET_CART_BY_ID';
 export const GET_USERS_FAVORITES="GET_USERS_FAVORITES";
 export const ADD_FAV="ADD_FAV";
 export const DELETE_FAV="DELETE_FAV";
+export const DELETE_CART="DELETE_CART";
 //acciones del carrito
 export const CHANGE_PRODUCT="CHANGE_PRODUCT";
 export const BUY="BUY";
@@ -39,3 +42,4 @@ export const POST_INGRESO = "POST_INFRESO";
 export const BORRAR_TOKEN = "BORRAR_TOKEN";
 export const POST_REGISTRO = "POST_REGISTRO";
 export const POST_GOOGLE = "POST_GOOGLE";
+export const CLOSE_SESSION = "CLOSE_SESSION";

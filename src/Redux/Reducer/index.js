@@ -25,6 +25,8 @@ import {
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
+  CLOSE_SESSION,
+  GET_NEWSLETTER
 } from "../Actions/actions";
 
 const initialState = {

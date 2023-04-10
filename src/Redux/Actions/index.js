@@ -23,7 +23,6 @@ import {
   ADD_FAV,
   DELETE_FAV,
   DELETE_CART,
-  DELETE_CART,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
@@ -422,12 +421,6 @@ return{
   type: CLOSE_SESSION,
   payload: []
 }
-}
-export function closeSession() {
-  return {
-    type: CLOSE_SESSION,
-    payload: [],
-  };
 }
 
 export const postNewsletter = (email) => {

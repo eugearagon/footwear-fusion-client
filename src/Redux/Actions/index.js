@@ -3,16 +3,15 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
+  GET_PRODUCT_DETAIL_ADMIN,
   GET_CATEGORY,
   GET_BRAND,
-  GET_COLOR,
   GET_SIZE,
   GET_PUNCTUATION,
   GET_USERS,
   POST_USERS,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
-  FILTER_BY_COLOR,
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   ORDER_BY_BEST_SELLING,
@@ -24,6 +23,7 @@ import {
   ADD_FAV,
   DELETE_FAV,
   DELETE_CART,
+  DELETE_CART,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
@@ -31,6 +31,9 @@ import {
   POST_GOOGLE,
   GET_CART_BY_ID,
   CLOSE_SESSION,
+  POST_NEWSLETTER,
+  GET_NEWSLETTER,
+  REGISTRO_NEWSLETTER
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -73,6 +76,22 @@ export function getDetail(prodId) {
       return dispatch({
         type: GET_PRODUCT_DETAIL,
         payload: productDetail.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export function getDetailAdmin(prodId) {
+  return async function (dispatch) {
+    try {
+      var productDetailAdmin = await axios.get(
+        `http://localhost:3001/admin/product/${prodId}`,
+        prodId
+      );
+      return dispatch({
+        type: GET_PRODUCT_DETAIL_ADMIN,
+        payload: productDetailAdmin.data,
       });
     } catch (error) {
       console.log(error);
@@ -123,20 +142,6 @@ export function getBrand() {
   };
 }
 
-export function getColor() {
-  return async function (dispatch) {
-    try {
-      var color = await axios.get("http://localhost:3001/filter/color");
-      return dispatch({
-        type: GET_COLOR,
-        payload: color.data,
-      });
-    } catch (error) {
-      console.log("no se encontraron colores");
-    }
-  };
-}
-
 export function getPrice() {
   return async function (dispatch) {
     try {
@@ -154,7 +159,7 @@ export function getPrice() {
 export function getUsers() {
   return async function (dispatch) {
     try {
-      var users = await axios.get("http://localhost:3001/users");
+      var users = await axios.get("http://localhost:3001/user");
       return dispatch({
         type: GET_USERS,
         payload: users.data,
@@ -289,13 +294,6 @@ export function filterByBrand(brand) {
   };
 }
 
-export function filterByColor(payload) {
-  return {
-    type: FILTER_BY_COLOR,
-    payload,
-  };
-}
-
 export function orderByBestSelling(payload) {
   return {
     type: ORDER_BY_BEST_SELLING,
@@ -425,4 +423,55 @@ return{
   payload: []
 }
 }
+export function closeSession() {
+  return {
+    type: CLOSE_SESSION,
+    payload: [],
+  };
+}
 
+export const postNewsletter = (email) => {
+  return async function (dispatch) {
+    try {
+      await axios.post("http://localhost:3001/newsletter", email);
+
+      dispatch({
+        type: POST_NEWSLETTER,
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  };
+};
+
+export const getNewsletter = () => {
+  return async function (dispatch) {
+    const token = localStorage.getItem("token");
+    const headers = {
+      "x-access-token": token,
+    };
+    try {
+      const apiGet = await axios.get("http://localhost:3001/newsletter",{headers});
+      const apiData = apiGet.data
+      dispatch({
+        type: GET_NEWSLETTER,
+        payload: apiData
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  };
+};
+
+export const correoRegistroNewsletter = (correo) => {
+  return async function(dispatch){
+    try {
+      await axios.post("http://localhost:3001/correo/registroNewsletter",correo)
+      dispatch({
+        type: REGISTRO_NEWSLETTER
+      })
+    } catch (error) {
+      
+    }
+  }
+}

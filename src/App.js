@@ -1,6 +1,7 @@
 import "./App.css";
 
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";
 import Login from "./Components/Register/Login";
@@ -13,9 +14,11 @@ import DarkMode from "./Components/DarkMode/DarkMode";
 import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
+import AdminPanel from "./Components/admin/Panel/AdminPanel";
+import DetailAdmin from "./Components/admin/Panel/DetailAdmin/DetailAdmin";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { AuthProvider } from "./Components/Register/authContext";
+import swal from "sweetalert";
 import { getFav, getUserCart } from "./Redux/Actions";
 
 function App() {
@@ -38,11 +41,16 @@ function App() {
       localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
-      navigate("/login");
-      alert("Credenciales expiradas. Por favor, inicie sesión de nuevo.");
+      swal(
+        "Cuidado",
+        "Credenciales expiradas. Por favor, inicie sesión de nuevo!",
+        "info"
+      );
+      window.location.reload();
     }
   }, [token, expirationDate, navigate]);
 
+  const isAdminDetail = location.pathname.includes("/admin/");
   // //Para el card
   // useEffect(() => {
   //   const userCart = async () => {
@@ -67,6 +75,8 @@ function App() {
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/login" &&
         location.pathname !== "/login-admin" &&
+        location.pathname !== "/admin" &&
+        !isAdminDetail && // No renderizar navbar, categories, darkmode, whatsapp y footer en la página de detalle de administrador
         location.pathname !== "/register" && (
           <>
             <Navbar />
@@ -79,12 +89,17 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
-          <Route path="/product/:prodId" element={<Detail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/userpanel" element={<UserPanel />} />
+          <Route path="/product/:prodId" element={<Detail />} />
+
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin/product/:prodId" element={<DetailAdmin />} />
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&
+          location.pathname !== "/admin" &&
+          !isAdminDetail && // No renderizar darkmode, whatsapp y footer en la página de detalle de administrador
           location.pathname !== "/register" && (
             <>
               <DarkMode toggleDarkMode={toggleDarkMode} />
@@ -95,27 +110,6 @@ function App() {
       </AuthProvider>
     </div>
   );
-
-  // return (
-  //   <div className={`App ${darkMode ? "dark-mode" : ""}`}>
-  //     {location.pathname !== "/register" && <Navbar />}
-  //     {location.pathname !== "/register" && <Categories />}
-  //     <AuthProvider>
-  //       <Routes>
-  //         <Route path="/" element={<Home />} />
-  //         <Route path="/register" element={<Register />} />
-  //         <Route path="/login" element={<Login />} />
-  //         <Route path="/product/:prodId" element={<Detail />} />
-  //         <Route path="/cart" element={<Cart />} />
-  //       </Routes>
-  //     </AuthProvider>
-  //     {location.pathname !== "/register" && (
-  //       <DarkMode toggleDarkMode={toggleDarkMode} />
-  //     )}
-  //     {location.pathname !== "/register" && <Whatsapp />}
-  //     {location.pathname !== "/register" && <Footer />}
-  //   </div>
-  // );
 }
 
 export default App;

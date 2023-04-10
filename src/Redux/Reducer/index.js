@@ -2,6 +2,7 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
+  GET_PRODUCT_DETAIL_ADMIN,
   GET_CATEGORY,
   GET_SIZE,
   GET_BRAND,
@@ -9,7 +10,6 @@ import {
   POST_USERS,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
-  FILTER_BY_COLOR,
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   GET_PRICE,
@@ -25,13 +25,13 @@ import {
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
-  CLOSE_SESSION,
 } from "../Actions/actions";
 
 const initialState = {
   products: [],
   prodRender: [],
   detail: [],
+  detailAdmin: [],
   categories: [],
   filteredProducts: [],
   users: [],
@@ -52,6 +52,7 @@ const initialState = {
   item: [],
   itemFav: [],
   productoAgregado: [],
+  newsletter: []
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -153,6 +154,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
+      
+    case GET_PRODUCT_DETAIL_ADMIN:
+      return {
+        ...state,
+        detailAdmin: action.payload,
+      };
 
     case GET_CATEGORY:
       return {
@@ -239,10 +246,7 @@ function rootReducer(state = initialState, action) {
         products: brandProd,
       };
 
-    case FILTER_BY_COLOR:
-      return {};
-
-    case ORDER_BY_PRICE:
+     case ORDER_BY_PRICE:
       const { payload } = action;
       const { products } = state;
       const sortedProducts = [...products].sort((a, b) => a.price - b.price);
@@ -328,6 +332,12 @@ function rootReducer(state = initialState, action) {
         itemFav: action.payload,
         item: action.payload
       };
+
+    case GET_NEWSLETTER:
+      return {
+        ...state,
+        newsletter: action.payload
+      }
 
     default:
       return state;

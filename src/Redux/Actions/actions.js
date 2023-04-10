@@ -4,10 +4,8 @@ export const GET_PRODUCTS_BY_NAME = " GET_PRODUCTS_BY_NAME";
 export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL";
 export const GET_CATEGORY = "GET_CATEGORY"
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
-export const GET_BRAND= "GET_BRAND";// recibe id 
+export const GET_BRAND= "GET_BRAND";
 export const FILTER_BY_BRAND = "FILTER_BY_BRAND";
-export const GET_COLOR= "GET_COLOR";
-export const FILTER_BY_COLOR="FILTER_BY_COLOR"
 export const GET_SIZE= "GET_SIZE";
 export const FILTER_BY_SIZE = "FILTER_BY_SIZE";
 export const GET_PRICE="GET_PRICE"
@@ -16,8 +14,12 @@ export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
 export const GET_PUNCTUATION= "GET_PUNCTUATION";
 export const ORDER_BY_BEST_RATING= "ORDER_BY_BEST_RATING";
 export const ORDER_BY_BEST_SELLING="ORDER_BY_BEST_SELLING"
+export const GET_STOCK="GET STOCK"
+export const PUT_STOCK="PUT_STOCK"
+//actions del footer
 export const POST_NEWSLETTER="POST_NEWSLETTER";
 export const GET_NEWSLETTER="GET_NEWSLETTER";
+export const REGISTRO_NEWSLETTER = "REGISTRO_NEWSLETTER"
 //acciones del detail 
 export const ADD_QUANTITY="ADD_QUANTITY";
 export const ADD_SIZE="ADD SIZE";
@@ -41,3 +43,16 @@ export const BORRAR_TOKEN = "BORRAR_TOKEN";
 export const POST_REGISTRO = "POST_REGISTRO";
 export const POST_GOOGLE = "POST_GOOGLE";
 export const CLOSE_SESSION = "CLOSE_SESSION";
+//acciones del administrador
+export const GET_USER_DETAIL=" GET_USER_DETAIL"
+export const PUT_USER="PUT_USER"
+export const GET_PRODUCT_DETAIL_ADMIN = "GET_PRODUCT_DETAIL_ADMIN";
+export const PUT_PRODUCT_PRICE="PUT_PRODUCT_PRICE"
+export const PUT_PRODUCT_IMAGE="PUT_PRODUCT_IMAGE"
+export const GET_SALES="GET_SALES"
+
+
+
+
+
+

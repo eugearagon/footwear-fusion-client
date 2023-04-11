@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   GET_PRODUCTS,
+  POST_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
   GET_PRODUCT_DETAIL_ADMIN,
@@ -48,6 +49,22 @@ export function getProducts() {
     }
   };
 }
+
+export function postProducts() {
+  return async function (dispatch) {
+    try {
+      var products = await axios.post("http://localhost:3001/product");
+      return dispatch({
+        type: GET_PRODUCTS,
+        payload: products.data,
+      });
+    } catch (error) {
+      console.log("no se encontraron productos");
+    }
+  };
+}
+
+
 
 export function getProductsByName(name) {
   return async function (dispatch) {

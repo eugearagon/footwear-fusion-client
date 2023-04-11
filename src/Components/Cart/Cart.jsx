@@ -1,13 +1,21 @@
 import { NavLink } from "react-router-dom";
 import promos from "../images/promos.jpg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import swal from "sweetalert";
+import { deleteFromCart, getUserCart } from "../../Redux/Actions"; 
+import { useNavigate } from "react-router-dom";
+
 
 
 
 export default function Cart() {
+  const dispatch = useDispatch();
   const item = useSelector((state) => state.item);
   console.log(item, 'item del cart');
+  const loginUserId = useSelector((state) => state.loginUser.id);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
 
   const totalPrice = item.reduce(
@@ -24,6 +32,16 @@ export default function Cart() {
       .then((res) => (window.location.href = res.data.global.init_point))
       .catch((error) => console.log(error))
   }
+
+  const handleDeleteFromCart = async (loginUserId, id, talle, qty) => {
+    if (!token) {
+      swal("Error", "Logueate para continuar!", "error"); 
+      return navigate("/login");
+    }
+    await dispatch(deleteFromCart(loginUserId, id, talle, qty));
+    await dispatch(getUserCart(loginUserId));
+    swal("Producto eliminado del carrito!", "success");
+  };
 
 
   return (
@@ -53,7 +71,7 @@ export default function Cart() {
                   Cantidad <b>{e.qty}</b>
                 </p>
               </div>
-              <button className="eliminar"><small>eliminar</small></button>
+              <button className="eliminar" onClick={() => handleDeleteFromCart(loginUserId, e.id, e.talle, e.qty)}><small>eliminar</small></button>
             </div>
             <div className="zapato-precio">
               <h2>Precio</h2>

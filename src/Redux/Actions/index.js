@@ -32,7 +32,8 @@ import {
   CLOSE_SESSION,
   POST_NEWSLETTER,
   GET_NEWSLETTER,
-  REGISTRO_NEWSLETTER
+  REGISTRO_NEWSLETTER,
+  DELETE_PRODUCT_CART
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -308,12 +309,8 @@ export function priceRangeSelector(payload) {
   };
 
 }
-export function addToCart(item, loginUserId) {
-  // console.log('actions', item);
-  // console.log('actions', loginUserId);
+export function addToCart(loginUserId, item) {
   return async function (dispatch) {
-    console.log('actions', item);
-    console.log('actions', loginUserId);  
     try {
       var userCart = await axios.post(
         `http://localhost:3001/cart/${loginUserId}`,
@@ -322,6 +319,26 @@ export function addToCart(item, loginUserId) {
       return dispatch({
         type: ADD_TO_CART,
         payload: userCart
+      });
+    } catch (error) {
+      console.log(error);
+    }
+}
+}
+
+export function deleteFromCart(loginUserId, id, talle, qty) {
+  return async function (dispatch) {
+    console.log('actions', id);
+    console.log('actions', loginUserId);  
+    console.log('actions', talle); 
+    try {
+      var currentUserCart = await axios.delete(
+        `http://localhost:3001/compraproducto/${loginUserId}`,
+        { data: { id, talle, qty } }
+      );
+      return dispatch({
+        type: DELETE_PRODUCT_CART,
+        payload: currentUserCart
       });
     } catch (error) {
       console.log(error);

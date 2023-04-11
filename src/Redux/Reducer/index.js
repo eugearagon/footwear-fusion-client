@@ -26,7 +26,8 @@ import {
   POST_REGISTRO,
   POST_GOOGLE,
   CLOSE_SESSION,
-  GET_NEWSLETTER
+  GET_NEWSLETTER,
+  DELETE_PRODUCT_CART
 } from "../Actions/actions";
 
 const initialState = {
@@ -302,6 +303,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         productoAgregado: [...action.payload],
+      };
+
+    case DELETE_PRODUCT_CART:
+      return {
+        ...state,
       };
 
     case GET_CART_BY_ID:

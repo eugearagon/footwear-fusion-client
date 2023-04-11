@@ -54,5 +54,6 @@ export const GET_PRODUCT_DETAIL_ADMIN = "GET_PRODUCT_DETAIL_ADMIN";
 export const PUT_PRODUCT_PRICE="PUT_PRODUCT_PRICE"
 export const PUT_PRODUCT_IMAGE="PUT_PRODUCT_IMAGE"
 export const GET_SALES="GET_SALES"
+export const POST_PRODUCTS="POST_PRODUCTS"
 //accion orden de compra
 export const POST_ORDEN = "POST_ORDEN";

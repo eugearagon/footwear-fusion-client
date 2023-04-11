@@ -4,7 +4,7 @@ import { useState } from "react";
 import { updateUser } from "../../Redux/Actions";
 
 export default function UserAccount() {
-  const user = useSelector((state) => state.datosUser);
+  const user = useSelector((state) => state.loginUser);
   const dispatch = useDispatch();
 
   const [showNameInput, setShowNameInput] = useState(false);

@@ -314,11 +314,7 @@ export function priceRangeSelector(payload) {
   };
 }
 export function addToCart(item, loginUserId) {
-  // console.log('actions', item);
-  // console.log('actions', loginUserId);
   return async function (dispatch) {
-    console.log("actions", item);
-    console.log("actions", loginUserId);
     try {
       var userCart = await axios.post(
         `http://localhost:3001/cart/${loginUserId}`,

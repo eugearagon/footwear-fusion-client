@@ -74,7 +74,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/userpanel" element={<UserPanel />} />
           <Route path="/product/:prodId" element={<Detail />} />
-          <Route exact path="/adminpanel" element={<AdminPanel />} />
+          <Route exact path="/admin" element={<AdminPanel />} />
           {/* para mercadopago */}
           <Route path="/terminarCompra" element = {<AntesDeComprar />} />
           <Route path="/success" element ={<Succes />} />

@@ -15,7 +15,6 @@ import swal from "sweetalert";
 export default function Detail() {
   const { prodId } = useParams();
   const loginUserId = useSelector((state) => state.loginUser.id);
-  // const items = useSelector((state) => state.item);
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);

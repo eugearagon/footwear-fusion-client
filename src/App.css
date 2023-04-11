@@ -72,9 +72,8 @@ p {
 }
 
 button {
-  color: aliceblue;
+  color: #0d0f12;
   background-color: #17e1e7;
-  color: #001e40;
   border: none;
   font-size: 9pt;
   font-weight: 500;
@@ -122,6 +121,26 @@ select {
 
 .popup a:hover {
   opacity: 1;
+}
+
+.prod-popup{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 600px !important;
+}
+
+.widgetContainer span {
+  color:#17e1e7;
+  border: none;
+  font-size: 9pt;
+  font-weight: 500;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.widgetContainer button{
+  color: #0d0f12;
 }
 
 /* register landing */

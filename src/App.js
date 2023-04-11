@@ -15,7 +15,6 @@ import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
 import AdminPanel from "./Components/admin/Panel/AdminPanel";
-import DetailAdmin from "./Components/admin/Panel/DetailAdmin/DetailAdmin";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
 import swal from "sweetalert";
@@ -45,7 +44,7 @@ function App() {
         "Credenciales expiradas. Por favor, inicie sesión de nuevo!",
         "info"
       );
-      window.location.reload();
+      navigate("/login");
     }
   }, [token, expirationDate, navigate]);
 
@@ -74,7 +73,6 @@ function App() {
           <Route path="/product/:prodId" element={<Detail />} />
 
           <Route path="/admin" element={<AdminPanel />} />
-          <Route path="/admin/product/:prodId" element={<DetailAdmin />} />
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&

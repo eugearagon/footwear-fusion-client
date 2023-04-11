@@ -60,7 +60,7 @@ export function postProducts() {
     try {
       var products = await axios.post("http://localhost:3001/product");
       return dispatch({
-        type: GET_PRODUCTS,
+        type: POST_PRODUCTS,
         payload: products.data,
       });
     } catch (error) {

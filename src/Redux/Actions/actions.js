@@ -47,5 +47,12 @@ export const CLOSE_SESSION = "CLOSE_SESSION";
 export const POST_MERCADO_PAGO = "POST_MERCADO_PAGO";
 export const GET_MERCADO_PAGO = "GET_MERCADO_PAGO";
 export const GET_DATOS_USER = "GET_DATOS_USER";
+//acciones del administrador
+export const GET_USER_DETAIL=" GET_USER_DETAIL"
+export const PUT_USER="PUT_USER"
+export const GET_PRODUCT_DETAIL_ADMIN = "GET_PRODUCT_DETAIL_ADMIN";
+export const PUT_PRODUCT_PRICE="PUT_PRODUCT_PRICE"
+export const PUT_PRODUCT_IMAGE="PUT_PRODUCT_IMAGE"
+export const GET_SALES="GET_SALES"
 //accion orden de compra
 export const POST_ORDEN = "POST_ORDEN";

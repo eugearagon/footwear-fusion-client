@@ -319,7 +319,7 @@ export function priceRangeSelector(payload) {
     payload,
   };
 }
-export function addToCart(item, loginUserId) {
+export function addToCart(loginUserId, item) {
   // console.log('actions', item);
   // console.log('actions', loginUserId);
   return async function (dispatch) {

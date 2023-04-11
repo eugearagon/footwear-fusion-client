@@ -21,6 +21,9 @@ export default function CardAdmin({ id, title, price, image, marca }) {
     <h5>${Number(price).toLocaleString('de-DE')}.-</h5>
     <button onClick={handleModifyPrice}>Modificar precio</button>
     <button onClick={handleModifyImage}>Modificar imagen</button>
+    <button onClick={handleModifyImage}>Modificar estado</button>
+    <button onClick={handleModifyImage}>Modificar stock</button>
+
   </div>
   );
 }

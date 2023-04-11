@@ -16,15 +16,27 @@ export default function Cart() {
     (total, item) => total + item.price * item.qty,
     0
   );
+  
+  // const player = {
+  //   phone: {
+  //     number: 1150645938
+  //   },
+  //   address: {
+  //     street_name: "Piñero 1247"
+  //   },
+  //   email: "Jonathan92_24@hotmail.com",
+  //   name: "Jonathan",
+  //   surname: "Benitez"
+  // }
 
-  const mpPago = async ()=>{
-    try {
-      await dispatch(mercadoPago(item))
-    } catch (error) {
-      console.log(error.menssage);
-    }
+  // const mpPago = async ()=>{
+  //   try {
+  //     await dispatch(mercadoPago(item, player))
+  //   } catch (error) {
+  //     console.log(error.menssage);
+  //   }
    
-  }
+  // }
 
 
   return (
@@ -73,7 +85,10 @@ export default function Cart() {
         <img src={promos} alt="" />
         <div className="ahora-si">
         <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
-          <button onClick={mpPago}>COMPRAR</button>
+          {/* <button onClick={mpPago}>COMPRAR</button> */}
+          <NavLink to={"/terminarCompra"}>
+            <button>Terminar compra</button>
+          </NavLink>
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>
           </NavLink>

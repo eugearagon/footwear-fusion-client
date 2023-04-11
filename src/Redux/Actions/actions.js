@@ -43,4 +43,8 @@ export const BORRAR_TOKEN = "BORRAR_TOKEN";
 export const POST_REGISTRO = "POST_REGISTRO";
 export const POST_GOOGLE = "POST_GOOGLE";
 export const CLOSE_SESSION = "CLOSE_SESSION";
-export const POST_MERCADO_PAGO = "POST_MERCADO_PAGO"
+export const POST_MERCADO_PAGO = "POST_MERCADO_PAGO";
+export const GET_MERCADO_PAGO = "GET_MERCADO_PAGO";
+export const GET_DATOS_USER = "GET_DATOS_USER";
+//accion orden de compra
+export const POST_ORDEN = "POST_ORDEN";

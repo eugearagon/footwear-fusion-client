@@ -18,6 +18,8 @@ import DetailAdmin from "./Components/admin/Panel/DetailAdmin/DetailAdmin";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
 import swal from "sweetalert";
+import AntesDeComprar from "./Components/AntesDeComprar";
+import Succes from "./Components/Succes";
 
 function App() {
   const location = useLocation();
@@ -36,6 +38,7 @@ function App() {
       localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
+      localStorage.removeItem("mercadoPago");
       swal(
         "Cuidado",
         "Credenciales expiradas. Por favor, inicie sesión de nuevo!",
@@ -70,6 +73,9 @@ function App() {
           <Route path="/product/:prodId" element={<Detail />} />
           <Route exact path="/adminpanel" element={<AdminPanel />} />
           <Route exact path="/admin/product/:prodId" element={<DetailAdmin />} />
+          {/* para mercadopago */}
+          <Route path="/terminarCompra" element = {<AntesDeComprar />} />
+          <Route path="/success" element ={<Succes />} />
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&

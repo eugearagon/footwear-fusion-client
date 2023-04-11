@@ -41,7 +41,7 @@ const initialState = {
   categories: [],
   filteredProducts: [],
   users: [],
-  datosUser: {
+  dataUser: {
     name: "",
     last_name: "",
     phone: "",
@@ -163,6 +163,12 @@ function rootReducer(state = initialState, action) {
           rol: "",
           token: "",
         },
+        dataUsers:{
+          name:"",
+          last_name:"",
+          phone:"",
+          address:""
+        },
         postMercadoPago: null,
       };
 
@@ -208,7 +214,7 @@ function rootReducer(state = initialState, action) {
     case UPDATE_USER_SUCCESS:
       return {
         ...state,
-        loginUser: action.payload,
+        dataUsers: action.payload,
         error: null,
       };
     case UPDATE_USER_FAILURE:

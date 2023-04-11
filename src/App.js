@@ -40,8 +40,8 @@ function App() {
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
       swal(
-        "Cuidado",
-        "Credenciales expiradas. Por favor, inicie sesión de nuevo!",
+        "¡Volvé a loguearte!",
+        "Tus credenciales expiraron ",
         "info"
       );
       navigate("/login");

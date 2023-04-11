@@ -8,7 +8,6 @@ import {
   GET_SIZE,
   GET_BRAND,
   GET_USERS,
-  POST_USERS,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
   FILTER_BY_SIZE,
@@ -27,7 +26,9 @@ import {
   POST_REGISTRO,
   POST_GOOGLE,
   CLOSE_SESSION,
-  GET_NEWSLETTER
+  GET_NEWSLETTER,
+  UPDATE_USER_FAILURE,
+  UPDATE_USER_SUCCESS
 } from "../Actions/actions";
 
 const initialState = {
@@ -55,7 +56,8 @@ const initialState = {
   item: [],
   itemFav: [],
   productoAgregado: [],
-  newsletter: []
+  newsletter: [],
+  error: null
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -95,6 +97,8 @@ function rootReducer(state = initialState, action) {
           token: userIngreso.token,
         },
       };
+
+      
 
     case POST_REGISTRO:
       const userRegistro = action.payload;
@@ -191,10 +195,17 @@ function rootReducer(state = initialState, action) {
         users: action.payload,
       };
 
-    case POST_USERS:
-      return {
-        ...state,
-      };
+  case UPDATE_USER_SUCCESS:
+        return {
+          ...state,
+          loginUser: action.payload,
+          error: null
+        };
+   case UPDATE_USER_FAILURE:
+        return {
+          ...state,
+          error: action.payload
+        };
 
     case GET_PRICE:
       return {

@@ -1014,6 +1014,10 @@ select {
   margin: 0 4px;
 }
 
+.number{
+  width: 70px;
+}
+
 /*  ----   ADMIN   ---- */
 
 .swal-overlay {

@@ -10,7 +10,8 @@ import {
   GET_SIZE,
   GET_PUNCTUATION,
   GET_USERS,
-  POST_USERS,
+ UPDATE_USER_SUCCESS,
+ UPDATE_USER_FAILURE,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
   FILTER_BY_SIZE,
@@ -59,7 +60,7 @@ export function postProducts() {
         payload: products.data,
       });
     } catch (error) {
-      console.log("no se encontraron productos");
+      console.log("faltan campos por llenar");
     }
   };
 }
@@ -185,16 +186,25 @@ export function getUsers() {
   };
 }
 
-export function postUsers(payload) {
-  return async function (dispatch) {
+export const updateUser = (id, updatedData) => {
+  return async (dispatch) => {
     try {
-      const newUser = await axios.post("http://localhost:3001/", payload);
-      return newUser;
-    } catch (error) {
-      console.log(error);
+      const res = await axios.post(`http://localhost:3001/user/${id}`, updatedData);
+      console.log('Response from server: ', res); // Agregar este console.log
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: res.data
+      });
+    } catch (err) {
+      console.log('Error updating user: ', err); // Agregar este console.log
+      dispatch({
+        type: UPDATE_USER_FAILURE,
+        payload: err.response.data.message
+      });
     }
   };
-}
+};
+
 
 export const ingreso = (email) => {
   return async function (dispatch) {

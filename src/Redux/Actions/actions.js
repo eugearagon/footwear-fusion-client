@@ -37,7 +37,8 @@ export const DELETE_PRODUCT="DELETE_PRODUCT";
 //acciones del usuario
 export const LOG_IN="LOG_IN";
 export const GET_USERS="GET_USERS";
-export const POST_USERS="POST_USERS";
+export const  UPDATE_USER_SUCCESS="UPDATE_USER_SUCCESS";
+export const  UPDATE_USER_FAILURE="UPDATE_USER_FAILURE";
 export const POST_INGRESO = "POST_INFRESO";
 export const BORRAR_TOKEN = "BORRAR_TOKEN";
 export const POST_REGISTRO = "POST_REGISTRO";

@@ -3,7 +3,6 @@ import {
   POST_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
-  GET_PRODUCT_DETAIL_ADMIN,
   GET_CATEGORY,
   GET_SIZE,
   GET_BRAND,
@@ -27,8 +26,11 @@ import {
   POST_GOOGLE,
   CLOSE_SESSION,
   GET_NEWSLETTER,
+  POST_MERCADO_PAGO,
+  GET_MERCADO_PAGO,
+  GET_DATOS_USER,
+  UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
-  UPDATE_USER_SUCCESS
 } from "../Actions/actions";
 
 const initialState = {
@@ -39,6 +41,12 @@ const initialState = {
   categories: [],
   filteredProducts: [],
   users: [],
+  datosUser: {
+    name: "",
+    last_name: "",
+    phone: "",
+    address: "",
+  },
   loginUser: {
     id: "",
     email: "",
@@ -57,19 +65,26 @@ const initialState = {
   itemFav: [],
   productoAgregado: [],
   newsletter: [],
-  error: null
+  postMercadoPago: null,
+  getMercadoPago: null,
 };
 
 const storedUser = localStorage.getItem("loginUser");
 const storedToken = localStorage.getItem("token");
+const storeMp = localStorage.getItem("mercadoPago");
 
 const userFromStorage = storedUser
   ? JSON.parse(storedUser)
   : initialState.loginUser;
 const tokenFromStorage = storedToken ? storedToken : "";
 
+const mpFromStorage = storeMp
+  ? JSON.parse(storeMp)
+  : initialState.postMercadoPago;
+
 initialState.loginUser = userFromStorage;
 initialState.loginUser.token = tokenFromStorage;
+initialState.postMercadoPago = mpFromStorage;
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -97,8 +112,6 @@ function rootReducer(state = initialState, action) {
           token: userIngreso.token,
         },
       };
-
-      
 
     case POST_REGISTRO:
       const userRegistro = action.payload;
@@ -141,6 +154,7 @@ function rootReducer(state = initialState, action) {
       localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
+      localStorage.removeItem("mercadoPago");
       return {
         ...state,
         loginUser: {
@@ -149,6 +163,7 @@ function rootReducer(state = initialState, action) {
           rol: "",
           token: "",
         },
+        postMercadoPago: null,
       };
 
     case GET_PRODUCTS_BY_NAME:
@@ -162,12 +177,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
-      
-    case GET_PRODUCT_DETAIL_ADMIN:
-      return {
-        ...state,
-        detailAdmin: action.payload,
-      };
+
 
     case GET_CATEGORY:
       return {
@@ -195,17 +205,17 @@ function rootReducer(state = initialState, action) {
         users: action.payload,
       };
 
-  case UPDATE_USER_SUCCESS:
-        return {
-          ...state,
-          loginUser: action.payload,
-          error: null
-        };
-   case UPDATE_USER_FAILURE:
-        return {
-          ...state,
-          error: action.payload
-        };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loginUser: action.payload,
+        error: null,
+      };
+    case UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
 
     case GET_PRICE:
       return {
@@ -261,7 +271,7 @@ function rootReducer(state = initialState, action) {
         products: brandProd,
       };
 
-     case ORDER_BY_PRICE:
+    case ORDER_BY_PRICE:
       const { payload } = action;
       const { products } = state;
       const sortedProducts = [...products].sort((a, b) => a.price - b.price);
@@ -345,14 +355,41 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         itemFav: action.payload,
-        item: action.payload
+        item: action.payload,
       };
 
     case GET_NEWSLETTER:
       return {
         ...state,
-        newsletter: action.payload
-      }
+        newsletter: action.payload,
+      };
+
+    case POST_MERCADO_PAGO:
+      const mp = action.payload;
+      localStorage.setItem("mercadoPago", JSON.stringify(mp));
+      return {
+        ...state,
+        postMercadoPago: mp,
+      };
+
+    case GET_MERCADO_PAGO:
+      const datosMp = action.payload;
+      return {
+        ...state,
+        getMercadoPago: datosMp,
+      };
+
+    case GET_DATOS_USER:
+      const datos = action.payload;
+      return {
+        ...state,
+        datosUser: {
+          name: datos.name || "",
+          last_name: datos.last_name || "",
+          phone: datos.phone || "",
+          address: datos.address || "",
+        },
+      };
 
     default:
       return state;

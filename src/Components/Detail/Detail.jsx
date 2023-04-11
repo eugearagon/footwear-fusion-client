@@ -88,17 +88,16 @@ export default function Detail() {
   const selectedSize = useSelector((state) => state.selectedSize);
   const selectedQty = useSelector((state) => state.selectedQty);
 
-  // const item = {
-  //   id: prod.id,
-  //   code: prod.code,
-  //   title: prod.title,
-  //   image: prod.image,
-  //   price: prod.price,
-  //   marca: marca,
-  //   size: selectedSize,
-  //   qty: selectedQty,
-  // };
-  // console.log("este es el console.log de item", item);
+  const item = {
+    id: prod.id,
+    code: prod.code,
+    title: prod.title,
+    image: prod.image,
+    price: prod.price,
+    marca: marca,
+    size: selectedSize,
+    qty: selectedQty,
+  };
 
   const handleSizeSelect = (e) => {
     dispatch(addSize(e.target.value));
@@ -123,7 +122,7 @@ export default function Detail() {
       );
       return navigate(`/product/${prodId}`);
     }
-    await dispatch(addToCart(loginUserId, prodId));
+    await dispatch(addToCart(item,loginUserId));
     await dispatch(getUserCart(loginUserId));
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };

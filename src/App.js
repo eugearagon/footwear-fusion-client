@@ -18,6 +18,8 @@ import AdminPanel from "./Components/admin/Panel/AdminPanel";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
 import swal from "sweetalert";
+import AntesDeComprar from "./Components/AntesDeComprar";
+import Succes from "./Components/Succes";
 
 function App() {
   const location = useLocation();
@@ -39,6 +41,7 @@ function App() {
       localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
+      localStorage.removeItem("mercadoPago");
       swal(
         "¡Volvé a loguearte!",
         "Tus credenciales expiraron ",
@@ -71,8 +74,10 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/userpanel" element={<UserPanel />} />
           <Route path="/product/:prodId" element={<Detail />} />
-
-          <Route path="/admin" element={<AdminPanel />} />
+          <Route exact path="/adminpanel" element={<AdminPanel />} />
+          {/* para mercadopago */}
+          <Route path="/terminarCompra" element = {<AntesDeComprar />} />
+          <Route path="/success" element ={<Succes />} />
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&

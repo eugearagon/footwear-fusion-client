@@ -37,24 +37,15 @@ export const DELETE_PRODUCT="DELETE_PRODUCT";
 //acciones del usuario
 export const LOG_IN="LOG_IN";
 export const GET_USERS="GET_USERS";
-export const  UPDATE_USER_SUCCESS="UPDATE_USER_SUCCESS";
-export const  UPDATE_USER_FAILURE="UPDATE_USER_FAILURE";
+export const UPDATE_USER_SUCCESS="UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILURE="UPDATE_USER_FAILURE";
 export const POST_INGRESO = "POST_INFRESO";
 export const BORRAR_TOKEN = "BORRAR_TOKEN";
 export const POST_REGISTRO = "POST_REGISTRO";
 export const POST_GOOGLE = "POST_GOOGLE";
 export const CLOSE_SESSION = "CLOSE_SESSION";
-//acciones del administrador
-export const GET_USER_DETAIL=" GET_USER_DETAIL"
-export const PUT_USER="PUT_USER"
-export const GET_PRODUCT_DETAIL_ADMIN = "GET_PRODUCT_DETAIL_ADMIN";
-export const PUT_PRODUCT_PRICE="PUT_PRODUCT_PRICE"
-export const PUT_PRODUCT_IMAGE="PUT_PRODUCT_IMAGE"
-export const GET_SALES="GET_SALES"
-export const POST_PRODUCTS="POST_PRODUCTS"
-
-
-
-
-
-
+export const POST_MERCADO_PAGO = "POST_MERCADO_PAGO";
+export const GET_MERCADO_PAGO = "GET_MERCADO_PAGO";
+export const GET_DATOS_USER = "GET_DATOS_USER";
+//accion orden de compra
+export const POST_ORDEN = "POST_ORDEN";

@@ -6,7 +6,7 @@ import OrderPaginate from "../OrderPaginate/OrderPaginate.jsx";
 import { CookiesProvider, useCookies } from "react-cookie";
 import popup from "../images/popup.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getFav, getUserCart } from "../../Redux/Actions";
+import { getDatosUser, getFav, getUserCart } from "../../Redux/Actions";
 
 export default function Home() {
   const loginUser = useSelector((state) => state.loginUser);
@@ -20,6 +20,7 @@ export default function Home() {
       try {
         await dispatch(getUserCart(loginUserId));
         await dispatch(getFav(loginUserId));
+        await dispatch(getDatosUser(loginUserId))
       } catch (error) {
         console.log(error.message);
       }

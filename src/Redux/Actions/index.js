@@ -34,7 +34,11 @@ import {
   CLOSE_SESSION,
   POST_NEWSLETTER,
   GET_NEWSLETTER,
-  REGISTRO_NEWSLETTER
+  REGISTRO_NEWSLETTER,
+  POST_MERCADO_PAGO,
+  GET_MERCADO_PAGO,
+  GET_DATOS_USER,
+  POST_ORDEN,
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -99,22 +103,8 @@ export function getDetail(prodId) {
     }
   };
 }
-export function getDetailAdmin(prodId) {
-  return async function (dispatch) {
-    try {
-      var productDetailAdmin = await axios.get(
-        `http://localhost:3001/admin/product/${prodId}`,
-        prodId
-      );
-      return dispatch({
-        type: GET_PRODUCT_DETAIL_ADMIN,
-        payload: productDetailAdmin.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
+
+
 
 export function getCategory() {
   return async function (dispatch) {
@@ -492,5 +482,86 @@ export const correoRegistroNewsletter = (correo) => {
     } catch (error) {
       
     }
+  }
+}
+
+export const mercadoPago = (item, player) => {
+  return async function(dispatch){
+    try {
+      const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+      };
+      console.log(item);
+      const response = await axios.post(`http://localhost:3001/mp/create_preference`, {data:{ item, player }}, {headers});
+      const apiData = response.data
+      const initPoint = apiData.global.init_point;
+      window.location.href = initPoint;
+      dispatch({
+        type: POST_MERCADO_PAGO,
+        payload: apiData.global
+      })
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  }
+};
+
+export const statusMercadoPago = (compraId) => {
+  return async function(dispatch){
+    try {
+      const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+      };
+      const response = await axios.get(`http://localhost:3001/mp/compra/${compraId}`,{headers});
+      const apiData = response.data
+      console.log("accion statusMercadoPago", apiData);
+      dispatch({
+        type: GET_MERCADO_PAGO,
+        payload: apiData
+      })
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  }
+};
+
+export const getDatosUser = (loginUserId) => {
+  return async function(dispatch){
+    try {
+      const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+      };
+      const response = await axios.get(`http://localhost:3001/user/datos/${loginUserId}`,{headers});
+      const apiData = response.data
+      dispatch({
+        type: GET_DATOS_USER,
+        payload: apiData
+      })
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  }
+}
+
+export const crearOrdenDeCompra = (loginUserId, orden) => {
+  return async function(dispatch){
+    try {
+      const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+      };
+      const datosApi = await axios.post(`http://localhost:3001/ordencompra/${loginUserId}`,{orden},{headers})
+      const datos = datosApi.data;
+      dispatch({
+        type: POST_ORDEN,
+        payload: datos
+      })
+    } catch (error) {
+      console.log(error.request.response);
+    }
+
   }
 }

@@ -326,15 +326,13 @@ export function addToCart(loginUserId, item) {
 }
 }
 
-export function deleteFromCart(loginUserId, id, talle, qty) {
+export function deleteFromCart(compraProductId) {
   return async function (dispatch) {
-    console.log('actions', id);
-    console.log('actions', loginUserId);  
-    console.log('actions', talle); 
+    console.log('actions', compraProductId);
     try {
       var currentUserCart = await axios.delete(
-        `http://localhost:3001/compraproducto/${loginUserId}`,
-        { data: { id, talle, qty } }
+        `http://localhost:3001/compraproducto/${compraProductId}`
+        // { data: { id, talle, qty } }
       );
       return dispatch({
         type: DELETE_PRODUCT_CART,

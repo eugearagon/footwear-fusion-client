@@ -33,12 +33,12 @@ export default function Cart() {
       .catch((error) => console.log(error))
   }
 
-  const handleDeleteFromCart = async (loginUserId, id, talle, qty) => {
+  const handleDeleteFromCart = async (compraProductId) => {
     if (!token) {
       swal("Error", "Logueate para continuar!", "error"); 
       return navigate("/login");
     }
-    await dispatch(deleteFromCart(loginUserId, id, talle, qty));
+    await dispatch(deleteFromCart(compraProductId));
     await dispatch(getUserCart(loginUserId));
     swal("Producto eliminado del carrito!", "success");
   };
@@ -71,7 +71,7 @@ export default function Cart() {
                   Cantidad <b>{e.qty}</b>
                 </p>
               </div>
-              <button className="eliminar" onClick={() => handleDeleteFromCart(loginUserId, e.id, e.talle, e.qty)}><small>eliminar</small></button>
+              <button className="eliminar" onClick={() => handleDeleteFromCart(e.compraProductId)}><small>eliminar</small></button>
             </div>
             <div className="zapato-precio">
               <h2>Precio</h2>

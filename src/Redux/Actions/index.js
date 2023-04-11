@@ -33,7 +33,8 @@ import {
   POST_NEWSLETTER,
   GET_NEWSLETTER,
   REGISTRO_NEWSLETTER,
-  DELETE_PRODUCT_CART
+  DELETE_PRODUCT_CART,
+  UPDATE_PRODUCT_CART
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -337,6 +338,24 @@ export function deleteFromCart(compraProductId) {
       return dispatch({
         type: DELETE_PRODUCT_CART,
         payload: currentUserCart
+      });
+    } catch (error) {
+      console.log(error);
+    }
+}
+}
+
+export function updateProduct(compraProductId, talle, qty) {
+  return async function (dispatch) {
+    console.log('actions updateProduct', compraProductId, talle, qty);
+    try {
+      var updatedUserCart = await axios.delete(
+        `http://localhost:3001/compraproducto/${compraProductId}`,
+        { data: { talle, qty } }
+      );
+      return dispatch({
+        type: UPDATE_PRODUCT_CART,
+        payload: updatedUserCart
       });
     } catch (error) {
       console.log(error);

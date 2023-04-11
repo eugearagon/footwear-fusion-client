@@ -27,7 +27,8 @@ import {
   POST_GOOGLE,
   CLOSE_SESSION,
   GET_NEWSLETTER,
-  DELETE_PRODUCT_CART
+  DELETE_PRODUCT_CART,
+  UPDATE_PRODUCT_CART
 } from "../Actions/actions";
 
 const initialState = {
@@ -309,6 +310,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+
+      case UPDATE_PRODUCT_CART:
+        return {
+          ...state,
+        };
 
     case GET_CART_BY_ID:
       console.log(action.payload, "payload reducer");

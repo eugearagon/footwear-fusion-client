@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { crearOrdenDeCompra, statusMercadoPago } from "../Redux/Actions";
 
-function Succes() {
+function Failure() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const compraId = params.get("collection_id");
@@ -44,10 +44,11 @@ function Succes() {
   }, [datos, datosCompra, dispatch, loginUserId, totalPrice]);
 
   return (
-    <div>
-      <h1>Gracias por tu compra!</h1>
-    </div>
-  );
+      <div>
+        <h1>Fallo la Compra</h1>
+      </div>
+
+  )
 }
 
-export default Succes;
+export default Failure;

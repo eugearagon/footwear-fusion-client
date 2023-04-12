@@ -10,7 +10,7 @@ import {
   GET_SIZE,
   GET_PUNCTUATION,
   GET_USERS,
- UPDATE_USER_SUCCESS,
+  POST_USER_SUCCESS,
  UPDATE_USER_FAILURE,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
@@ -179,13 +179,17 @@ export function getUsers() {
   };
 }
 
-export const updateUser = (id, updatedData) => {
+export const postDataUser = (loginUserId, datos) => {
   return async (dispatch) => {
+    const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+    };
     try {
-      const res = await axios.post(`http://localhost:3001/user/${id}`, updatedData);
+      const res = await axios.post(`http://localhost:3001/user/${loginUserId}`, datos, {headers});
       console.log('Response from server: ', res); // Agregar este console.log
       dispatch({
-        type: UPDATE_USER_SUCCESS,
+        type: POST_USER_SUCCESS,
         payload: res.data
       });
     } catch (err) {
@@ -207,11 +211,6 @@ export const ingreso = (email) => {
         { email }
       );
       const usuario = apiData.data;
-      // localStorage.setItem("token", usuario.token);
-      // localStorage.setItem("loginUser", JSON.stringify(usuario));
-      // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
-      // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_INGRESO,
         payload: usuario,
@@ -231,11 +230,6 @@ export const registros = (email) => {
         { email }
       );
       const usuario = apiData.data;
-      // localStorage.setItem("token", usuario.token);
-      // localStorage.setItem("loginUser", JSON.stringify(usuario));
-      // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
-      // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_REGISTRO,
         payload: usuario,
@@ -255,11 +249,6 @@ export const loginUserGoogle = (email) => {
         { email }
       );
       const usuario = apiData.data;
-      // localStorage.setItem("token", usuario.token);
-      // localStorage.setItem("loginUser", JSON.stringify(usuario));
-      // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
-      // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_GOOGLE,
         payload: usuario,

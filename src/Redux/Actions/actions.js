@@ -38,7 +38,7 @@ export const UPDATE_PRODUCT_CART="UPDATE_PRODUCT_CART";
 //acciones del usuario
 export const LOG_IN="LOG_IN";
 export const GET_USERS="GET_USERS";
-export const UPDATE_USER_SUCCESS="UPDATE_USER_SUCCESS";
+export const POST_USER_SUCCESS="POST_USER_SUCCESS";
 export const UPDATE_USER_FAILURE="UPDATE_USER_FAILURE";
 export const POST_INGRESO = "POST_INFRESO";
 export const BORRAR_TOKEN = "BORRAR_TOKEN";

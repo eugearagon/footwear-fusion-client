@@ -20,6 +20,7 @@ import { AuthProvider } from "./Components/Register/authContext";
 import swal from "sweetalert";
 import AntesDeComprar from "./Components/AntesDeComprar";
 import Succes from "./Components/Succes";
+import Failure from "./Components/Failure";
 
 function App() {
   const location = useLocation();
@@ -78,6 +79,7 @@ function App() {
           {/* para mercadopago */}
           <Route path="/terminarCompra" element = {<AntesDeComprar />} />
           <Route path="/success" element ={<Succes />} />
+          <Route path="/failure" element={ <Failure /> }/>
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&

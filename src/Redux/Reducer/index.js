@@ -29,7 +29,7 @@ import {
   POST_MERCADO_PAGO,
   GET_MERCADO_PAGO,
   GET_DATOS_USER,
-  UPDATE_USER_SUCCESS,
+  POST_USER_SUCCESS,
   UPDATE_USER_FAILURE,
   DELETE_PRODUCT_CART,
   UPDATE_PRODUCT_CART
@@ -164,7 +164,7 @@ function rootReducer(state = initialState, action) {
           rol: "",
           token: "",
         },
-        dataUsers:{
+        dataUser:{
           name:"",
           last_name:"",
           phone:"",
@@ -212,12 +212,6 @@ function rootReducer(state = initialState, action) {
         users: action.payload,
       };
 
-    case UPDATE_USER_SUCCESS:
-      return {
-        ...state,
-        dataUsers: action.payload,
-        error: null,
-      };
     case UPDATE_USER_FAILURE:
       return {
         ...state,
@@ -400,7 +394,7 @@ function rootReducer(state = initialState, action) {
       const datos = action.payload;
       return {
         ...state,
-        datosUser: {
+        dataUser: {
           name: datos.name || "",
           last_name: datos.last_name || "",
           phone: datos.phone || "",

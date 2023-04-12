@@ -8,7 +8,6 @@ import swal from "sweetalert";
 export default function Cart() {
   const dispatch = useDispatch();
   const item = useSelector((state) => state.item);
-  console.log(item, 'item del cart');
   const loginUserId = useSelector((state) => state.loginUser.id);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");

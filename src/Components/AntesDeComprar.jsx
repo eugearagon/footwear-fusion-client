@@ -8,7 +8,7 @@ function AntesDeComprar() {
   const loginUser = useSelector((state) => state.loginUser);
   const loginUserId = loginUser.id;
   const item = useSelector((state) => state.item);
-  const datos = useSelector((state) => state.datosUser)
+  const datos = useSelector((state) => state.dataUser)
 
   const player = {
     phone: {

@@ -41,6 +41,9 @@ import {
   GET_MERCADO_PAGO,
   GET_DATOS_USER,
   POST_ORDEN,
+  PUT_PRODUCT_IMAGE,
+  PUT_PRODUCT_PRICE,
+  PUT_PRODUCT_STOCK,
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -589,3 +592,19 @@ export const crearOrdenDeCompra = (loginUserId, orden) => {
 
   }
 }
+
+export function modifyProductPrice(id, price) {
+  return async function (dispatch) {
+    try {
+      await axios.put(`http://localhost:3001/product/${id}`, { price }, { withCredentials: true });
+      return dispatch({
+        type: PUT_PRODUCT_PRICE,
+        payload: { id, price },
+      });
+    } catch (error) {
+      console.log("no se pudo modificar", error);
+    }
+  };
+}
+
+

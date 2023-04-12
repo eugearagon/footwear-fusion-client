@@ -32,7 +32,8 @@ import {
   POST_USER_SUCCESS,
   UPDATE_USER_FAILURE,
   DELETE_PRODUCT_CART,
-  UPDATE_PRODUCT_CART
+  UPDATE_PRODUCT_CART,
+  PUT_PRODUCT_PRICE
 } from "../Actions/actions";
 
 const initialState = {
@@ -401,6 +402,22 @@ function rootReducer(state = initialState, action) {
           address: datos.address || "",
         },
       };
+
+      case PUT_PRODUCT_PRICE:
+        const { id, price } = action.payload;
+        const updatedProducts = state.products.map((product) => {
+          if (product.id === id) {
+            return {
+              ...product,
+              price,
+            };
+          }
+          return product;
+        });
+        return {
+          ...state,
+          products: updatedProducts,
+        };
 
     default:
       return state;

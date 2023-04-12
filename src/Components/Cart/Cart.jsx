@@ -1,14 +1,17 @@
 import { NavLink } from "react-router-dom";
 import promos from "../images/promos.jpg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import swal from "sweetalert";
+import { deleteFromCart, getUserCart } from "../../Redux/Actions"; 
+import { useNavigate } from "react-router-dom";
+
 
 
 
 export default function Cart() {
   const dispatch = useDispatch();
   const item = useSelector((state) => state.item);
-  const dispatch = useDispatch()
   console.log(item, 'item del cart');
   const loginUserId = useSelector((state) => state.loginUser.id);
   const navigate = useNavigate();
@@ -19,27 +22,16 @@ export default function Cart() {
     (total, item) => total + item.price * item.qty,
     0
   );
-  
-  // const player = {
-  //   phone: {
-  //     number: 1150645938
-  //   },
-  //   address: {
-  //     street_name: "Piñero 1247"
-  //   },
-  //   email: "Jonathan92_24@hotmail.com",
-  //   name: "Jonathan",
-  //   surname: "Benitez"
-  // }
 
-  // const mpPago = async ()=>{
-  //   try {
-  //     await dispatch(mercadoPago(item, player))
-  //   } catch (error) {
-  //     console.log(error.menssage);
-  //   }
-   
-  // }
+  const mercadoPago = () => {
+    const token = localStorage.getItem("token");
+        const headers = { 
+          'x-access-token': token,
+      };
+    axios.post("http://localhost:3001/mp/create_preference",item,{headers})
+      .then((res) => (window.location.href = res.data.global.init_point))
+      .catch((error) => console.log(error))
+  }
 
   const handleDeleteFromCart = async (compraProductId) => {
     if (!token) {
@@ -98,10 +90,7 @@ export default function Cart() {
         <img src={promos} alt="" />
         <div className="ahora-si">
         <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
-          {/* <button onClick={mpPago}>COMPRAR</button> */}
-          <NavLink to={"/terminarCompra"}>
-            <button>Terminar compra</button>
-          </NavLink>
+          <button onClick={mercadoPago}>COMPRAR</button>
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>
           </NavLink>

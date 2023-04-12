@@ -26,28 +26,30 @@ function Succes() {
     fetchData();
   }, [compraId, dispatch]);
 
-  // Aquí puedes hacer lo que necesites con los datos recuperados
-    console.log("getMercadoPago",datos);
 
-    const orden = {
-      address: datosCompra.payer.address.street_name, 
-      promotion:false, 
-      payment:datos && datos.payment_method, 
-      orderStatus:datos && datos.status, 
-      total:totalPrice
-    }
 
-    console.log(orden);
-   
+    useEffect(() => {
+      if (datos && datosCompra) {
+        const orden = {
+          address: datosCompra.payer.address.street_name, 
+          promotion:false, 
+          payment:datos.payment_method, 
+          orderStatus:datos.status, 
+          total:datos.transaction_amount
+        }
+    
+        const mandarOreden = async () =>{
+          await dispatch(crearOrdenDeCompra(loginUserId,orden))
+        }
+    
+        mandarOreden();
+      }
+    }, [datos, datosCompra, dispatch, loginUserId, totalPrice]);
 
-    const andate_a_la_mierda = async () =>{
-      await dispatch(crearOrdenDeCompra(loginUserId,orden))
-    }
   return (
     <div>
         <h1>Gracias por tu compra!</h1>
-        
-        <button onClick={andate_a_la_mierda}>gracias</button>
+
     </div>
   )
 }

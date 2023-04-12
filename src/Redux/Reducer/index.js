@@ -403,21 +403,6 @@ function rootReducer(state = initialState, action) {
         },
       };
 
-      case PUT_PRODUCT_PRICE:
-        const { id, price } = action.payload;
-        const updatedProducts = state.products.map((product) => {
-          if (product.id === id) {
-            return {
-              ...product,
-              price,
-            };
-          }
-          return product;
-        });
-        return {
-          ...state,
-          products: updatedProducts,
-        };
 
     default:
       return state;

@@ -1,16 +1,25 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { modifyProductPrice } from "../../../../Redux/Actions"; 
+import Swal from "sweetalert2";
 
 export default function CardAdmin({ id, title, price, image, marca }) {
   const dispatch = useDispatch();
 
   function handleModifyPrice() {
-    const newPrice = prompt("Ingrese el nuevo precio:");
-    if (newPrice !== null) {
-      dispatch(modifyProductPrice(id, newPrice));
-    }
+    Swal.fire({
+      title: "Ingrese el nuevo precio:",
+      input: "text",
+      showCancelButton: true,
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(modifyProductPrice(id, result.value));
+      }
+    });
   }
+  
 
   function handleModifyImage() {}
 

@@ -9,6 +9,7 @@ export default function CardAdmin({ id, title, price, image, marca }) {
     const newPrice = prompt("Ingrese el nuevo precio:");
     if (newPrice !== null) {
       dispatch(modifyProductPrice(id, newPrice));
+      //window.location.reload()
     }
   }
 

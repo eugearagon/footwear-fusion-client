@@ -596,10 +596,13 @@ export const crearOrdenDeCompra = (loginUserId, orden) => {
 export function modifyProductPrice(id, price) {
   return async function (dispatch) {
     try {
-      await axios.put(`http://localhost:3001/product/${id}`, { price }, { withCredentials: true });
+      const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+      };
+      await axios.put(`http://localhost:3001/product/${id}`, { price }, {headers});
       return dispatch({
         type: PUT_PRODUCT_PRICE,
-        payload: { id, price },
       });
     } catch (error) {
       console.log("no se pudo modificar", error);

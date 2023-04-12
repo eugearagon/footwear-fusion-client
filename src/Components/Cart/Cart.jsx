@@ -4,36 +4,28 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 export default function Cart() {
+  const dispatch = useDispatch();
   const item = useSelector((state) => state.item);
-  const dispatch = useDispatch()
   console.log(item, 'item del cart');
+  const loginUserId = useSelector((state) => state.loginUser.id);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
 
   const totalPrice = item.reduce(
     (total, item) => total + item.price * item.qty,
     0
   );
-  
-  // const player = {
-  //   phone: {
-  //     number: 1150645938
-  //   },
-  //   address: {
-  //     street_name: "Piñero 1247"
-  //   },
-  //   email: "Jonathan92_24@hotmail.com",
-  //   name: "Jonathan",
-  //   surname: "Benitez"
-  // }
 
-  // const mpPago = async ()=>{
-  //   try {
-  //     await dispatch(mercadoPago(item, player))
-  //   } catch (error) {
-  //     console.log(error.menssage);
-  //   }
-   
-  // }
+  const handleDeleteFromCart = async (compraProductId) => {
+    if (!token) {
+      swal("Error", "Logueate para continuar!", "error"); 
+      return navigate("/login");
+    }
+    await dispatch(deleteFromCart(compraProductId));
+    await dispatch(getUserCart(loginUserId));
+    swal("Producto eliminado del carrito!", "success");
+  };
 
 
   return (
@@ -63,7 +55,7 @@ export default function Cart() {
                   Cantidad <b>{e.qty}</b>
                 </p>
               </div>
-              <button className="eliminar"><small>eliminar</small></button>
+              <button className="eliminar" onClick={() => handleDeleteFromCart(e.compraProductId)}><small>eliminar</small></button>
             </div>
             <div className="zapato-precio">
               <h2>Precio</h2>
@@ -82,10 +74,7 @@ export default function Cart() {
         <img src={promos} alt="" />
         <div className="ahora-si">
         <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
-          {/* <button onClick={mpPago}>COMPRAR</button> */}
-          <NavLink to={"/terminarCompra"}>
-            <button>Terminar compra</button>
-          </NavLink>
+          <button onClick={mercadoPago}>COMPRAR</button>
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>
           </NavLink>

@@ -31,6 +31,8 @@ import {
   GET_DATOS_USER,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
+  DELETE_PRODUCT_CART,
+  UPDATE_PRODUCT_CART
 } from "../Actions/actions";
 
 const initialState = {
@@ -137,7 +139,6 @@ function rootReducer(state = initialState, action) {
       localStorage.setItem("token", user.token);
       localStorage.setItem("loginUser", JSON.stringify(user));
       const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // const expirationDate = new Date(new Date().getTime() + 60 * 1000);
       localStorage.setItem("expirationDate", expirationDate);
       return {
         ...state,
@@ -332,6 +333,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         productoAgregado: [...action.payload],
       };
+
+    case DELETE_PRODUCT_CART:
+      return {
+        ...state,
+      };
+
+      case UPDATE_PRODUCT_CART:
+        return {
+          ...state,
+        };
 
     case GET_CART_BY_ID:
       console.log(action.payload, "payload reducer");

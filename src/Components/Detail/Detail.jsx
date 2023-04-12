@@ -121,7 +121,7 @@ export default function Detail() {
       );
       return navigate(`/product/${prodId}`);
     }
-    await dispatch(addToCart(item,loginUserId));
+    await dispatch(addToCart(loginUserId, item));
     await dispatch(getUserCart(loginUserId));
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };

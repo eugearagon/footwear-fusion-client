@@ -33,7 +33,8 @@ export const DELETE_CART="DELETE_CART";
 //acciones del carrito
 export const CHANGE_PRODUCT="CHANGE_PRODUCT";
 export const BUY="BUY";
-export const DELETE_PRODUCT="DELETE_PRODUCT";
+export const DELETE_PRODUCT_CART="DELETE_PRODUCT_CART";
+export const UPDATE_PRODUCT_CART="UPDATE_PRODUCT_CART";
 //acciones del usuario
 export const LOG_IN="LOG_IN";
 export const GET_USERS="GET_USERS";

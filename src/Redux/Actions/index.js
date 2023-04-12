@@ -35,6 +35,8 @@ import {
   POST_NEWSLETTER,
   GET_NEWSLETTER,
   REGISTRO_NEWSLETTER,
+  DELETE_PRODUCT_CART,
+  UPDATE_PRODUCT_CART,
   POST_MERCADO_PAGO,
   GET_MERCADO_PAGO,
   GET_DATOS_USER,
@@ -114,6 +116,7 @@ export function getCategory() {
         type: GET_CATEGORY,
         payload: category.data,
       });
+
     } catch (error) {
       console.log("no se encontraron categorias");
     }
@@ -199,63 +202,72 @@ export const updateUser = (id, updatedData) => {
 export const ingreso = (email) => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.post("http://localhost:3001/user/login", {
-        email,
-      });
+      const apiData = await axios.post(
+        "http://localhost:3001/user/login",
+        { email }
+      );
       const usuario = apiData.data;
       // localStorage.setItem("token", usuario.token);
       // localStorage.setItem("loginUser", JSON.stringify(usuario));
       // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas
+      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
       // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_INGRESO,
         payload: usuario,
       });
       return usuario;
-    } catch (error) {}
+    } catch (error) {
+
+    }
   };
 };
 
 export const registros = (email) => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.post("http://localhost:3001/user/registro", {
-        email,
-      });
+      const apiData = await axios.post(
+        "http://localhost:3001/user/registro",
+        { email }
+      );
       const usuario = apiData.data;
       // localStorage.setItem("token", usuario.token);
       // localStorage.setItem("loginUser", JSON.stringify(usuario));
       // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas
+      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
       // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_REGISTRO,
         payload: usuario,
       });
       return usuario;
-    } catch (error) {}
+    } catch (error) {
+
+    }
   };
 };
 
 export const loginUserGoogle = (email) => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.post("http://localhost:3001/user/google", {
-        email,
-      });
+      const apiData = await axios.post(
+        "http://localhost:3001/user/google",
+        { email }
+      );
       const usuario = apiData.data;
       // localStorage.setItem("token", usuario.token);
       // localStorage.setItem("loginUser", JSON.stringify(usuario));
       // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas
+      // // const expirationDate = new Date(new Date().getTime() + 120 * 1000); // 2 minutos para pruebas 
       // localStorage.setItem('expirationDate', expirationDate);
       dispatch({
         type: POST_GOOGLE,
         payload: usuario,
       });
       return usuario;
-    } catch (error) {}
+    } catch (error) {
+
+    }
   };
 };
 
@@ -265,9 +277,9 @@ export const borrarToken = () => {
     payload: {
       email: "",
       rol: "",
-      token: "",
-    },
-  };
+      token: ""
+    }
+  }
 };
 
 export function orderByPrice(payload) {
@@ -308,12 +320,14 @@ export function orderByBestSelling(payload) {
 }
 
 export function priceRangeSelector(payload) {
+
   return {
     type: PRICE_RANGE_SELECTOR,
     payload,
   };
+
 }
-export function addToCart(item, loginUserId) {
+export function addToCart(loginUserId, item) {
   return async function (dispatch) {
     try {
       var userCart = await axios.post(
@@ -322,117 +336,142 @@ export function addToCart(item, loginUserId) {
       );
       return dispatch({
         type: ADD_TO_CART,
-        payload: userCart,
+        payload: userCart
       });
     } catch (error) {
       console.log(error);
     }
-  };
+}
+}
+
+export function deleteFromCart(compraProductId) {
+  return async function (dispatch) {
+    console.log('actions', compraProductId);
+    try {
+      var currentUserCart = await axios.delete(
+        `http://localhost:3001/compraproducto/${compraProductId}`
+        // { data: { id, talle, qty } }
+      );
+      return dispatch({
+        type: DELETE_PRODUCT_CART,
+        payload: currentUserCart
+      });
+    } catch (error) {
+      console.log(error);
+    }
+}
+}
+
+export function updateProduct(compraProductId, talle, qty) {
+  return async function (dispatch) {
+    console.log('actions updateProduct', compraProductId, talle, qty);
+    try {
+      var updatedUserCart = await axios.delete(
+        `http://localhost:3001/compraproducto/${compraProductId}`,
+        { data: { talle, qty } }
+      );
+      return dispatch({
+        type: UPDATE_PRODUCT_CART,
+        payload: updatedUserCart
+      });
+    } catch (error) {
+      console.log(error);
+    }
+}
 }
 
 export function getUserCart(loginUserId) {
   return async function (dispatch) {
     try {
-      var userCart = await axios.get(
-        `http://localhost:3001/cart/${loginUserId}`
-      );
+      var userCart = await axios.get(`http://localhost:3001/cart/${loginUserId}`);
       const userCartData = userCart.data;
-      console.log(userCartData, "actions");
+      console.log(userCartData, 'actions');
       return dispatch({
         type: GET_CART_BY_ID,
-        payload: userCartData,
+        payload: userCartData
       });
     } catch (error) {
       console.log(error);
     }
-  };
+}
 }
 
 export function addSize(payload) {
   return {
     type: ADD_SIZE,
-    payload,
-  };
+    payload
+  }
 }
 
 export function addQty(payload) {
   return {
     type: ADD_QUANTITY,
-    payload,
-  };
+    payload
+  }
 }
 
-export function addFav(userId, prodId) {
-  return async function (dispatch) {
+
+export function addFav(userId,prodId) {
+  return async function(dispatch){
     const token = localStorage.getItem("token");
-    const headers = {
-      "x-access-token": token,
+      const headers = { 
+        'x-access-token': token,
     };
     try {
-      const apiData = await axios.post(
-        `http://localhost:3001/favorite/${userId}/${prodId}`,
-        {},
-        { headers }
-      );
+      const apiData = await axios.post(`http://localhost:3001/favorite/${userId}/${prodId}`,{},{headers})
       const favorito = apiData.data;
       dispatch({
         type: ADD_FAV,
-        payload: favorito,
-      });
+        payload: favorito
+      })
     } catch (error) {
       console.log(error.request.response);
     }
-  };
+  }
 }
 
 export function getFav(userId) {
-  return async function (dispatch) {
-    const token = localStorage.getItem("token");
-    const headers = {
-      "x-access-token": token,
-    };
-    try {
-      const apiData = await axios.get(
-        `http://localhost:3001/favorite/${userId}`,
-        { headers }
-      );
-      const favorito = apiData.data;
-      dispatch({
-        type: GET_USERS_FAVORITES,
-        payload: favorito,
-      });
-    } catch (error) {
-      console.log(error.request.response);
-    }
+return async function(dispatch){
+  const token = localStorage.getItem("token");
+    const headers = { 
+      'x-access-token': token,
   };
+  try {
+    const apiData = await axios.get(`http://localhost:3001/favorite/${userId}`,{headers})
+    const favorito = apiData.data;
+    dispatch({
+      type: GET_USERS_FAVORITES,
+      payload: favorito
+    })
+  } catch (error) {
+    console.log(error.request.response);
+  }
+}
 }
 
-export function deletFav(userId, prodId) {
-  return async function (dispatch) {
-    const token = localStorage.getItem("token");
-    const headers = {
-      "x-access-token": token,
-    };
-    try {
-      const apiData = await axios.delete(
-        `http://localhost:3001/favorite/${userId}/${prodId}`,
-        { headers }
-      );
-      const favorito = apiData.data;
-      dispatch({
-        type: DELETE_FAV,
-        payload: favorito,
-      });
-    } catch (error) {
-      console.log(error.request.response);
-    }
+export function deletFav(userId,prodId) {
+return async function(dispatch){
+  const token = localStorage.getItem("token");
+    const headers = { 
+      'x-access-token': token,
   };
+  try {
+    const apiData = await axios.delete(`http://localhost:3001/favorite/${userId}/${prodId}`,{headers})
+    const favorito = apiData.data;
+    dispatch({
+      type: DELETE_FAV,
+      payload: favorito
+    })
+  } catch (error) {
+    console.log(error.request.response);
+  }
 }
-export function closeSession() {
-  return {
-    type: CLOSE_SESSION,
-    payload: [],
-  };
+}
+export function closeSession(){
+return{
+  type: CLOSE_SESSION,
+  payload: []
+}
 }
 
 export const postNewsletter = (email) => {

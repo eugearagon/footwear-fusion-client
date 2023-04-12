@@ -18,7 +18,6 @@ import AdminPanel from "./Components/admin/Panel/AdminPanel";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
 import swal from "sweetalert";
-import { getFav, getUserCart } from "./Redux/Actions";
 import AntesDeComprar from "./Components/AntesDeComprar";
 import Succes from "./Components/Succes";
 
@@ -53,26 +52,7 @@ function App() {
   }, [token, expirationDate, navigate]);
 
   const isAdminDetail = location.pathname.includes("/admin/");
-  // //Para el card
-  // useEffect(() => {
-  //   const userCart = async () => {
-  //     await dispatch(getUserCart(loginUserId))
-  //   }
-  //   userCart()
-  // }, []);
-
-  // //Para Favoritos
-  // useEffect(()=>{
-  //   const favoritos = async () =>{
-  //     try {
-  //       await dispatch(getFav(loginUserId))
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   }
-  //   favoritos()
-  // },[])
-
+  
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/login" &&

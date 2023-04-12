@@ -1,6 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import promos from "../images/promos.jpg";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteFromCart, getUserCart } from "../../Redux/Actions";
+import swal from "sweetalert";
 
 
 export default function Cart() {
@@ -74,7 +76,9 @@ export default function Cart() {
         <img src={promos} alt="" />
         <div className="ahora-si">
         <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
-          <button onClick={mercadoPago}>COMPRAR</button>
+        <NavLink to={"/terminarCompra"}>
+          <button>TERMINAR COMPRAR</button>
+        </NavLink>
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>
           </NavLink>

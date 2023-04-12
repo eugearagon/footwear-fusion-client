@@ -568,7 +568,7 @@ export const getDatosUser = (loginUserId) => {
         payload: apiData
       })
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error.request);
     }
   }
 }

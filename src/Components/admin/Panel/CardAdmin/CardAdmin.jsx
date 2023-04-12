@@ -14,7 +14,7 @@ export default function CardAdmin({ id, title, price, image, marca }) {
       <div className="modif-prod">
         <button onClick={handleModifyPrice}>Modificar precio</button>
         <button onClick={handleModifyImage}>Modificar imagen</button>
-        <button onClick={handleModifyPrice}>Modificar estado</button>
+        <button onClick={handleModifyImage}>Modificar estado</button>
         <button onClick={handleModifyImage}>Modificar stock</button>
       </div>
     </div>

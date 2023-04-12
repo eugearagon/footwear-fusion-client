@@ -15,7 +15,6 @@ import swal from "sweetalert";
 export default function Detail() {
   const { prodId } = useParams();
   const loginUserId = useSelector((state) => state.loginUser.id);
-  // const items = useSelector((state) => state.item);
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -98,7 +97,10 @@ export default function Detail() {
     size: selectedSize,
     qty: selectedQty,
   };
+<<<<<<< HEAD
   console.log("este es el console.log de item", item);
+=======
+>>>>>>> b851f18d544c8295e70b5b9c4d6fc20b31ca3da1
 
   const handleSizeSelect = (e) => {
     dispatch(addSize(e.target.value));
@@ -123,7 +125,11 @@ export default function Detail() {
       );
       return navigate(`/product/${prodId}`);
     }
+<<<<<<< HEAD
     await dispatch(addToCart(loginUserId, item));
+=======
+    await dispatch(addToCart(item,loginUserId));
+>>>>>>> b851f18d544c8295e70b5b9c4d6fc20b31ca3da1
     await dispatch(getUserCart(loginUserId));
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };

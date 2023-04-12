@@ -1,9 +1,6 @@
 import { NavLink } from "react-router-dom";
 import promos from "../images/promos.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { mercadoPago } from "../../Redux/Actions";
-
 
 
 export default function Cart() {

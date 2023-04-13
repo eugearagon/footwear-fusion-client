@@ -7,10 +7,13 @@ import { Link } from "react-router-dom";
 import UserManage from "./UserManage";
 import ProductManage from "./ProductManage";
 import SalesManage from "./SalesManage";
+import { useSelector } from "react-redux";
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("account");
   const [showNovedades, setShowNovedades] = useState(true);
+  const user = useSelector(state => state.loginUser)
+  const datos = useSelector(state => state.dataUser)
 
   function handleTabClick(tabName) {
     setActiveTab(tabName);
@@ -19,7 +22,7 @@ export default function AdminPanel() {
   return (
     <div className="admin-panel">
       <div className="saludo-admin">
-        <h5>Bienvenido, Pepe Hongo</h5>
+        <h5>{user ? `Bienvenido, ${ user.email}` : "Bienvenido, Pepe Hongo"}</h5>
         <div className="admin-buscador">
           <input type="text" />
           <button className="enviar">buscar</button>

@@ -34,7 +34,7 @@ import {
   DELETE_PRODUCT_CART,
   UPDATE_PRODUCT_CART,
   PUT_PRODUCT_PRICE,
-  GET_USER_ROL
+
 } from "../Actions/actions";
 
 const initialState = {
@@ -71,7 +71,7 @@ const initialState = {
   newsletter: [],
   postMercadoPago: null,
   getMercadoPago: null,
-  verificoAdmin: null,
+ 
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -399,14 +399,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         dataUser: datos
       };
-
-      case GET_USER_ROL:
-        const rol = action.payload;
-        return {
-          ...state,
-          verificoAdmin: rol
-        };
-
 
     default:
       return state;

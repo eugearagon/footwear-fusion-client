@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getDatosUser, mercadoPago } from '../Redux/Actions';
+import { getDatosUser, getFav, getUserCart, mercadoPago } from '../Redux/Actions';
 
 function AntesDeComprar() {
 
@@ -9,6 +9,14 @@ function AntesDeComprar() {
   const loginUserId = loginUser.id;
   const item = useSelector((state) => state.item);
   const datos = useSelector((state) => state.dataUser)
+
+  useEffect(() => {
+    const getCarFav = async () => {
+      await dispatch(getUserCart(loginUserId));
+      await dispatch(getFav(loginUserId))
+    };
+    getCarFav();
+  }, [dispatch]);
 
   const player = {
     phone: {

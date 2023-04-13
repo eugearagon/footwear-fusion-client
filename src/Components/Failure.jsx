@@ -12,19 +12,15 @@ function Failure() {
 
   const datos = useSelector((state) => state.getMercadoPago);
   const datosCompra = useSelector((state) => state.postMercadoPago);
-  const item = useSelector((state) => state.item);
   const loginUserId = useSelector((state) => state.loginUser.id);
-  const totalPrice = item.reduce(
-    (total, item) => total + item.price * item.qty,
-    0
-  );
+ 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await dispatch(statusMercadoPago(compraId));
-  //   };
-  //   fetchData();
-  // }, [compraId, dispatch]);
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(statusMercadoPago(compraId));
+    };
+    fetchData();
+  }, [compraId, dispatch]);
 
   // useEffect(() => {
   //   if (datos && datosCompra) {
@@ -40,9 +36,9 @@ function Failure() {
   //       await dispatch(crearOrdenDeCompra(loginUserId, orden));
   //     };
 
-  //     mandarOreden();
+  //     mandarOrden();
   //   }
-  // }, [datos, datosCompra, dispatch, loginUserId, totalPrice]);
+  // }, [datos, datosCompra, dispatch, loginUserId]);
 
   return (
     <div>
@@ -53,5 +49,6 @@ function Failure() {
     </div>
   )
 }
+
 
 export default Failure;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getDatosUser, getFav, getUserCart, mercadoPago } from '../Redux/Actions';
 
@@ -17,6 +17,13 @@ function AntesDeComprar() {
     };
     getCarFav();
   }, [dispatch]);
+
+  const [datoModificado, setdatoModificado] = useState({
+    number: "",
+    address: ""
+  })
+
+  const [modificar, setModificar] = useState(false)
 
   const player = {
     phone: {
@@ -51,13 +58,54 @@ function AntesDeComprar() {
     }
    
   }
+
+  const modificarNumbre = () => {
+    setModificar(true)
+  }
     
   return (
-    <div><h1>Antes de la compra</h1>
+    <div>
+      <h1>Antes de la compra</h1>
+      {item && item.map((e) => (
+          <div className="zapato" key={e.code}>
+            <img src={e.image} alt="zapato" />
+            <div className="zapato-datos">
+              <p>
+                <strong>{e.marca}</strong>
+                <br />
+                {e.title}
+              </p>
+              <span>Código del artículo: {e.code}</span>
+              <p>Talle: {e.talle}</p>
+              <div className="sel-cant">
+                <p>
+                  Cantidad <b>{e.qty}</b>
+                </p>
+              </div>
+              {/* <button className="eliminar" onClick={() => handleDeleteFromCart(e.compraProductId)}><small>eliminar</small></button> */}
+            </div>
+            <div className="zapato-precio">
+              <h2>Precio</h2>
+              <h2>${e.price.toLocaleString("de-De")}</h2>
+            </div>
+            
+          </div>
+        ))
+      }
+      <h2>Datos de Entrega</h2>
+      <h3>email: {loginUser.email}</h3>
+      <h4>Nombre y Apellido: {`${datos.name} ${datos.last_name}`} </h4>
+      {datoModificado ? <h4>{datoModificado.number}</h4> : <h4>{datos.number}</h4> }
+      <button onClick={modificarNumbre}>modificar</button>
+      {modificar ? 
+      <input type="text" /> 
+        :  <h4>{datos.number}</h4> 
+    }
+
+
     
-    <button onClick={mpPago}>COMPRAR</button>
     
-    
+<button onClick={mpPago}>COMPRAR</button>
     </div>
   )
 }

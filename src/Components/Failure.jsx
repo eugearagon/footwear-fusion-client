@@ -11,12 +11,8 @@ function Failure() {
 
   const datos = useSelector((state) => state.getMercadoPago);
   const datosCompra = useSelector((state) => state.postMercadoPago);
-  const item = useSelector((state) => state.item);
   const loginUserId = useSelector((state) => state.loginUser.id);
-  const totalPrice = item.reduce(
-    (total, item) => total + item.price * item.qty,
-    0
-  );
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +37,7 @@ function Failure() {
 
       mandarOreden();
     }
-  }, [datos, datosCompra, dispatch, loginUserId, totalPrice]);
+  }, [datos, datosCompra, dispatch, loginUserId]);
 
   return (
       <div>

@@ -563,7 +563,7 @@ export const getDatosUser = (loginUserId) => {
         payload: apiData
       })
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error.request);
     }
   }
 }
@@ -598,6 +598,40 @@ export function modifyProductPrice(id, price) {
       await axios.put(`http://localhost:3001/product/${id}`, { price }, {headers});
       return dispatch({
         type: PUT_PRODUCT_PRICE,
+      });
+    } catch (error) {
+      console.log("no se pudo modificar", error);
+    }
+  };
+}
+
+export function modifyProductImage(id, image) {
+  return async function (dispatch) {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+      };
+      await axios.put(`http://localhost:3001/product/${id}`, { image }, {headers});
+      return dispatch({
+        type: PUT_PRODUCT_IMAGE,
+      });
+    } catch (error) {
+      console.log("no se pudo modificar", error);
+    }
+  };
+}
+
+export function modifyProductStock(id, stock) {
+  return async function (dispatch) {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = { 
+        'x-access-token': token,
+      };
+      await axios.put(`http://localhost:3001/product/${id}`, { stock }, {headers});
+      return dispatch({
+        type: PUT_PRODUCT_STOCK,
       });
     } catch (error) {
       console.log("no se pudo modificar", error);

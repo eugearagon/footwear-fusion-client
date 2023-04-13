@@ -11,7 +11,7 @@ import {
   GET_PUNCTUATION,
   GET_USERS,
   POST_USER_SUCCESS,
- UPDATE_USER_FAILURE,
+  UPDATE_USER_FAILURE,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
   FILTER_BY_SIZE,
@@ -41,15 +41,20 @@ import {
   GET_MERCADO_PAGO,
   GET_DATOS_USER,
   POST_ORDEN,
+  GET_ORDEN_USER,
   PUT_PRODUCT_IMAGE,
   PUT_PRODUCT_PRICE,
   PUT_PRODUCT_STOCK,
 } from "../Actions/actions.js";
 
+const back = "http://localhost:3001";
+
+// const back = para el deploy
+
 export function getProducts() {
   return async function (dispatch) {
     try {
-      var products = await axios.get("http://localhost:3001/product");
+      var products = await axios.get(`${back}/product`);
       return dispatch({
         type: GET_PRODUCTS,
         payload: products.data,
@@ -63,7 +68,7 @@ export function getProducts() {
 export function postProducts() {
   return async function (dispatch) {
     try {
-      var products = await axios.post("http://localhost:3001/product");
+      var products = await axios.post(`${back}/product`);
       return dispatch({
         type: POST_PRODUCTS,
         payload: products.data,
@@ -74,13 +79,11 @@ export function postProducts() {
   };
 }
 
-
-
 export function getProductsByName(name) {
   return async function (dispatch) {
     try {
       var products = await axios.get(
-        `http://localhost:3001/product?name=${name}`
+        `${back}/product?name=${name}`
       );
       return dispatch({
         type: GET_PRODUCTS_BY_NAME,
@@ -96,7 +99,7 @@ export function getDetail(prodId) {
   return async function (dispatch) {
     try {
       var productDetail = await axios.get(
-        `http://localhost:3001/product/${prodId}`,
+        `${back}/product/${prodId}`,
         prodId
       );
       return dispatch({
@@ -109,17 +112,14 @@ export function getDetail(prodId) {
   };
 }
 
-
-
 export function getCategory() {
   return async function (dispatch) {
     try {
-      var category = await axios.get("http://localhost:3001/filter/category");
+      var category = await axios.get(`${back}/filter/category`);
       return dispatch({
         type: GET_CATEGORY,
         payload: category.data,
       });
-
     } catch (error) {
       console.log("no se encontraron categorias");
     }
@@ -129,7 +129,7 @@ export function getCategory() {
 export function getSize() {
   return async function (dispatch) {
     try {
-      var size = await axios.get("http://localhost:3001/filter/talle");
+      var size = await axios.get(`${back}/filter/talle`);
       return dispatch({
         type: GET_SIZE,
         payload: size.data,
@@ -143,7 +143,7 @@ export function getSize() {
 export function getBrand() {
   return async function (dispatch) {
     try {
-      var brand = await axios.get("http://localhost:3001/filter/marca");
+      var brand = await axios.get(`${back}/filter/marca`);
       return dispatch({
         type: GET_BRAND,
         payload: brand.data,
@@ -157,7 +157,7 @@ export function getBrand() {
 export function getPrice() {
   return async function (dispatch) {
     try {
-      var price = await axios.get("http://localhost:3001/precios");
+      var price = await axios.get(`${back}/precios`);
       return dispatch({
         type: GET_PRICE,
         payload: price.data,
@@ -171,7 +171,7 @@ export function getPrice() {
 export function getUsers() {
   return async function (dispatch) {
     try {
-      var users = await axios.get("http://localhost:3001/user");
+      var users = await axios.get(`${back}/user`);
       return dispatch({
         type: GET_USERS,
         payload: users.data,
@@ -185,75 +185,67 @@ export function getUsers() {
 export const postDataUser = (loginUserId, datos) => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+    const headers = {
+      "x-access-token": token,
     };
     try {
-      await axios.post(`http://localhost:3001/user/${loginUserId}`, datos, {headers});
+      await axios.post(`${back}/user/${loginUserId}`, datos, {
+        headers,
+      });
       dispatch({
         type: POST_USER_SUCCESS,
       });
     } catch (err) {
-      console.log('Error updating user: ', err); // Agregar este console.log
+      console.log("Error updating user: ", err); // Agregar este console.log
     }
   };
 };
 
-
 export const ingreso = (email) => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.post(
-        "http://localhost:3001/user/login",
-        { email }
-      );
+      const apiData = await axios.post(`${back}/user/login`, {
+        email,
+      });
       const usuario = apiData.data;
       dispatch({
         type: POST_INGRESO,
         payload: usuario,
       });
       return usuario;
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 };
 
 export const registros = (email) => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.post(
-        "http://localhost:3001/user/registro",
-        { email }
-      );
+      const apiData = await axios.post(`${back}/user/registro`, {
+        email,
+      });
       const usuario = apiData.data;
       dispatch({
         type: POST_REGISTRO,
         payload: usuario,
       });
       return usuario;
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 };
 
 export const loginUserGoogle = (email) => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.post(
-        "http://localhost:3001/user/google",
-        { email }
-      );
+      const apiData = await axios.post(`${back}/user/google`, {
+        email,
+      });
       const usuario = apiData.data;
       dispatch({
         type: POST_GOOGLE,
         payload: usuario,
       });
       return usuario;
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 };
 
@@ -263,9 +255,9 @@ export const borrarToken = () => {
     payload: {
       email: "",
       rol: "",
-      token: ""
-    }
-  }
+      token: "",
+    },
+  };
 };
 
 export function orderByPrice(payload) {
@@ -306,164 +298,174 @@ export function orderByBestSelling(payload) {
 }
 
 export function priceRangeSelector(payload) {
-
   return {
     type: PRICE_RANGE_SELECTOR,
     payload,
   };
-
 }
+
 export function addToCart(loginUserId, item) {
   return async function (dispatch) {
     try {
       var userCart = await axios.post(
-        `http://localhost:3001/cart/${loginUserId}`,
+        `${back}/cart/${loginUserId}`,
         item
       );
       return dispatch({
         type: ADD_TO_CART,
-        payload: userCart
+        payload: userCart,
       });
     } catch (error) {
       console.log(error);
     }
-}
+  };
 }
 
 export function deleteFromCart(compraProductId) {
   return async function (dispatch) {
-    console.log('actions', compraProductId);
+    console.log("actions", compraProductId);
     try {
       var currentUserCart = await axios.delete(
-        `http://localhost:3001/compraproducto/${compraProductId}`
+        `${back}/compraproducto/${compraProductId}`
         // { data: { id, talle, qty } }
       );
       return dispatch({
         type: DELETE_PRODUCT_CART,
-        payload: currentUserCart
+        payload: currentUserCart,
       });
     } catch (error) {
       console.log(error);
     }
-}
+  };
 }
 
 export function updateProduct(compraProductId, talle, qty) {
   return async function (dispatch) {
-    console.log('actions updateProduct', compraProductId, talle, qty);
+    console.log("actions updateProduct", compraProductId, talle, qty);
     try {
       var updatedUserCart = await axios.delete(
-        `http://localhost:3001/compraproducto/${compraProductId}`,
+        `${back}/compraproducto/${compraProductId}`,
         { data: { talle, qty } }
       );
       return dispatch({
         type: UPDATE_PRODUCT_CART,
-        payload: updatedUserCart
+        payload: updatedUserCart,
       });
     } catch (error) {
       console.log(error);
     }
-}
+  };
 }
 
 export function getUserCart(loginUserId) {
   return async function (dispatch) {
     try {
-      var userCart = await axios.get(`http://localhost:3001/cart/${loginUserId}`);
+      var userCart = await axios.get(
+        `${back}/cart/${loginUserId}`
+      );
       const userCartData = userCart.data;
-      console.log(userCartData, 'actions');
+      console.log(userCartData, "actions");
       return dispatch({
         type: GET_CART_BY_ID,
-        payload: userCartData
+        payload: userCartData,
       });
     } catch (error) {
       console.log(error);
     }
-}
+  };
 }
 
 export function addSize(payload) {
   return {
     type: ADD_SIZE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function addQty(payload) {
   return {
     type: ADD_QUANTITY,
-    payload
-  }
+    payload,
+  };
 }
 
-
-export function addFav(userId,prodId) {
-  return async function(dispatch){
+export function addFav(userId, prodId) {
+  return async function (dispatch) {
     const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+    const headers = {
+      "x-access-token": token,
     };
     try {
-      const apiData = await axios.post(`http://localhost:3001/favorite/${userId}/${prodId}`,{},{headers})
+      const apiData = await axios.post(
+        `${back}/favorite/${userId}/${prodId}`,
+        {},
+        { headers }
+      );
       const favorito = apiData.data;
       dispatch({
         type: ADD_FAV,
-        payload: favorito
-      })
+        payload: favorito,
+      });
     } catch (error) {
       console.log(error.request.response);
     }
-  }
+  };
 }
 
 export function getFav(userId) {
-return async function(dispatch){
-  const token = localStorage.getItem("token");
-    const headers = { 
-      'x-access-token': token,
+  return async function (dispatch) {
+    const token = localStorage.getItem("token");
+    const headers = {
+      "x-access-token": token,
+    };
+    try {
+      const apiData = await axios.get(
+        `${back}/favorite/${userId}`,
+        { headers }
+      );
+      const favorito = apiData.data;
+      dispatch({
+        type: GET_USERS_FAVORITES,
+        payload: favorito,
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
   };
-  try {
-    const apiData = await axios.get(`http://localhost:3001/favorite/${userId}`,{headers})
-    const favorito = apiData.data;
-    dispatch({
-      type: GET_USERS_FAVORITES,
-      payload: favorito
-    })
-  } catch (error) {
-    console.log(error.request.response);
-  }
-}
 }
 
-export function deletFav(userId,prodId) {
-return async function(dispatch){
-  const token = localStorage.getItem("token");
-    const headers = { 
-      'x-access-token': token,
+export function deletFav(userId, prodId) {
+  return async function (dispatch) {
+    const token = localStorage.getItem("token");
+    const headers = {
+      "x-access-token": token,
+    };
+    try {
+      const apiData = await axios.delete(
+        `${back}/favorite/${userId}/${prodId}`,
+        { headers }
+      );
+      const favorito = apiData.data;
+      dispatch({
+        type: DELETE_FAV,
+        payload: favorito,
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
   };
-  try {
-    const apiData = await axios.delete(`http://localhost:3001/favorite/${userId}/${prodId}`,{headers})
-    const favorito = apiData.data;
-    dispatch({
-      type: DELETE_FAV,
-      payload: favorito
-    })
-  } catch (error) {
-    console.log(error.request.response);
-  }
 }
-}
-export function closeSession(){
-return{
-  type: CLOSE_SESSION,
-  payload: []
-}
+export function closeSession() {
+  return {
+    type: CLOSE_SESSION,
+    payload: [],
+  };
 }
 
 export const postNewsletter = (email) => {
   return async function (dispatch) {
     try {
-      await axios.post("http://localhost:3001/newsletter", email);
+      await axios.post(`${back}/newsletter`, email);
 
       dispatch({
         type: POST_NEWSLETTER,
@@ -481,11 +483,13 @@ export const getNewsletter = () => {
       "x-access-token": token,
     };
     try {
-      const apiGet = await axios.get("http://localhost:3001/newsletter",{headers});
-      const apiData = apiGet.data
+      const apiGet = await axios.get(`${back}/newsletter`, {
+        headers,
+      });
+      const apiData = apiGet.data;
       dispatch({
         type: GET_NEWSLETTER,
-        payload: apiData
+        payload: apiData,
       });
     } catch (error) {
       console.log(error.request.response);
@@ -494,108 +498,151 @@ export const getNewsletter = () => {
 };
 
 export const correoRegistroNewsletter = (correo) => {
-  return async function(dispatch){
+  return async function (dispatch) {
     try {
-      await axios.post("http://localhost:3001/correo/registroNewsletter",correo)
+      await axios.post(
+        `${back}/correo/registroNewsletter`,
+        correo
+      );
       dispatch({
-        type: REGISTRO_NEWSLETTER
-      })
-    } catch (error) {
-      
-    }
-  }
-}
+        type: REGISTRO_NEWSLETTER,
+      });
+    } catch (error) {}
+  };
+};
 
 export const mercadoPago = (item, player) => {
-  return async function(dispatch){
+  console.log(item, player, 'actions');
+  return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+      const headers = {
+        "x-access-token": token,
       };
       console.log(item);
-      const response = await axios.post(`http://localhost:3001/mp/create_preference`, {data:{ item, player }}, {headers});
-      const apiData = response.data
+      const response = await axios.post(
+        `${back}/mp/create_preference`,
+        { data: { item, player } },
+        { headers }
+      );
+      const apiData = response.data;
       const initPoint = apiData.global.init_point;
       window.location.href = initPoint;
       dispatch({
         type: POST_MERCADO_PAGO,
-        payload: apiData.global
-      })
+        payload: apiData.global,
+      });
     } catch (error) {
       console.log(error.request.response);
     }
-  }
+  };
 };
 
 export const statusMercadoPago = (compraId) => {
-  return async function(dispatch){
+  return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+      const headers = {
+        "x-access-token": token,
       };
-      const response = await axios.get(`http://localhost:3001/mp/compra/${compraId}`,{headers});
-      const apiData = response.data
+      const response = await axios.get(
+        `${back}/mp/compra/${compraId}`,
+        { headers }
+      );
+      const apiData = response.data;
       console.log("accion statusMercadoPago", apiData);
       dispatch({
         type: GET_MERCADO_PAGO,
-        payload: apiData
-      })
+        payload: apiData,
+      });
     } catch (error) {
       console.log(error.request.response);
     }
-  }
+  };
 };
 
 export const getDatosUser = (loginUserId) => {
-  return async function(dispatch){
+  return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+      const headers = {
+        "x-access-token": token,
       };
-      const response = await axios.get(`http://localhost:3001/user/datos/${loginUserId}`,{headers});
-      const apiData = response.data
+      const response = await axios.get(
+        `${back}/user/datos/${loginUserId}`,
+        { headers }
+      );
+      const apiData = response.data;
       console.log(apiData);
       dispatch({
         type: GET_DATOS_USER,
-        payload: apiData
-      })
+        payload: apiData,
+      });
     } catch (error) {
       console.log(error.request);
     }
-  }
-}
+  };
+};
 
 export const crearOrdenDeCompra = (loginUserId, orden) => {
-  return async function(dispatch){
+  console.log(loginUserId, orden, 'actions');
+  return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+      const headers = {
+        "x-access-token": token,
       };
-      const datosApi = await axios.post(`http://localhost:3001/ordencompra/${loginUserId}`,{orden},{headers})
+      const datosApi = await axios.post(
+        `${back}/ordencompra/${loginUserId}`,
+        { orden },
+        { headers }
+      );
       const datos = datosApi.data;
       dispatch({
         type: POST_ORDEN,
-        payload: datos
-      })
+        payload: datos,
+      });
     } catch (error) {
       console.log(error.request.response);
     }
+  };
+};
 
-  }
+export function getOrdenesCompraId(userId) {
+  return async function (dispatch) {
+    const token = localStorage.getItem("token");
+    const headers = {
+      "x-access-token": token,
+    };
+    try {
+      const ordenesCompraId = await axios.get(
+        `${back}/ordencompra/${userId}`,
+        { headers }
+      );
+      const ordenesCompraUser = ordenesCompraId.data;
+      console.log(ordenesCompraId.data, 'actions');
+      dispatch({
+        type: GET_ORDEN_USER,
+        payload: ordenesCompraUser,
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  };
 }
 
 export function modifyProductPrice(id, price) {
   return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+      const headers = {
+        "x-access-token": token,
       };
-      await axios.put(`http://localhost:3001/product/${id}`, { price }, {headers});
+      await axios.put(
+        `${back}/product/${id}`,
+        { price },
+        { headers }
+      );
       return dispatch({
         type: PUT_PRODUCT_PRICE,
       });
@@ -609,10 +656,14 @@ export function modifyProductImage(id, image) {
   return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+      const headers = {
+        "x-access-token": token,
       };
-      await axios.put(`http://localhost:3001/product/${id}`, { image }, {headers});
+      await axios.put(
+        `${back}/product/${id}`,
+        { image },
+        { headers }
+      );
       return dispatch({
         type: PUT_PRODUCT_IMAGE,
       });
@@ -626,10 +677,14 @@ export function modifyProductStock(id, stock) {
   return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
-      const headers = { 
-        'x-access-token': token,
+      const headers = {
+        "x-access-token": token,
       };
-      await axios.put(`http://localhost:3001/product/${id}`, { stock }, {headers});
+      await axios.put(
+        `${back}/product/${id}`,
+        { stock },
+        { headers }
+      );
       return dispatch({
         type: PUT_PRODUCT_STOCK,
       });
@@ -638,5 +693,3 @@ export function modifyProductStock(id, stock) {
     }
   };
 }
-
-

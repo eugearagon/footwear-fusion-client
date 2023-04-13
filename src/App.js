@@ -21,6 +21,7 @@ import swal from "sweetalert";
 import AntesDeComprar from "./Components/AntesDeComprar";
 import Succes from "./Components/Succes";
 import Failure from "./Components/Failure";
+import ProtecAdmin from "./Components/admin/LoginAdmin/ProtecAdmin";
 
 function App() {
   const location = useLocation();
@@ -76,7 +77,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/userpanel" element={<UserPanel />} />
           <Route path="/product/:prodId" element={<Detail />} />
-          <Route exact path="/admin" element={<AdminPanel />} />
+          <Route exact path="/admin" element={<ProtecAdmin> <AdminPanel /> </ProtecAdmin> } />
           {/* para mercadopago */}
           <Route path="/terminarCompra" element = {<AntesDeComprar />} />
           <Route path="/success" element ={<Succes />} />

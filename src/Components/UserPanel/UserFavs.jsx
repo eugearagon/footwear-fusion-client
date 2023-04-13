@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import fav from "../images/cora.png";
 import { deletFav, getFav } from "../../Redux/Actions";
+import { NavLink } from "react-router-dom";
 
 export default function UserFavs() {
   const itemFav = useSelector((state) => state.itemFav);
@@ -22,10 +23,14 @@ export default function UserFavs() {
           {itemFav && itemFav.length > 0 ? (
             itemFav.map((e) => (
               <div className="zapato-fav" key={e.id}>
+                 <NavLink to={`/product/${e.id}`}>
                 <img src={e.image} alt={e.title} />
+                 </NavLink>
                 <div className="zapato-datos-fav">
                   <p>
+                  <NavLink to={`/product/${e.id}`}>
                     <strong>{e.marca}</strong>
+                    </NavLink>
                     <br />
                     {e.title}
                   </p>

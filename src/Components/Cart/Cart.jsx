@@ -1,8 +1,9 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import promos from "../images/promos.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteFromCart, getUserCart } from "../../Redux/Actions";
+import { deleteFromCart, getFav, getUserCart } from "../../Redux/Actions";
 import swal from "sweetalert";
+import { useEffect } from "react";
 
 
 export default function Cart() {
@@ -17,6 +18,14 @@ export default function Cart() {
     (total, item) => total + item.price * item.qty,
     0
   );
+
+  useEffect(() => {
+    const getCarFav = async () => {
+      await dispatch(getUserCart(loginUserId));
+      await dispatch(getFav(loginUserId))
+    };
+    getCarFav();
+  }, [dispatch]);
 
   const handleDeleteFromCart = async (compraProductId) => {
     if (!token) {

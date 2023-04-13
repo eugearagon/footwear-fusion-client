@@ -33,7 +33,8 @@ import {
   UPDATE_USER_FAILURE,
   DELETE_PRODUCT_CART,
   UPDATE_PRODUCT_CART,
-  PUT_PRODUCT_PRICE
+  PUT_PRODUCT_PRICE,
+  GET_ORDEN_USER
 } from "../Actions/actions";
 
 const initialState = {
@@ -70,6 +71,7 @@ const initialState = {
   newsletter: [],
   postMercadoPago: null,
   getMercadoPago: null,
+  userCompras: null
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -165,11 +167,11 @@ function rootReducer(state = initialState, action) {
           rol: "",
           token: "",
         },
-        dataUser:{
-          name:"",
-          last_name:"",
-          phone:"",
-          address:""
+        dataUser: {
+          name: "",
+          last_name: "",
+          phone: "",
+          address: ""
         },
         postMercadoPago: null,
       };
@@ -334,10 +336,10 @@ function rootReducer(state = initialState, action) {
         ...state,
       };
 
-      case UPDATE_PRODUCT_CART:
-        return {
-          ...state,
-        };
+    case UPDATE_PRODUCT_CART:
+      return {
+        ...state,
+      };
 
     case GET_CART_BY_ID:
       console.log(action.payload, "payload reducer");
@@ -350,6 +352,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         itemFav: action.payload,
+      };
+
+    case GET_ORDEN_USER:
+      return {
+        ...state,
+        userCompras: action.payload,
       };
 
     case DELETE_FAV:
@@ -397,7 +405,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         dataUser: datos
       };
-
 
     default:
       return state;

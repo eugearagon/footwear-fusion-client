@@ -36,6 +36,7 @@ export default function Detail() {
   useEffect(() => {
     const userCart = async () => {
       await dispatch(getUserCart(loginUserId));
+      await dispatch(getFav(loginUserId))
     };
     userCart();
   }, [dispatch]);

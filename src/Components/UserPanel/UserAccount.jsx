@@ -1,7 +1,7 @@
 import React from "react";
 import cuenta from "../images/f.png";
 import { useEffect, useState } from "react";
-import { getDatosUser, postDataUser } from "../../Redux/Actions";
+import { getDatosUser, getFav, getUserCart, postDataUser } from "../../Redux/Actions";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
@@ -15,6 +15,8 @@ export default function UserAccount() {
   useEffect(() => {
     const userData = async () => {
       await dispatch(getDatosUser(loginUserId));
+      await dispatch(getUserCart(loginUserId));
+      await dispatch(getFav(loginUserId))
     };
     userData();
   }, [loginUserId, dispatch]);
@@ -37,8 +39,8 @@ export default function UserAccount() {
 
   const enviarDatos = async () => {
     try {
-      await dispatch(postDataUser(loginUserId, datos))
-      await dispatch(getDatosUser(loginUserId))
+      await dispatch(postDataUser(loginUserId, datos));
+      await dispatch(getDatosUser(loginUserId));
     } catch (error) {
       console.log(error.menssage)
     }

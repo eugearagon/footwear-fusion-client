@@ -31,7 +31,7 @@ function Succes() {
         address: datosCompra.payer.address.street_name,
         promotion: false,
         payment: datos.payment_method,
-        orderStatus: datos.status,
+        // orderStatus: datos.status,
         total: datos.transaction_amount,
       };
 

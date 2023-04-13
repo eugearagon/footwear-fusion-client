@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -18,36 +19,38 @@ function Failure() {
     0
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(statusMercadoPago(compraId));
-    };
-    fetchData();
-  }, [compraId, dispatch]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await dispatch(statusMercadoPago(compraId));
+  //   };
+  //   fetchData();
+  // }, [compraId, dispatch]);
 
-  useEffect(() => {
-    if (datos && datosCompra) {
-      const orden = {
-        address: datosCompra.payer.address.street_name,
-        promotion: false,
-        payment: datos.payment_method,
-        orderStatus: datos.status,
-        total: datos.transaction_amount,
-      };
+  // useEffect(() => {
+  //   if (datos && datosCompra) {
+  //     const orden = {
+  //       address: datosCompra.payer.address.street_name,
+  //       promotion: false,
+  //       payment: datos.payment_method,
+  //       // orderStatus: datos.status,
+  //       total: datos.transaction_amount,
+  //     };
 
-      const mandarOreden = async () => {
-        await dispatch(crearOrdenDeCompra(loginUserId, orden));
-      };
+  //     const mandarOreden = async () => {
+  //       await dispatch(crearOrdenDeCompra(loginUserId, orden));
+  //     };
 
-      mandarOreden();
-    }
-  }, [datos, datosCompra, dispatch, loginUserId, totalPrice]);
+  //     mandarOreden();
+  //   }
+  // }, [datos, datosCompra, dispatch, loginUserId, totalPrice]);
 
   return (
-      <div>
-        <h1>Fallo la Compra</h1>
-      </div>
-
+    <div>
+      <h1>Fallo la Compra</h1>
+      <NavLink to={"/terminarCompra"}>
+        <button className="favs">Volver a tu compra</button>
+      </NavLink>
+    </div>
   )
 }
 

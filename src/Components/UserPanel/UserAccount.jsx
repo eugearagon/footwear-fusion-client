@@ -38,6 +38,7 @@ export default function UserAccount() {
   const enviarDatos = async () => {
     try {
       await dispatch(postDataUser(loginUserId, datos))
+      await dispatch(getDatosUser(loginUserId))
     } catch (error) {
       console.log(error.menssage)
     }

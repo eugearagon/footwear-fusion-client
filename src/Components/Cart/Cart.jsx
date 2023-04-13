@@ -45,7 +45,9 @@ export default function Cart() {
           <h3>CARRITO DE COMPRAS</h3>
           <p>{item.length} PRODUCTOS</p>
         </div>
-        <button>TERMINAR DE COMPRAR</button>
+        <NavLink to={"/terminarCompra"}>
+          <button>TERMINAR COMPRAR</button>
+        </NavLink>
       </div>
 
       {item && item.length > 0 ? (

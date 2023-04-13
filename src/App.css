@@ -1041,6 +1041,11 @@ select {
 
 /*  ----   panel de usuario   ---- */
 
+.centrar{
+  width: 60%;
+  margin: 0 auto;
+}
+
 .user-panel {
   border: #a2a2a2 1px solid;
   margin: 50px;

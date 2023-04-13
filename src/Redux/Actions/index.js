@@ -311,6 +311,7 @@ export function addToCart(loginUserId, item) {
         `${back}/cart/${loginUserId}`,
         item
       );
+      
       return dispatch({
         type: ADD_TO_CART,
         payload: userCart,

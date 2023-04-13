@@ -32,7 +32,8 @@ import {
   POST_USER_SUCCESS,
   UPDATE_USER_FAILURE,
   DELETE_PRODUCT_CART,
-  UPDATE_PRODUCT_CART
+  UPDATE_PRODUCT_CART,
+  PUT_PRODUCT_PRICE
 } from "../Actions/actions";
 
 const initialState = {
@@ -396,6 +397,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         dataUser: datos
       };
+
 
     default:
       return state;

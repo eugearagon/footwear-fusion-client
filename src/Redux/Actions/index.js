@@ -189,14 +189,12 @@ export const postDataUser = (loginUserId, datos) => {
         'x-access-token': token,
     };
     try {
-      const res = await axios.post(`http://localhost:3001/user/${loginUserId}`, datos, {headers});
-      console.log('Response from server: ', res); // Agregar este console.log
+      await axios.post(`http://localhost:3001/user/${loginUserId}`, datos, {headers});
       dispatch({
         type: POST_USER_SUCCESS,
       });
     } catch (err) {
       console.log('Error updating user: ', err); // Agregar este console.log
-      
     }
   };
 };
@@ -559,6 +557,7 @@ export const getDatosUser = (loginUserId) => {
       };
       const response = await axios.get(`http://localhost:3001/user/datos/${loginUserId}`,{headers});
       const apiData = response.data
+      console.log(apiData);
       dispatch({
         type: GET_DATOS_USER,
         payload: apiData

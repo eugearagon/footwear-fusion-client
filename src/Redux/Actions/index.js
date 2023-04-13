@@ -44,6 +44,7 @@ import {
   PUT_PRODUCT_IMAGE,
   PUT_PRODUCT_PRICE,
   PUT_PRODUCT_STOCK,
+  GET_USER_ROL
 } from "../Actions/actions.js";
 
 export function getProducts() {
@@ -639,4 +640,19 @@ export function modifyProductStock(id, stock) {
   };
 }
 
+export function getAdminRol(email) {
+  return async function (dispatch) {
+    try {
+      const rolApi = await axios.get(
+        `http://localhost:3001/admin?name=${email}`
+      );
+      return dispatch({
+        type: GET_USER_ROL,
+        payload: rolApi.data,
+      });
+    } catch (error) {
+      alert(error.menssage);
+    }
+  };
+}
 

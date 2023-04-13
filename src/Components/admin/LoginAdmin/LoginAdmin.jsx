@@ -35,9 +35,7 @@ export default function LoginAdmin() {
     try {
       const login = await iniciarLogin(user.email, user.password);
       await dispatch(ingreso(login.user.email));
-      if(user.email === "pt10henry@gmail.com")
        return navigate("/admin");
-       else return navigate("/")
     } catch (error) {
       console.log(error.code); //esto me muestra por consola el codigo del error, para poder cambiar el mensaje.
       if (error.code === "auth/user-not-found") {

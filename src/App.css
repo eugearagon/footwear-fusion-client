@@ -1019,8 +1019,12 @@ select {
 }
 
 .image-popup{
-  height: 320px !important;
-  width: 230px;
+  font-size: 9pt;
+  text-align: center;
+  background-color: #04101eed;
+  width: 235px ;
+  padding: 10px 0;
+  margin-bottom: 5px;
 }
 
 /*  ----   ADMIN   ---- */

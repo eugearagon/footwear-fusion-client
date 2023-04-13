@@ -92,7 +92,15 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
 
   return (
     <div key={reloadComponent ? "reload" : ""} className="card admin-card">
+      {showPopup && (
+        <div className="image-popup">
+         
+          <UploadWidget onUpload={handleModifyImage} />
+          <button onClick={() => setShowPopup(false)}>Cerrar</button>
+        </div>
+      )}
       <button onClick={() => setShowPopup(true)}>
+      
         <img src={image} alt="" />
       </button>
       <h4 className="marca">{marca.toUpperCase()}</h4>
@@ -103,13 +111,7 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
       <button onClick={handleModifyStock}>
         <h5>Stock: {newStock}</h5>
       </button>
-      {showPopup && (
-        <div className="popup prod-popup image-popup">
-         
-          <UploadWidget onUpload={handleModifyImage} />
-          <button onClick={() => setShowPopup(false)}>Cerrar</button>
-        </div>
-      )}
+     
     </div>
   );
 }

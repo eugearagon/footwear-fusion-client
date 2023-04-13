@@ -13,7 +13,7 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
   const [reloadComponent, setReloadComponent] = useState(false);
   const [newPrice, setNewPrice] = useState(price);
   const [newStock, setNewStock] = useState(stock);
-  const [newImage, setNewImage] = useState(stock);
+  const [newImage, setNewImage] = useState(image);
   const [showPopup, setShowPopup] = useState(false);
 
   function handleModifyPrice() {
@@ -54,7 +54,6 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
     Swal.fire("Imagen modificada", `Se cambio la imagen`, "success");
 
     dispatch(modifyProductImage(id, image));
-    window.scroll(0,0)
   }
 
   function handleModifyStock() {
@@ -95,7 +94,7 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
         </div>
       )}
       <button onClick={() => setShowPopup(true)}>
-        <img src={image} alt={title} />
+        <img src={newImage} alt={title} />
       </button>
       <h4 className="marca">{marca.toUpperCase()}</h4>
       <h5>{title}</h5>

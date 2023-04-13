@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from "react-redux";
 import cuenta from "../images/f.png";
 import { useEffect, useState } from "react";
 import { getDatosUser, postDataUser } from "../../Redux/Actions";
-import { Input } from "@mui/material";
 
 export default function UserAccount() {
   const user = useSelector((state) => state.loginUser);
@@ -58,6 +57,7 @@ const [address, setAddress] = useState(dataUsers?.address ?? '');
   const enviarDatos = async () => {
     try {
       await dispatch(postDataUser(loginUserId, datos))
+      await dispatch(getDatosUser(loginUserId))
     } catch (error) {
       console.log(error.menssage)
     }

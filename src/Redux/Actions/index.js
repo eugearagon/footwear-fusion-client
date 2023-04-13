@@ -193,14 +193,10 @@ export const postDataUser = (loginUserId, datos) => {
       console.log('Response from server: ', res); // Agregar este console.log
       dispatch({
         type: POST_USER_SUCCESS,
-        payload: res.data
       });
     } catch (err) {
       console.log('Error updating user: ', err); // Agregar este console.log
-      dispatch({
-        type: UPDATE_USER_FAILURE,
-        payload: err.response.data.message
-      });
+      
     }
   };
 };

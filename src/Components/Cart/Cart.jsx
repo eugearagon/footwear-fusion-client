@@ -25,7 +25,7 @@ export default function Cart() {
     }
     await dispatch(deleteFromCart(compraProductId));
     await dispatch(getUserCart(loginUserId));
-    swal("Producto eliminado del carrito!", "success");
+    swal("Carrito", "Producto eliminado del carrito!", "success");
   };
 
 

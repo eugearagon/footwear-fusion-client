@@ -395,12 +395,7 @@ function rootReducer(state = initialState, action) {
       const datos = action.payload;
       return {
         ...state,
-        dataUser: {
-          name: datos.name || "",
-          last_name: datos.last_name || "",
-          phone: datos.phone || "",
-          address: datos.address || "",
-        },
+        dataUser: datos,
       };
 
 

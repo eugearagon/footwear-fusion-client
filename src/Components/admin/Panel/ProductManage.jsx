@@ -42,6 +42,7 @@ export default function ProductManage() {
               key={p.id}
               id={p.id}
               title={p.title}
+              stock={p.stock}
               price={p.price}
               image={p.image}
               marca={p.MarcaProducts[0].name}

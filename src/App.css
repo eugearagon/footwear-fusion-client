@@ -1006,16 +1006,25 @@ select {
   width: 50%;
 }
 
-.modif-prod button{
+.modif-prod button, .admin-card button{
+  font-size: 12pt;
   padding: 0;
   color: #17e1e7;
   background: none;
-  width: 50%;
-  margin: 0 4px;
+  margin: 0 10px;
 }
 
 .number{
   width: 70px;
+}
+
+.image-popup{
+  font-size: 9pt;
+  text-align: center;
+  background-color: #04101eed;
+  width: 235px ;
+  padding: 10px 0;
+  margin-bottom: 5px;
 }
 
 /*  ----   ADMIN   ---- */

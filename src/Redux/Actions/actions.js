@@ -59,3 +59,4 @@ export const GET_SALES="GET_SALES"
 export const POST_PRODUCTS="POST_PRODUCTS"
 //accion orden de compra
 export const POST_ORDEN = "POST_ORDEN";
+export const GET_ORDEN_USER = "GET_ORDEN_USER"

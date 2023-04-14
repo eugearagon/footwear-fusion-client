@@ -41,6 +41,7 @@ import {
   GET_MERCADO_PAGO,
   GET_DATOS_USER,
   POST_ORDEN,
+  GET_ORDEN_USER,
   PUT_PRODUCT_IMAGE,
   PUT_PRODUCT_PRICE,
   PUT_PRODUCT_STOCK,
@@ -511,6 +512,7 @@ export const correoRegistroNewsletter = (correo) => {
 };
 
 export const mercadoPago = (item, player) => {
+  console.log(item, player, 'actions');
   return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
@@ -583,6 +585,7 @@ export const getDatosUser = (loginUserId) => {
 };
 
 export const crearOrdenDeCompra = (loginUserId, orden) => {
+  console.log(loginUserId, orden, 'actions');
   return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
@@ -604,6 +607,29 @@ export const crearOrdenDeCompra = (loginUserId, orden) => {
     }
   };
 };
+
+export function getOrdenesCompraId(userId) {
+  return async function (dispatch) {
+    const token = localStorage.getItem("token");
+    const headers = {
+      "x-access-token": token,
+    };
+    try {
+      const ordenesCompraId = await axios.get(
+        `${back}/ordencompra/${userId}`,
+        { headers }
+      );
+      const ordenesCompraUser = ordenesCompraId.data;
+      console.log(ordenesCompraId.data, 'actions');
+      dispatch({
+        type: GET_ORDEN_USER,
+        payload: ordenesCompraUser,
+      });
+    } catch (error) {
+      console.log(error.request.response);
+    }
+  };
+}
 
 export function modifyProductPrice(id, price) {
   return async function (dispatch) {

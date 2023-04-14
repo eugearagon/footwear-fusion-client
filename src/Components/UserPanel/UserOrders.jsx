@@ -1,6 +1,14 @@
 import shoe from "../images/shoe.png";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+
 
 export default function UserOrders() {
+  
+  const dispatch = useDispatch();
+  const ordenesCompraUser = useSelector((state) => state.userCompras);
+
+
   return (
     <div className="user-content">
       <div className="user-data">

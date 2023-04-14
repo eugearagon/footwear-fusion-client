@@ -7,21 +7,52 @@ import {
   mercadoPago,
 } from "../Redux/Actions";
 
-function AntesDeComprar(props) {
-  console.log("props",props);
+function AntesDeComprar() {
   const dispatch = useDispatch();
   const loginUser = useSelector((state) => state.loginUser);
   const loginUserId = loginUser.id;
-  const items = useSelector((state) => state.item);
+  const item = useSelector((state) => state.item);
   const dataUser = useSelector((state) => state.dataUser);
+  const descuento = useSelector((state) => state.promotions);
 
   const [datoModificado, setDatoModificado] = useState({
     number: "",
     address: "",
   });
 
+  const totalPrice = item.reduce(
+    (total, item) => total + item.price * item.qty,
+    0
+  );
+
+  
   const [modificar, setModificar] = useState(false);
   const [promoCode, setPromoCode] = useState("");
+  console.log("antes de comprar", promoCode);
+  
+  useEffect(() => {
+    try {
+      if (descuento?.discount) {
+        //reviso si tengo un codigo y si ese codigo pertene a un descuento de promo
+        const porcentaje = descuento.discount / 100;
+        let iten = item.map((dato) => {
+          return {
+            id: dato.id,
+            code: dato.code,
+            title: dato.title,
+            image: dato.image,
+            price: dato.price - (dato.price * porcentaje),
+            marca: dato.marca,
+            size: dato.talle,
+            qty: dato.qty,
+          };
+        });
+        setPromoCode(iten);
+      }
+    } catch (error) {
+      console.log("errorPromo", error);
+    }
+  }, [descuento, totalPrice]);
 
   useEffect(() => {
     const getCartAndFav = async () => {
@@ -47,19 +78,27 @@ function AntesDeComprar(props) {
     setModificar(false);
   };
 
+  let items = descuento ? promoCode : item
+
   const handleCompraClick = async () => {
     try {
       await dispatch(
         mercadoPago(items, {
           phone: {
-            number: datoModificado.number ? parseInt(datoModificado.number)  : dataUser.number,
+            number: datoModificado.number
+              ? parseInt(datoModificado.number)
+              : dataUser.number,
           },
           address: {
-            street_name: datoModificado.address ? datoModificado.address : dataUser.address,
+            street_name: datoModificado.address
+              ? datoModificado.address
+              : dataUser.address,
           },
           email: loginUser.email,
           name: dataUser.name,
           surname: dataUser.last_name,
+          total: parseInt(totalPrice),
+          descuento: promoCode ? parseInt(promoCode) : 0,
         })
       );
     } catch (error) {

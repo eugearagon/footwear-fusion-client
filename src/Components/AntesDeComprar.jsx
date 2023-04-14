@@ -15,8 +15,8 @@ function AntesDeComprar() {
   const dataUser = useSelector((state) => state.dataUser);
 
   const [datoModificado, setDatoModificado] = useState({
-    number: dataUser.number,
-    address: dataUser.address,
+    number: "",
+    address: "",
   });
 
   const [modificar, setModificar] = useState(false);
@@ -61,10 +61,10 @@ function AntesDeComprar() {
       await dispatch(
         mercadoPago(items, {
           phone: {
-            number: datoModificado.number,
+            number: datoModificado.number ? parseInt(datoModificado.number)  : dataUser.number,
           },
           address: {
-            street_name: datoModificado.address,
+            street_name: datoModificado.address ? datoModificado.address : dataUser.address,
           },
           email: loginUser.email,
           name: dataUser.name,
@@ -100,7 +100,6 @@ function AntesDeComprar() {
               <h2>Precio</h2>
               <h2>${item.price.toLocaleString("de-De")}</h2>
             </div>
-            <button onClick={handleCompraClick}>COMPRAR</button>
           </div>
         ))}
       <h1> DATOS DE ENTREGA</h1>
@@ -112,7 +111,7 @@ function AntesDeComprar() {
           <input
             id="number"
             type="tel"
-            value={datoModificado.number}
+            name={datoModificado.number}
             onChange={handlePhoneChange}
           />
           <button onClick={handleModificarSubmit}>Guardar cambios</button>
@@ -150,6 +149,8 @@ function AntesDeComprar() {
           <button>Agregar código</button>
         </div>
       )}
+      <button onClick={handleCompraClick}>COMPRAR</button>
+      <br />
       <br />
     </div>
   );

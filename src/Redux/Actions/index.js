@@ -45,6 +45,8 @@ import {
   PUT_PRODUCT_IMAGE,
   PUT_PRODUCT_PRICE,
   PUT_PRODUCT_STOCK,
+  POST_PROMOTIONS,
+  GET_PROMOTIONS
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -699,4 +701,34 @@ export function modifyProductStock(id, stock) {
       console.log("no se pudo modificar", error);
     }
   };
+}
+
+export const crearPromo = (discount) => {
+  return async function(dispatch){
+    try {
+      const apiPromo = await axios.post(`${back}/promotions`,discount)
+      const promo = apiPromo.data
+      return dispatch({
+        type: POST_PROMOTIONS,
+        payload: promo
+      })
+    } catch (error) {
+      console.log(error.menssage);
+    }
+  }
+}
+
+export const getPromo = (code) => {
+  return async function(dispatch){
+    try {
+      const apiPromo = await axios.get(`${back}/promotions/${code}`)
+      const promo = apiPromo.data
+      return dispatch({
+        type: GET_PROMOTIONS,
+        payload: promo
+      })
+    } catch (error) {
+      console.log(error.menssage);
+    }
+  }
 }

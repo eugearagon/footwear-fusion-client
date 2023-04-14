@@ -7,7 +7,8 @@ import {
   mercadoPago,
 } from "../Redux/Actions";
 
-function AntesDeComprar() {
+function AntesDeComprar(props) {
+  console.log("props",props);
   const dispatch = useDispatch();
   const loginUser = useSelector((state) => state.loginUser);
   const loginUserId = loginUser.id;
@@ -30,16 +31,6 @@ function AntesDeComprar() {
     };
     getCartAndFav();
   }, [dispatch, loginUserId]);
-
-  const handlePromoCodeChange = (event) => {
-    setPromoCode(event.target.value);
-  };
-
-  const handlePromoCodeSubmit = (event) => {
-    event.preventDefault();
-
-    console.log(`Código promocional ingresado: ${promoCode}`);
-  };
 
   const handlePhoneChange = (event) => {
     setModificar(true);
@@ -139,16 +130,7 @@ function AntesDeComprar() {
           <button onClick={() => setModificar(true)}>Modificar</button>
         </div>
       )}
-
-      {dataUser.promoCode ? (
-        <p>Tienes un código promocional: {dataUser.promoCode}</p>
-      ) : (
-        <div className="centrar zapato-fav">
-          <label htmlFor="promoCode">¿Tenes un código promocional?</label>
-          <input id="promoCode" type="text" />
-          <button>Agregar código</button>
-        </div>
-      )}
+      <br />
       <button onClick={handleCompraClick}>COMPRAR</button>
       <br />
       <br />

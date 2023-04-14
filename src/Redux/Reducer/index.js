@@ -34,7 +34,8 @@ import {
   DELETE_PRODUCT_CART,
   UPDATE_PRODUCT_CART,
   PUT_PRODUCT_PRICE,
-  GET_ORDEN_USER
+  GET_ORDEN_USER,
+  GET_PROMOTIONS
 } from "../Actions/actions";
 
 const initialState = {
@@ -71,7 +72,8 @@ const initialState = {
   newsletter: [],
   postMercadoPago: null,
   getMercadoPago: null,
-  userCompras: null
+  userCompras: null,
+  promotions: null
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -405,6 +407,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         dataUser: datos
       };
+    
+    case GET_PROMOTIONS:
+      const promo = action.payload;
+      return {
+        ...state,
+        promotions: promo
+      }
 
     default:
       return state;

@@ -13,10 +13,7 @@ function Succes() {
   const datosCompra = useSelector((state) => state.postMercadoPago);
   const item = useSelector((state) => state.item);
   const loginUserId = useSelector((state) => state.loginUser.id);
-  const totalPrice = item.reduce(
-    (total, item) => total + item.price * item.qty,
-    0
-  );
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +38,7 @@ function Succes() {
 
       mandarOreden();
     }
-  }, [datos, datosCompra, dispatch, loginUserId, totalPrice]);
+  }, [datos, datosCompra, dispatch, loginUserId]);
 
   return (
     <div className="relleno">

@@ -1,15 +1,16 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import promos from "../images/promos.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteFromCart, getFav, getUserCart } from "../../Redux/Actions";
+import { deleteFromCart, getFav, getPromo, getUserCart } from "../../Redux/Actions";
 import swal from "sweetalert";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function Cart() {
   const dispatch = useDispatch();
   const item = useSelector((state) => state.item);
   const loginUserId = useSelector((state) => state.loginUser.id);
+  const descuento = useSelector((state) => state.promotions)
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -18,6 +19,28 @@ export default function Cart() {
     (total, item) => total + item.price * item.qty,
     0
   );
+
+  const [promoCode, setPromoCode] = useState("");
+  const [newPrice, setNewPrice] = useState("");
+  
+  const handlePromoCodeChange = (event) => {
+    setPromoCode(event.target.value);
+  };
+
+  const handlePromoCodeSubmit = async () => {
+    if (promoCode) {
+      try {
+        await dispatch(getPromo(promoCode))
+        if (descuento) {
+          const valor = descuento.discount;
+          const porcentaje = valor / 100;
+          const newPrice = totalPrice - totalPrice * porcentaje;
+          setNewPrice(newPrice)
+          console.log(newPrice);
+        }
+      } catch (error) {}
+    }
+  };
 
   useEffect(() => {
     const getCarFav = async () => {
@@ -37,7 +60,7 @@ export default function Cart() {
     swal("Producto eliminado", "Se elmininó del carrito", "success");
   };
 
-
+  
   return (
      <div className="cart">
       <div className="cart-header">
@@ -85,10 +108,17 @@ export default function Cart() {
       <div className="cart-footer">
         <img src={promos} alt="" />
         <div className="ahora-si">
-        <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
-        <NavLink to={"/terminarCompra"}>
+        <h1>Total: ${newPrice ? newPrice.toLocaleString("de-De") : totalPrice.toLocaleString("de-De")}</h1>
+        <NavLink to={"/terminarCompra" }>
           <button>TERMINAR COMPRAR</button>
         </NavLink>
+       
+        <div className="centrar zapato-fav">
+          <label htmlFor="promoCode">¿Tenes un código promocional?</label>
+          <input id="promoCode" type="text" name="code"  onChange={handlePromoCodeChange}/>
+          <button onClick={handlePromoCodeSubmit}>Agregar código</button>
+        </div>
+     
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>
           </NavLink>

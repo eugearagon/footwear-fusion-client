@@ -59,6 +59,7 @@ h2 {
 a {
   text-decoration: none;
   cursor: pointer;
+  color: #001e40;
 }
 
 a:hover {
@@ -1040,6 +1041,10 @@ select {
 }
 
 /*  ----   panel de usuario   ---- */
+
+.relleno{
+  padding: 200px 30px;
+}
 
 .centrar{
   width: 60%;

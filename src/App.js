@@ -50,6 +50,7 @@ function App() {
         "info"
       );
       navigate("/login");
+      window.location.reload()
     }
   }, [token, expirationDate, navigate]);
 

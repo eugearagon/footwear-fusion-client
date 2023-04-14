@@ -1,71 +1,158 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { getDatosUser, getFav, getUserCart, mercadoPago, crearOrdenDeCompra } from '../Redux/Actions';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getDatosUser,
+  getFav,
+  getUserCart,
+  mercadoPago,
+} from "../Redux/Actions";
 
 function AntesDeComprar() {
-
   const dispatch = useDispatch();
   const loginUser = useSelector((state) => state.loginUser);
   const loginUserId = loginUser.id;
-  const item = useSelector((state) => state.item);
-  const datos = useSelector((state) => state.dataUser)
+  const items = useSelector((state) => state.item);
+  const dataUser = useSelector((state) => state.dataUser);
+
+  const [datoModificado, setDatoModificado] = useState({
+    number: dataUser.number,
+    address: dataUser.address,
+  });
+
+  const [modificar, setModificar] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
 
   useEffect(() => {
-    const getCarFav = async () => {
+    const getCartAndFav = async () => {
       await dispatch(getUserCart(loginUserId));
-      await dispatch(getFav(loginUserId))
+      await dispatch(getFav(loginUserId));
+      await dispatch(getDatosUser(loginUserId));
     };
-    getCarFav();
-  }, [dispatch]);
+    getCartAndFav();
+  }, [dispatch, loginUserId]);
 
-  const [datoModificado, setdatoModificado] = useState({
-    number: "",
-    address: ""
-  })
+  const handlePromoCodeChange = (event) => {
+    setPromoCode(event.target.value);
+  };
 
-  const [modificar, setModificar] = useState(false)
+  const handlePromoCodeSubmit = (event) => {
+    event.preventDefault();
 
-  const player = {
-    phone: {
-      number: parseInt(datos.phone)
-    },
-    address: {
-      street_name: datos.address
-    },
-    email: loginUser.email,
-    name: datos.name,
-    surname: datos.last_name
-  }
+    console.log(`Código promocional ingresado: ${promoCode}`);
+  };
 
+  const handlePhoneChange = (event) => {
+    setModificar(true);
+    setDatoModificado({ ...datoModificado, number: event.target.value });
+  };
 
-  useEffect(() => {
-    const datos = async () => {
-      try {
-        await dispatch(getDatosUser(loginUserId))
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    datos();
-  }, []);
+  const handleAddressChange = (event) => {
+    setModificar(true);
+    setDatoModificado({ ...datoModificado, address: event.target.value });
+  };
 
+  const handleModificarSubmit = (event) => {
+    event.preventDefault();
+    setModificar(false);
+  };
 
-  const mpPago = async () => {
+  const handleCompraClick = async () => {
     try {
-      await dispatch(mercadoPago(item, player));
+      await dispatch(
+        mercadoPago(items, {
+          phone: {
+            number: datoModificado.number,
+          },
+          address: {
+            street_name: datoModificado.address,
+          },
+          email: loginUser.email,
+          name: dataUser.name,
+          surname: dataUser.last_name,
+        })
+      );
     } catch (error) {
       console.log(error.message);
     }
   };
-  
+
   return (
-    <div><h1>Antes de la compra</h1>
+    <div className="centrar">
+      <h1>RESUMEN DE TU COMPRA</h1>
+      {items &&
+        items.map((item) => (
+          <div className="zapato-fav" key={item.code}>
+            <img src={item.image} alt="zapato" />
+            <div className="zapato-dataUser">
+              <p>
+                <strong>{item.marca}</strong>
+                <br />
+                {item.title}
+              </p>
+              <p>Talle: {item.talle}</p>
+              <div className="sel-cant">
+                <p>
+                  Cantidad <b>{item.qty}</b>
+                </p>
+              </div>
+            </div>
+            <div className="zapato-precio">
+              <h2>Precio</h2>
+              <h2>${item.price.toLocaleString("de-De")}</h2>
+            </div>
+            <button onClick={handleCompraClick}>COMPRAR</button>
+          </div>
+        ))}
+      <h1> DATOS DE ENTREGA</h1>
+      <h4>Nombre y Apellido: {`${dataUser.name} ${dataUser.last_name}`}</h4>
+      <p>Email: {loginUser.email}</p>
+      {modificar ? (
+        <div>
+          <label htmlFor="number">Nuevo número:</label>
+          <input
+            id="number"
+            type="tel"
+            value={datoModificado.number}
+            onChange={handlePhoneChange}
+          />
+          <button onClick={handleModificarSubmit}>Guardar cambios</button>
+        </div>
+      ) : (
+        <div>
+          <p>Teléfono: {datoModificado.number || dataUser.phone}</p>
+          <button onClick={() => setModificar(true)}>Modificar</button>
+        </div>
+      )}
+      {modificar ? (
+        <div>
+          <label htmlFor="address">Nueva dirección:</label>
+          <input
+            id="address"
+            type="text"
+            value={datoModificado.address}
+            onChange={handleAddressChange}
+          />
+          <button onClick={handleModificarSubmit}>Guardar cambios</button>
+        </div>
+      ) : (
+        <div>
+          <p>Dirección: {datoModificado.address || dataUser.address}</p>
+          <button onClick={() => setModificar(true)}>Modificar</button>
+        </div>
+      )}
 
-      <button onClick={mpPago}>COMPRAR</button>
-
-
+      {dataUser.promoCode ? (
+        <p>Tienes un código promocional: {dataUser.promoCode}</p>
+      ) : (
+        <div className="centrar zapato-fav">
+          <label htmlFor="promoCode">¿Tenes un código promocional?</label>
+          <input id="promoCode" type="text" />
+          <button>Agregar código</button>
+        </div>
+      )}
+      <br />
     </div>
-  )
+  );
 }
 
-export default AntesDeComprar
+export default AntesDeComprar;

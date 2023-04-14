@@ -13,6 +13,7 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
   const [reloadComponent, setReloadComponent] = useState(false);
   const [newPrice, setNewPrice] = useState(price);
   const [newStock, setNewStock] = useState(stock);
+  const [newImage, setNewImage] = useState(image);
   const [showPopup, setShowPopup] = useState(false);
 
   function handleModifyPrice() {
@@ -46,15 +47,14 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
     });
   }
 
-
-
   function handleModifyImage(url) {
-    setProdImage({ ...prodImage, imagen: url });
-    dispatch(modifyProductImage(id, prodImage.image))
+    image = url;
+    setNewImage(url);
+
+    Swal.fire("Imagen modificada", `Se cambio la imagen`, "success");
+
+    dispatch(modifyProductImage(id, image));
   }
-
-
-
 
   function handleModifyStock() {
     Swal.fire({
@@ -85,23 +85,16 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
     });
   }
 
-  const [prodImage, setProdImage] = useState({
-    image: "",
-  });
-
-
   return (
     <div key={reloadComponent ? "reload" : ""} className="card admin-card">
       {showPopup && (
         <div className="image-popup">
-         
           <UploadWidget onUpload={handleModifyImage} />
           <button onClick={() => setShowPopup(false)}>Cerrar</button>
         </div>
       )}
       <button onClick={() => setShowPopup(true)}>
-      
-        <img src={image} alt="" />
+        <img src={newImage} alt={title} />
       </button>
       <h4 className="marca">{marca.toUpperCase()}</h4>
       <h5>{title}</h5>
@@ -111,7 +104,6 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
       <button onClick={handleModifyStock}>
         <h5>Stock: {newStock}</h5>
       </button>
-     
     </div>
   );
 }

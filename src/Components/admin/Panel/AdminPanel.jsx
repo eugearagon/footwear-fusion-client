@@ -13,7 +13,6 @@ export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("account");
   const [showNovedades, setShowNovedades] = useState(true);
   const user = useSelector(state => state.loginUser)
-  const datos = useSelector(state => state.dataUser)
 
   function handleTabClick(tabName) {
     setActiveTab(tabName);

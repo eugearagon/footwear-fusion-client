@@ -44,8 +44,10 @@ function Succes() {
   }, [datos, datosCompra, dispatch, loginUserId, totalPrice]);
 
   return (
-    <div>
+    <div className="relleno">
       <h1>Gracias por tu compra!</h1>
+      <br />
+      <h4>¡Te enviamos un correo con el detalle de tu pedido!</h4>
     </div>
   );
 }

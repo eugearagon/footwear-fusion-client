@@ -29,6 +29,13 @@ export default function UserManage() {
               <img src={userIconBlock} alt="user icon" />
             )}
             <>
+            <h5>{u.DataUsers?.map((d) => (
+             <>
+              <h3>{d.name} &nbsp; {d.last_name}</h3>
+              <h5>{d.address}</h5>
+              <h5>{d.phone}</h5>
+             </>
+            ))}</h5>
               <h5>{u.email}</h5>
               <p className={`${u.rol.toLowerCase() === "block" ? "rol-block" : ""}`} >{u.rol}</p>
             </>

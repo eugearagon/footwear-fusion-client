@@ -170,8 +170,12 @@ export function getPrice() {
 
 export function getUsers() {
   return async function (dispatch) {
+    const token = localStorage.getItem("token");
+    const headers = {
+      "x-access-token": token,
+    };
     try {
-      var users = await axios.get(`${back}/user`);
+      var users = await axios.get(`${back}/user`, {headers});
       return dispatch({
         type: GET_USERS,
         payload: users.data,
@@ -305,12 +309,14 @@ export function priceRangeSelector(payload) {
 }
 
 export function addToCart(loginUserId, item) {
+  console.log("a ver si llega ",loginUserId, item);
   return async function (dispatch) {
     try {
       var userCart = await axios.post(
         `${back}/cart/${loginUserId}`,
         item
       );
+      
       return dispatch({
         type: ADD_TO_CART,
         payload: userCart,
@@ -358,13 +364,14 @@ export function updateProduct(compraProductId, talle, qty) {
 }
 
 export function getUserCart(loginUserId) {
+  console.log(loginUserId);
   return async function (dispatch) {
     try {
       var userCart = await axios.get(
         `${back}/cart/${loginUserId}`
       );
       const userCartData = userCart.data;
-      console.log(userCartData, "actions");
+      console.log(userCartData, "actions get user cart");
       return dispatch({
         type: GET_CART_BY_ID,
         payload: userCartData,

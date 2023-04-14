@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import fav from "../images/cora.png";
 import { deletFav, getFav } from "../../Redux/Actions";
 import { NavLink } from "react-router-dom";
+import Swal from "sweetalert";
 
 export default function UserFavs() {
   const itemFav = useSelector((state) => state.itemFav);
@@ -11,6 +12,7 @@ export default function UserFavs() {
   const deleteOneFav = async (userId, prodId) => {
     await dispatch(deletFav(userId, prodId));
     await dispatch(getFav(userId));
+    Swal("Producto eliminado", "","success")
   };
 
   return (
@@ -28,7 +30,7 @@ export default function UserFavs() {
                  </NavLink>
                 <div className="zapato-datos-fav">
                   <p>
-                  <NavLink to={`/product/${e.id}`}>
+                  <NavLink  to={`/product/${e.id}`}>
                     <strong>{e.marca}</strong>
                     </NavLink>
                     <br />

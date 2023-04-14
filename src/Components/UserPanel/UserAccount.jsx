@@ -64,24 +64,19 @@ export default function UserAccount() {
               <p>
                
                   <span>
-                    {dataUsers? dataUsers.name : <input type="text" name="name" placeholder="Falta Nombre" onChange={actualizarDatosUser} />}
+                    {dataUsers? dataUsers.name : <input type="text" name="name" placeholder="Añadir Nombre" onChange={actualizarDatosUser} />} &nbsp;
+                    {dataUsers ? dataUsers.last_name : <input type="text" name="last_name" placeholder="Añadir Apellido" onChange={actualizarDatosUser} />}
                   </span>
-             
-                <br />
-                
-                  <span>
-                    {dataUsers ? dataUsers.last_name : <input type="text" name="last_name" placeholder="Falta Apellido" onChange={actualizarDatosUser} />}
-                  </span>
-                
+      
                
                 <br />
                 
                
-                  <span>{dataUsers ? dataUsers.phone : <input type="text" name="phone" placeholder="Falta Telefono" onChange={actualizarDatosUser} />}</span>
+                  <span>{dataUsers ? dataUsers.phone : <input type="text" name="phone" placeholder="Añadir Telefono" onChange={actualizarDatosUser} />}</span>
             
                 <br />
                
-                  <span>{dataUsers ? dataUsers.address : <input type="text" name="address" placeholder="Falta Dirección" onChange={actualizarDatosUser} />}</span>
+                  <span>{dataUsers ? dataUsers.address : <input type="text" name="address" placeholder="Añadir Dirección" onChange={actualizarDatosUser} />}</span>
                
               </p>
              { !dataUsers && <button onClick={enviarDatos} >Guardar</button>}

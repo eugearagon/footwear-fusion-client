@@ -1,18 +1,25 @@
 import shoe from "../images/shoe.png";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+
 
 export default function UserOrders() {
-    return (
-
-        <div className="user-content">
-          <div className="user-data">
-          <img src={shoe} alt="footwear-fusion" />
-          <div className="data-list">
   
-            <h6>MIS PEDIDOS REALIZADOS</h6>
-          </div>
-           
+  const dispatch = useDispatch();
+  const ordenesCompraUser = useSelector((state) => state.userCompras);
+
+
+  return (
+    <div className="user-content">
+      <div className="user-data">
+        <img src={shoe} alt="footwear-fusion" />
+        <div className="data-list">
+          <h6>MIS PEDIDOS REALIZADOS</h6>
+          <div className="zapato-fav">
+            <h1>TODAVIA NO HAY PEDIDOS REALIZADOS</h1>
           </div>
         </div>
-  
-    );
-  }
+      </div>
+    </div>
+  );
+}

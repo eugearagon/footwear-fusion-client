@@ -1,10 +1,10 @@
 import logo from "../images/logo.png";
 import corazon from "../images/cora-icon.png";
 import carro from "../images/carro.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
 import { useSelector, useDispatch } from "react-redux";
-import {borrarToken, getUserCart} from "../../Redux/Actions/index"
+import {borrarToken, getUserCart, closeSession} from "../../Redux/Actions/index"
 import swal from 'sweetalert';
 
 
@@ -17,10 +17,15 @@ const lcdtmab = useSelector((state) => state.item.flat())
 const lcdtmabFav = useSelector((state) => state.itemFav)
 const dispatch = useDispatch();
 const loginUserId = user.id;
+const navigate = useNavigate()
 
 const eliminarLocalStore = () => {
   swal("Hasta luego!", "Te esperamos cuando quieras!", "info");
-  dispatch(borrarToken())
+  dispatch(borrarToken(), closeSession())
+ setTimeout(() => {
+  navigate("/");
+  window.location.reload();
+ }, 2000);
 }
 
 const handleGetUserCart = () => {
@@ -63,6 +68,13 @@ const handleGetUserCart = () => {
           <span className="cant-carro">{lcdtmab.length}</span>
         )}
       </NavLink>
+       
+      {user.rol === 'admin' && (
+        <NavLink to="/admin">
+          <button>Ver panel admin</button>
+        </NavLink>) }
+
+
     </div>
   );
 }

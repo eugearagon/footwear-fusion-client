@@ -1,15 +1,14 @@
 import {
   GET_PRODUCTS,
+  POST_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
   GET_CATEGORY,
   GET_SIZE,
   GET_BRAND,
   GET_USERS,
-  POST_USERS,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
-  FILTER_BY_COLOR,
   FILTER_BY_SIZE,
   ORDER_BY_PRICE,
   GET_PRICE,
@@ -19,20 +18,40 @@ import {
   ADD_TO_CART,
   GET_CART_BY_ID,
   DELETE_FAV,
+  DELETE_CART,
   GET_USERS_FAVORITES,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
   POST_GOOGLE,
+  CLOSE_SESSION,
+  GET_NEWSLETTER,
+  POST_MERCADO_PAGO,
+  GET_MERCADO_PAGO,
+  GET_DATOS_USER,
+  POST_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
+  DELETE_PRODUCT_CART,
+  UPDATE_PRODUCT_CART,
+  PUT_PRODUCT_PRICE,
+  GET_ORDEN_USER,
+  GET_PROMOTIONS
 } from "../Actions/actions";
 
 const initialState = {
   products: [],
   prodRender: [],
   detail: [],
+  detailAdmin: [],
   categories: [],
   filteredProducts: [],
   users: [],
+  dataUser: {
+    name: "",
+    last_name: "",
+    phone: "",
+    address: "",
+  },
   loginUser: {
     id: "",
     email: "",
@@ -50,18 +69,29 @@ const initialState = {
   item: [],
   itemFav: [],
   productoAgregado: [],
+  newsletter: [],
+  postMercadoPago: null,
+  getMercadoPago: null,
+  userCompras: null,
+  promotions: null
 };
 
 const storedUser = localStorage.getItem("loginUser");
 const storedToken = localStorage.getItem("token");
+const storeMp = localStorage.getItem("mercadoPago");
 
 const userFromStorage = storedUser
   ? JSON.parse(storedUser)
   : initialState.loginUser;
 const tokenFromStorage = storedToken ? storedToken : "";
 
+const mpFromStorage = storeMp
+  ? JSON.parse(storeMp)
+  : initialState.postMercadoPago;
+
 initialState.loginUser = userFromStorage;
 initialState.loginUser.token = tokenFromStorage;
+initialState.postMercadoPago = mpFromStorage;
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -114,7 +144,6 @@ function rootReducer(state = initialState, action) {
       localStorage.setItem("token", user.token);
       localStorage.setItem("loginUser", JSON.stringify(user));
       const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-      // const expirationDate = new Date(new Date().getTime() + 60 * 1000);
       localStorage.setItem("expirationDate", expirationDate);
       return {
         ...state,
@@ -131,6 +160,7 @@ function rootReducer(state = initialState, action) {
       localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
+      localStorage.removeItem("mercadoPago");
       return {
         ...state,
         loginUser: {
@@ -139,6 +169,13 @@ function rootReducer(state = initialState, action) {
           rol: "",
           token: "",
         },
+        dataUser: {
+          name: "",
+          last_name: "",
+          phone: "",
+          address: ""
+        },
+        postMercadoPago: null,
       };
 
     case GET_PRODUCTS_BY_NAME:
@@ -152,6 +189,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
+
 
     case GET_CATEGORY:
       return {
@@ -179,9 +217,10 @@ function rootReducer(state = initialState, action) {
         users: action.payload,
       };
 
-    case POST_USERS:
+    case UPDATE_USER_FAILURE:
       return {
         ...state,
+        error: action.payload,
       };
 
     case GET_PRICE:
@@ -237,9 +276,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         products: brandProd,
       };
-
-    case FILTER_BY_COLOR:
-      return {};
 
     case ORDER_BY_PRICE:
       const { payload } = action;
@@ -297,6 +333,16 @@ function rootReducer(state = initialState, action) {
         productoAgregado: [...action.payload],
       };
 
+    case DELETE_PRODUCT_CART:
+      return {
+        ...state,
+      };
+
+    case UPDATE_PRODUCT_CART:
+      return {
+        ...state,
+      };
+
     case GET_CART_BY_ID:
       console.log(action.payload, "payload reducer");
       return {
@@ -310,11 +356,64 @@ function rootReducer(state = initialState, action) {
         itemFav: action.payload,
       };
 
+    case GET_ORDEN_USER:
+      return {
+        ...state,
+        userCompras: action.payload,
+      };
+
     case DELETE_FAV:
       return {
         ...state,
         itemFav: action.payload,
       };
+    case DELETE_CART:
+      return {
+        ...state,
+        itemFav: action.payload,
+      };
+
+    case CLOSE_SESSION:
+      return {
+        ...state,
+        itemFav: action.payload,
+        item: action.payload,
+      };
+
+    case GET_NEWSLETTER:
+      return {
+        ...state,
+        newsletter: action.payload,
+      };
+
+    case POST_MERCADO_PAGO:
+      const mp = action.payload;
+      localStorage.setItem("mercadoPago", JSON.stringify(mp));
+      return {
+        ...state,
+        postMercadoPago: mp,
+      };
+
+    case GET_MERCADO_PAGO:
+      const datosMp = action.payload;
+      return {
+        ...state,
+        getMercadoPago: datosMp,
+      };
+
+    case GET_DATOS_USER:
+      const datos = action.payload;
+      return {
+        ...state,
+        dataUser: datos
+      };
+    
+    case GET_PROMOTIONS:
+      const promo = action.payload;
+      return {
+        ...state,
+        promotions: promo
+      }
 
     default:
       return state;

@@ -1,13 +1,18 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import promos from "../images/promos.jpg";
-import { useSelector } from "react-redux";
-import axios from "axios";
-
+import { useDispatch, useSelector } from "react-redux";
+import { deleteFromCart, getFav, getPromo, getUserCart } from "../../Redux/Actions";
+import swal from "sweetalert";
+import { useEffect, useState } from "react";
 
 
 export default function Cart() {
+  const dispatch = useDispatch();
   const item = useSelector((state) => state.item);
-  console.log(item, 'item del cart');
+  const loginUserId = useSelector((state) => state.loginUser.id);
+  const descuento = useSelector((state) => state.promotions)
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
 
   const totalPrice = item.reduce(
@@ -15,17 +20,72 @@ export default function Cart() {
     0
   );
 
-  const mercadoPago = () => {
-    const token = localStorage.getItem("token");
-        const headers = { 
-          'x-access-token': token,
-      };
-    axios.post("http://localhost:3001/mp/create_preference",item,{headers})
-      .then((res) => (window.location.href = res.data.global.init_point))
-      .catch((error) => console.log(error))
+  const [promoCode, setPromoCode] = useState("");
+  const [newPrice, setNewPrice] = useState("");
+  const [loginPromo, setLoginPromo] = useState(false)
+  
+  const handlePromoCodeChange = (event) => {
+    setPromoCode(event.target.value);
+  };
+
+
+  const handlePromoCodeSubmit = async () => {
+    if (promoCode) {
+      setLoginPromo(true);
+      try {
+        await dispatch(getPromo(promoCode));
+      } catch (error) { //para mostrar los error que llegan del back
+        let errorMessage = 'Ocurrió un error';
+        if (error.response && error.response.data && error.response.data.error) {
+          const { error: errorCode } = error.response.data;
+          switch (errorCode) {
+            case "ERR_BAD_REQUEST":
+              errorMessage = 'Código de promoción inválido';
+              break;
+            default:
+              errorMessage = 'Código de promoción no encontrado';
+              break;
+          }
+        }
+        swal('Error', errorMessage, 'error');
+        console.log('error', error.code);
+      }
+      setLoginPromo(false);
+    }
+  };
+
+useEffect(() => {
+  try {
+     if (promoCode && descuento?.discount) { //reviso si tengo un codigo y si ese codigo pertene a un descuento de promo
+    const porcentaje = descuento.discount / 100;
+    const newPrice = totalPrice - totalPrice * porcentaje;
+    setNewPrice(newPrice);
   }
+  } catch (error) {
+    console.log("errorPromo",error)
+  }
+ 
+}, [descuento, totalPrice]);
 
+  useEffect(() => {
+    const getCarFav = async () => {
+      await dispatch(getUserCart(loginUserId));
+      await dispatch(getFav(loginUserId))
+    };
+    getCarFav();
+  }, [dispatch]);
 
+  const handleDeleteFromCart = async (compraProductId) => {
+    if (!token) {
+      swal("Error", "Logueate para continuar!", "error"); 
+      return navigate("/login");
+    }
+    await dispatch(deleteFromCart(compraProductId));
+    await dispatch(getUserCart(loginUserId));
+    swal("Producto eliminado", "Se elmininó del carrito", "success");
+  };
+
+  
   return (
      <div className="cart">
       <div className="cart-header">
@@ -33,7 +93,9 @@ export default function Cart() {
           <h3>CARRITO DE COMPRAS</h3>
           <p>{item.length} PRODUCTOS</p>
         </div>
-        <button>TERMINAR DE COMPRAR</button>
+        <NavLink to={"/terminarCompra"}>
+          <button>TERMINAR COMPRAR</button>
+        </NavLink>
       </div>
 
       {item && item.length > 0 ? (
@@ -53,7 +115,7 @@ export default function Cart() {
                   Cantidad <b>{e.qty}</b>
                 </p>
               </div>
-              <button className="eliminar"><small>eliminar</small></button>
+              <button className="eliminar" onClick={() => handleDeleteFromCart(e.compraProductId)}><small>eliminar</small></button>
             </div>
             <div className="zapato-precio">
               <h2>Precio</h2>
@@ -71,8 +133,20 @@ export default function Cart() {
       <div className="cart-footer">
         <img src={promos} alt="" />
         <div className="ahora-si">
-        <h1>Total: ${totalPrice.toLocaleString("de-De")}</h1>
-          <button onClick={mercadoPago}>COMPRAR</button>
+          {loginPromo? "buscando promo..."
+          :
+        <h1>Total: ${newPrice ? newPrice.toLocaleString("de-De") : totalPrice.toLocaleString("de-De")}</h1>
+          }
+        <NavLink to={"/terminarCompra" }>
+          <button>TERMINAR COMPRAR</button>
+        </NavLink>
+       
+        <div className="centrar zapato-fav">
+          <label htmlFor="promoCode">¿Tenes un código promocional?</label>
+          <input id="promoCode" type="text" name="code"  onChange={handlePromoCodeChange}/>
+          <button onClick={handlePromoCodeSubmit}>Agregar código</button>
+        </div>
+     
           <NavLink to={"/"}>
             <button className="favs">Continuar comprando...</button>
           </NavLink>

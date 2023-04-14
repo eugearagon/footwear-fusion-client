@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import UserFavs from "./UserFavs";
 import UserOrders from "./UserOrders";
 import UserAccount from "./UserAccount";
+import { getOrdenesCompraId } from "../../Redux/Actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function UserPanel() {
   const [activeTab, setActiveTab] = useState("account");
+  const loginUser = useSelector((state) => state.loginUser);
+  const loginUserId = loginUser.id;
+
+  const dispatch = useDispatch();
+
+// unificamos los useEffect del cart y fav
+  useEffect(() => {
+    const iniciarOrdenesCompraUser = async () => {
+      try {
+        await dispatch(getOrdenesCompraId(loginUserId));
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    iniciarOrdenesCompraUser();
+  }, []);
+
 
   function handleTabClick(tabName) {
     setActiveTab(tabName);

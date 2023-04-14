@@ -22,25 +22,50 @@ export default function Cart() {
 
   const [promoCode, setPromoCode] = useState("");
   const [newPrice, setNewPrice] = useState("");
+  const [loginPromo, setLoginPromo] = useState(false)
   
   const handlePromoCodeChange = (event) => {
     setPromoCode(event.target.value);
   };
 
+
   const handlePromoCodeSubmit = async () => {
     if (promoCode) {
+      setLoginPromo(true);
       try {
-        await dispatch(getPromo(promoCode))
-        if (descuento) {
-          const valor = descuento.discount;
-          const porcentaje = valor / 100;
-          const newPrice = totalPrice - totalPrice * porcentaje;
-          setNewPrice(newPrice)
-          console.log(newPrice);
+        await dispatch(getPromo(promoCode));
+      } catch (error) { //para mostrar los error que llegan del back
+        let errorMessage = 'Ocurrió un error';
+        if (error.response && error.response.data && error.response.data.error) {
+          const { error: errorCode } = error.response.data;
+          switch (errorCode) {
+            case "ERR_BAD_REQUEST":
+              errorMessage = 'Código de promoción inválido';
+              break;
+            default:
+              errorMessage = 'Código de promoción no encontrado';
+              break;
+          }
         }
-      } catch (error) {}
+        swal('Error', errorMessage, 'error');
+        console.log('error', error.code);
+      }
+      setLoginPromo(false);
     }
   };
+
+useEffect(() => {
+  try {
+     if (promoCode && descuento?.discount) { //reviso si tengo un codigo y si ese codigo pertene a un descuento de promo
+    const porcentaje = descuento.discount / 100;
+    const newPrice = totalPrice - totalPrice * porcentaje;
+    setNewPrice(newPrice);
+  }
+  } catch (error) {
+    console.log("errorPromo",error)
+  }
+ 
+}, [descuento, totalPrice]);
 
   useEffect(() => {
     const getCarFav = async () => {
@@ -108,7 +133,10 @@ export default function Cart() {
       <div className="cart-footer">
         <img src={promos} alt="" />
         <div className="ahora-si">
+          {loginPromo? "buscando promo..."
+          :
         <h1>Total: ${newPrice ? newPrice.toLocaleString("de-De") : totalPrice.toLocaleString("de-De")}</h1>
+          }
         <NavLink to={"/terminarCompra" }>
           <button>TERMINAR COMPRAR</button>
         </NavLink>

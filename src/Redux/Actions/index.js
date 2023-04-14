@@ -565,7 +565,7 @@ export const statusMercadoPago = (compraId) => {
         payload: apiData,
       });
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error.response.data);
     }
   };
 };
@@ -588,7 +588,7 @@ export const getDatosUser = (loginUserId) => {
         payload: apiData,
       });
     } catch (error) {
-      console.log(error.request);
+      console.log(error.response.data);
     }
   };
 };
@@ -612,7 +612,7 @@ export const crearOrdenDeCompra = (loginUserId, orden) => {
         payload: datos,
       });
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error.response.data);
     }
   };
 };
@@ -635,7 +635,7 @@ export function getOrdenesCompraId(userId) {
         payload: ordenesCompraUser,
       });
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error.response.data);
     }
   };
 }
@@ -656,7 +656,7 @@ export function modifyProductPrice(id, price) {
         type: PUT_PRODUCT_PRICE,
       });
     } catch (error) {
-      console.log("no se pudo modificar", error);
+      console.log(error.response.data);
     }
   };
 }
@@ -677,7 +677,7 @@ export function modifyProductImage(id, image) {
         type: PUT_PRODUCT_IMAGE,
       });
     } catch (error) {
-      console.log("no se pudo modificar", error);
+      console.log(error.response.data);
     }
   };
 }
@@ -698,7 +698,8 @@ export function modifyProductStock(id, stock) {
         type: PUT_PRODUCT_STOCK,
       });
     } catch (error) {
-      console.log("no se pudo modificar", error);
+      console.log(error.response.data);//para recueprar el error del back
+      throw error; // para poder mostrarlo en el front
     }
   };
 }
@@ -713,7 +714,8 @@ export const crearPromo = (discount) => {
         payload: promo
       })
     } catch (error) {
-      console.log(error.menssage);
+      console.log(error.response.data);
+      throw error;
     }
   }
 }
@@ -728,7 +730,8 @@ export const getPromo = (code) => {
         payload: promo
       })
     } catch (error) {
-      console.log(error.menssage);
+      console.log(error.response.data);//para recueprar el error del back
+      throw error;// para poder mostrarlo en el front
     }
   }
 }

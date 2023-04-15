@@ -25,7 +25,6 @@ export default function LoginAdmin() {
     });
   };
 
-  console.log(user);
 
 
   const { iniciarLogin } = useAuth();

@@ -43,7 +43,7 @@ export default function Cart() {
               errorMessage = 'Código de promoción inválido';
               break;
             default:
-              errorMessage = 'Código de promoción no encontrado';
+              errorMessage = 'Código de promoción inhabilitado';
               break;
           }
         }
@@ -71,6 +71,7 @@ useEffect(() => {
     const getCarFav = async () => {
       await dispatch(getUserCart(loginUserId));
       await dispatch(getFav(loginUserId))
+      localStorage.removeItem("mercadoPago")
     };
     getCarFav();
   }, [dispatch]);

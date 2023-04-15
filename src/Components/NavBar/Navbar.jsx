@@ -1,6 +1,7 @@
 import logo from "../images/logo.png";
 import corazon from "../images/cora-icon.png";
 import carro from "../images/carro.png";
+import usericon from "../images/user-icon-home.png"
 import { NavLink, useNavigate } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
 import { useSelector, useDispatch } from "react-redux";
@@ -47,15 +48,19 @@ const handleGetUserCart = () => {
       
       {user && user.email ? (
         <div className="bienvenido">
+          
+          
            <p><b>BIENVENIDO!</b></p>
           <NavLink to="/userpanel"><p>{user.email}</p></NavLink>
           <button className="cerrar-sesion" onClick={eliminarLocalStore}>cerrar sesión</button>
         </div>
+        
       ) : (
         <NavLink className="ingresa" to={"/register"}>
           Ingresa / <br /> Registrate <span>{">"}</span>
         </NavLink>
       )}
+      <NavLink to="/userpanel"><img src={usericon} alt="user icon" /></NavLink>
       <NavLink to={"/userpanel"}>
         <img src={corazon} alt="" />
         {lcdtmabFav && lcdtmabFav.length > 0 && (

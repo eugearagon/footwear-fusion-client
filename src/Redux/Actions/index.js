@@ -46,7 +46,8 @@ import {
   PUT_PRODUCT_PRICE,
   PUT_PRODUCT_STOCK,
   POST_PROMOTIONS,
-  GET_PROMOTIONS
+  GET_PROMOTIONS,
+  PUT_PROMO_CURRENT
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -520,8 +521,8 @@ export const correoRegistroNewsletter = (correo) => {
   };
 };
 
-export const mercadoPago = (item, player) => {
-  console.log(item, player, 'actions');
+export const mercadoPago = (item,promo, player) => {
+  console.log(item, promo, player, 'actions');
   return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
@@ -531,7 +532,7 @@ export const mercadoPago = (item, player) => {
       console.log(item);
       const response = await axios.post(
         `${back}/mp/create_preference`,
-        { data: { item, player } },
+        { data: { item, promo, player } },
         { headers }
       );
       const apiData = response.data;
@@ -734,4 +735,18 @@ export const getPromo = (code) => {
       throw error;// para poder mostrarlo en el front
     }
   }
+}
+
+export const putPromo = (promotionId, loginUserId ) => {
+  return async function(dispatch){
+    try {
+      await axios.put(`${back}/promotions/${promotionId}/${loginUserId}`)
+      return dispatch({
+        type: PUT_PROMO_CURRENT
+      })
+    } catch (error) {
+      console.log(error.response.data);//para recueprar el error del back
+      throw error;// para poder mostrarlo en el front
+    }
+  } 
 }

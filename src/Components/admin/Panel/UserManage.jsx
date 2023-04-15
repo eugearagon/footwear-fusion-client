@@ -37,7 +37,7 @@ export default function UserManage() {
              </>
             ))}</h5>
               <h5>{u.email}</h5>
-              <p className={`${u.rol.toLowerCase() === "block" ? "rol-block" : ""}`} >{u.rol}</p>
+              <p className={`${u.rol.toLowerCase() === "Blocked" ? "rol-block" : ""}`} >{u.rol}</p>
             </>
             <br /><br />
           </>

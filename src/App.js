@@ -22,6 +22,8 @@ import AntesDeComprar from "./Components/AntesDeComprar";
 import Succes from "./Components/Succes";
 import Failure from "./Components/Failure";
 import ProtecAdmin from "./Components/admin/LoginAdmin/ProtecAdmin";
+import ProtectLogin from "./Components/Register/ProtectLogin";
+import UserBlocked from "./Components/UserBlocked.jsx";
 
 function App() {
   const location = useLocation();
@@ -60,6 +62,7 @@ function App() {
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/login" &&
         location.pathname !== "/login-admin" &&
+        location.pathname !== "/user-blocked" &&
         location.pathname !== "/admin" &&
         !isAdminDetail && // No renderizar navbar, categories, darkmode, whatsapp y footer en la página de detalle de administrador
         location.pathname !== "/register" && (
@@ -72,19 +75,22 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={ <Login />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
+          <Route path="/user-blocked" element={ <UserBlocked /> }/>
           <Route path="/cart" element={<Cart />} />
-          <Route path="/userpanel" element={<UserPanel />} />
-          <Route path="/product/:prodId" element={<Detail />} />
+          <Route path="/userpanel" element={<ProtectLogin><UserPanel /></ProtectLogin>} />
+          <Route path="/product/:prodId" element={<ProtectLogin><Detail /></ProtectLogin>} />
           <Route exact path="/admin" element={<ProtecAdmin> <AdminPanel /> </ProtecAdmin> } />
           {/* para mercadopago */}
-          <Route path="/terminarCompra" element = {<AntesDeComprar />} />
-          <Route path="/success" element ={<Succes />} />
-          <Route path="/failure" element={ <Failure /> }/>
+          <Route path="/terminarCompra" element = {<ProtectLogin><AntesDeComprar /></ProtectLogin>} />
+          <Route path="/success" element ={<ProtectLogin><Succes /></ProtectLogin>} />
+          <Route path="/failure" element={ <ProtectLogin><Failure /></ProtectLogin> }/>
+          
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&
+          location.pathname !== "/user-blocked" &&
           location.pathname !== "/admin" &&
           !isAdminDetail && // No renderizar darkmode, whatsapp y footer en la página de detalle de administrador
           location.pathname !== "/register" && (

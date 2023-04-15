@@ -28,7 +28,7 @@ function AntesDeComprar() {
   
   const [modificar, setModificar] = useState(false);
   const [promoCode, setPromoCode] = useState("");
-  console.log("antes de comprar", promoCode);
+
   
   useEffect(() => {
     try {
@@ -78,12 +78,16 @@ function AntesDeComprar() {
     setModificar(false);
   };
 
+  //para verificar que va a mandar items, si tengo promo manda promoCode, sino el item normal
   let items = descuento ? promoCode : item
+  let promo = promoCode ? true : false
+  let code = promoCode ? descuento.code : false
+  let id = promoCode ? descuento.id : false
 
   const handleCompraClick = async () => {
     try {
       await dispatch(
-        mercadoPago(items, {
+        mercadoPago(items,{promo: promo, code: code, id: id }, {
           phone: {
             number: datoModificado.number
               ? parseInt(datoModificado.number)
@@ -97,8 +101,6 @@ function AntesDeComprar() {
           email: loginUser.email,
           name: dataUser.name,
           surname: dataUser.last_name,
-          total: parseInt(totalPrice),
-          descuento: promoCode ? parseInt(promoCode) : 0,
         })
       );
     } catch (error) {

@@ -633,7 +633,7 @@ export function getOrdenesCompraId(userId) {
       console.log(ordenesCompraId.data, 'actions');
       dispatch({
         type: GET_ORDEN_USER,
-        payload: ordenesCompraUser,
+        payload: ordenesCompraUser.compraProducto,
       });
     } catch (error) {
       console.log(error.response.data);
@@ -750,3 +750,5 @@ export const putPromo = (promotionId, loginUserId ) => {
     }
   } 
 }
+
+

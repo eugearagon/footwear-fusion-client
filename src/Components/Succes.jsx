@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { crearOrdenDeCompra, getPromo, putPromo, statusMercadoPago } from "../Redux/Actions";
+import success from "./images/success.jpg"
 
 function Succes() {
   const location = useLocation();
@@ -46,8 +47,8 @@ function Succes() {
 
   return (
     <div className="relleno">
+      <img src={success} alt="compra exitosa" />
       <h1>Gracias por tu compra!</h1>
-      <br />
       <h4>¡Te enviamos un correo con el detalle de tu pedido!</h4>
     </div>
   );

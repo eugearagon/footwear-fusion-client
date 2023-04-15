@@ -14,7 +14,6 @@ export default function Cart() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-
   const totalPrice = item.reduce(
     (total, item) => total + item.price * item.qty,
     0
@@ -142,7 +141,7 @@ useEffect(() => {
           <button>TERMINAR COMPRAR</button>
         </NavLink>
        
-        <div className="centrar zapato-fav">
+        <div className="centrar zapato-fav column">
           <label htmlFor="promoCode">¿Tenes un código promocional?</label>
           <input id="promoCode" type="text" name="code"  onChange={handlePromoCodeChange}/>
           <button onClick={handlePromoCodeSubmit}>Agregar código</button>

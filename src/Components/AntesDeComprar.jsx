@@ -7,6 +7,7 @@ import {
   mercadoPago,
 } from "../Redux/Actions";
 
+
 function AntesDeComprar() {
   const dispatch = useDispatch();
   const loginUser = useSelector((state) => state.loginUser);
@@ -111,6 +112,7 @@ function AntesDeComprar() {
   return (
     <div className="centrar">
       <h1>RESUMEN DE TU COMPRA</h1>
+      
       {items &&
         items.map((item) => (
           <div className="zapato-fav" key={item.code}>
@@ -132,6 +134,7 @@ function AntesDeComprar() {
               <h2>Precio</h2>
               <h2>${item.price.toLocaleString("de-De")}</h2>
             </div>
+            <button onClick={handleCompraClick}>COMPRAR</button>
           </div>
         ))}
       <h1> DATOS DE ENTREGA</h1>
@@ -171,10 +174,7 @@ function AntesDeComprar() {
           <button onClick={() => setModificar(true)}>Modificar</button>
         </div>
       )}
-      <br />
-      <button onClick={handleCompraClick}>COMPRAR</button>
-      <br />
-      <br />
+
     </div>
   );
 }

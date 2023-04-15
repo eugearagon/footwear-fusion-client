@@ -36,16 +36,17 @@ import {
   UPDATE_PRODUCT_CART,
   PUT_PRODUCT_PRICE,
   GET_ORDEN_USER,
-  GET_PROMOTIONS
+  GET_PROMOTIONS,
+
 } from "../Actions/actions";
 
 const initialState = {
   products: [],
   prodRender: [],
+  filteredProducts:[],
   detail: [],
   detailAdmin: [],
   categories: [],
-  filteredProducts: [],
   users: [],
   dataUser: {
     name: "",
@@ -252,7 +253,7 @@ function rootReducer(state = initialState, action) {
 
     case FILTER_BY_SIZE:
       const sizeFilter = action.payload;
-      let sizeProd = state.prodRender;
+      let sizeProd = state.filteredProducts.length ? state.filteredProducts : state.prodRender;
       if (sizeFilter) {
         sizeProd = sizeProd.filter((product) => {
           if (product.TalleProducts) {
@@ -265,11 +266,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: sizeProd,
+        filteredProducts: sizeProd
       };
 
     case FILTER_BY_BRAND:
       const brandFilter = action.payload.toUpperCase();
-      let brandProd = state.prodRender;
+      let brandProd = state.filteredProducts.length ? state.filteredProducts : state.prodRender;
       if (brandFilter) {
         brandProd = brandProd.filter((product) => {
           if (product.MarcaProducts && product.MarcaProducts.length > 0) {
@@ -282,6 +284,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: brandProd,
+        filteredProducts: brandProd
       };
 
     case ORDER_BY_PRICE:
@@ -298,7 +301,7 @@ function rootReducer(state = initialState, action) {
 
     case PRICE_RANGE_SELECTOR:
       const { minPrice, maxPrice } = action.payload;
-      let priceProd = state.prodRender;
+      let priceProd = state.filteredProducts.length ? state.filteredProducts : state.prodRender;
       let nuevoPrecio = [];
       if (minPrice && maxPrice) {
         priceProd &&
@@ -316,6 +319,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         selectedPriceRange: { minPrice, maxPrice },
         products: nuevoPrecio,
+        filteredProducts:nuevoPrecio
       };
 
     case ADD_SIZE:

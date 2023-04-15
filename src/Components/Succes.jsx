@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { crearOrdenDeCompra, statusMercadoPago } from "../Redux/Actions";
+import { crearOrdenDeCompra, getPromo, putPromo, statusMercadoPago } from "../Redux/Actions";
 
 function Succes() {
   const location = useLocation();
@@ -11,16 +11,15 @@ function Succes() {
 
   const datos = useSelector((state) => state.getMercadoPago);
   const datosCompra = useSelector((state) => state.postMercadoPago);
-  const item = useSelector((state) => state.item);
   const loginUserId = useSelector((state) => state.loginUser.id);
-  const totalPrice = item.reduce(
-    (total, item) => total + item.price * item.qty,
-    0
-  );
+  const promotionId = datosCompra.metadata.id;
+  const code = datosCompra.metadata.code;
+
 
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(statusMercadoPago(compraId));
+      if(code) await dispatch(getPromo(code));
     };
     fetchData();
   }, [compraId, dispatch]);
@@ -29,19 +28,21 @@ function Succes() {
     if (datos && datosCompra) {
       const orden = {
         address: datosCompra.payer.address.street_name,
-        promotion: false,
+        promotion: datosCompra.metadata.promo,
         payment: datos.payment_method,
-        // orderStatus: datos.status,
+        orderStatus: datos.status,
         total: datos.transaction_amount,
       };
 
       const mandarOreden = async () => {
+         if(code) await dispatch(putPromo(promotionId, loginUserId))
         await dispatch(crearOrdenDeCompra(loginUserId, orden));
+        localStorage.removeItem("mercadoPago")
       };
 
       mandarOreden();
     }
-  }, [datos, datosCompra, dispatch, loginUserId, totalPrice]);
+  }, [datos, datosCompra, dispatch, loginUserId]);
 
   return (
     <div className="relleno">

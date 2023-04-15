@@ -11,16 +11,48 @@ function AntesDeComprar() {
   const dispatch = useDispatch();
   const loginUser = useSelector((state) => state.loginUser);
   const loginUserId = loginUser.id;
-  const items = useSelector((state) => state.item);
+  const item = useSelector((state) => state.item);
   const dataUser = useSelector((state) => state.dataUser);
+  const descuento = useSelector((state) => state.promotions);
 
   const [datoModificado, setDatoModificado] = useState({
-    number: dataUser.number,
-    address: dataUser.address,
+    number: "",
+    address: "",
   });
 
+  const totalPrice = item.reduce(
+    (total, item) => total + item.price * item.qty,
+    0
+  );
+
+  
   const [modificar, setModificar] = useState(false);
   const [promoCode, setPromoCode] = useState("");
+
+  
+  useEffect(() => {
+    try {
+      if (descuento?.discount) {
+        //reviso si tengo un codigo y si ese codigo pertene a un descuento de promo
+        const porcentaje = descuento.discount / 100;
+        let iten = item.map((dato) => {
+          return {
+            id: dato.id,
+            code: dato.code,
+            title: dato.title,
+            image: dato.image,
+            price: dato.price - (dato.price * porcentaje),
+            marca: dato.marca,
+            size: dato.talle,
+            qty: dato.qty,
+          };
+        });
+        setPromoCode(iten);
+      }
+    } catch (error) {
+      console.log("errorPromo", error);
+    }
+  }, [descuento, totalPrice]);
 
   useEffect(() => {
     const getCartAndFav = async () => {
@@ -30,16 +62,6 @@ function AntesDeComprar() {
     };
     getCartAndFav();
   }, [dispatch, loginUserId]);
-
-  const handlePromoCodeChange = (event) => {
-    setPromoCode(event.target.value);
-  };
-
-  const handlePromoCodeSubmit = (event) => {
-    event.preventDefault();
-
-    console.log(`Código promocional ingresado: ${promoCode}`);
-  };
 
   const handlePhoneChange = (event) => {
     setModificar(true);
@@ -56,15 +78,25 @@ function AntesDeComprar() {
     setModificar(false);
   };
 
+  //para verificar que va a mandar items, si tengo promo manda promoCode, sino el item normal
+  let items = descuento ? promoCode : item
+  let promo = promoCode ? true : false
+  let code = promoCode ? descuento.code : false
+  let id = promoCode ? descuento.id : false
+
   const handleCompraClick = async () => {
     try {
       await dispatch(
-        mercadoPago(items, {
+        mercadoPago(items,{promo: promo, code: code, id: id }, {
           phone: {
-            number: datoModificado.number,
+            number: datoModificado.number
+              ? parseInt(datoModificado.number)
+              : dataUser.number,
           },
           address: {
-            street_name: datoModificado.address,
+            street_name: datoModificado.address
+              ? datoModificado.address
+              : dataUser.address,
           },
           email: loginUser.email,
           name: dataUser.name,
@@ -100,7 +132,6 @@ function AntesDeComprar() {
               <h2>Precio</h2>
               <h2>${item.price.toLocaleString("de-De")}</h2>
             </div>
-            <button onClick={handleCompraClick}>COMPRAR</button>
           </div>
         ))}
       <h1> DATOS DE ENTREGA</h1>
@@ -112,7 +143,7 @@ function AntesDeComprar() {
           <input
             id="number"
             type="tel"
-            value={datoModificado.number}
+            name={datoModificado.number}
             onChange={handlePhoneChange}
           />
           <button onClick={handleModificarSubmit}>Guardar cambios</button>
@@ -140,16 +171,9 @@ function AntesDeComprar() {
           <button onClick={() => setModificar(true)}>Modificar</button>
         </div>
       )}
-
-      {dataUser.promoCode ? (
-        <p>Tienes un código promocional: {dataUser.promoCode}</p>
-      ) : (
-        <div className="centrar zapato-fav">
-          <label htmlFor="promoCode">¿Tenes un código promocional?</label>
-          <input id="promoCode" type="text" />
-          <button>Agregar código</button>
-        </div>
-      )}
+      <br />
+      <button onClick={handleCompraClick}>COMPRAR</button>
+      <br />
       <br />
     </div>
   );

@@ -45,6 +45,9 @@ import {
   PUT_PRODUCT_IMAGE,
   PUT_PRODUCT_PRICE,
   PUT_PRODUCT_STOCK,
+  POST_PROMOTIONS,
+  GET_PROMOTIONS,
+  PUT_PROMO_CURRENT
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -518,8 +521,8 @@ export const correoRegistroNewsletter = (correo) => {
   };
 };
 
-export const mercadoPago = (item, player) => {
-  console.log(item, player, 'actions');
+export const mercadoPago = (item,promo, player) => {
+  console.log(item, promo, player, 'actions');
   return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
@@ -529,7 +532,7 @@ export const mercadoPago = (item, player) => {
       console.log(item);
       const response = await axios.post(
         `${back}/mp/create_preference`,
-        { data: { item, player } },
+        { data: { item, promo, player } },
         { headers }
       );
       const apiData = response.data;
@@ -563,7 +566,7 @@ export const statusMercadoPago = (compraId) => {
         payload: apiData,
       });
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error.response.data);
     }
   };
 };
@@ -586,7 +589,7 @@ export const getDatosUser = (loginUserId) => {
         payload: apiData,
       });
     } catch (error) {
-      console.log(error.request);
+      console.log(error.response.data);
     }
   };
 };
@@ -610,7 +613,7 @@ export const crearOrdenDeCompra = (loginUserId, orden) => {
         payload: datos,
       });
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error.response.data);
     }
   };
 };
@@ -633,7 +636,7 @@ export function getOrdenesCompraId(userId) {
         payload: ordenesCompraUser,
       });
     } catch (error) {
-      console.log(error.request.response);
+      console.log(error.response.data);
     }
   };
 }
@@ -654,7 +657,7 @@ export function modifyProductPrice(id, price) {
         type: PUT_PRODUCT_PRICE,
       });
     } catch (error) {
-      console.log("no se pudo modificar", error);
+      console.log(error.response.data);
     }
   };
 }
@@ -675,7 +678,7 @@ export function modifyProductImage(id, image) {
         type: PUT_PRODUCT_IMAGE,
       });
     } catch (error) {
-      console.log("no se pudo modificar", error);
+      console.log(error.response.data);
     }
   };
 }
@@ -696,7 +699,54 @@ export function modifyProductStock(id, stock) {
         type: PUT_PRODUCT_STOCK,
       });
     } catch (error) {
-      console.log("no se pudo modificar", error);
+      console.log(error.response.data);//para recueprar el error del back
+      throw error; // para poder mostrarlo en el front
     }
   };
+}
+
+export const crearPromo = (discount) => {
+  return async function(dispatch){
+    try {
+      const apiPromo = await axios.post(`${back}/promotions`,discount)
+      const promo = apiPromo.data
+      return dispatch({
+        type: POST_PROMOTIONS,
+        payload: promo
+      })
+    } catch (error) {
+      console.log(error.response.data);
+      throw error;
+    }
+  }
+}
+
+export const getPromo = (code) => {
+  return async function(dispatch){
+    try {
+      const apiPromo = await axios.get(`${back}/promotions/${code}`)
+      const promo = apiPromo.data
+      return dispatch({
+        type: GET_PROMOTIONS,
+        payload: promo
+      })
+    } catch (error) {
+      console.log(error.response.data);//para recueprar el error del back
+      throw error;// para poder mostrarlo en el front
+    }
+  }
+}
+
+export const putPromo = (promotionId, loginUserId ) => {
+  return async function(dispatch){
+    try {
+      await axios.put(`${back}/promotions/${promotionId}/${loginUserId}`)
+      return dispatch({
+        type: PUT_PROMO_CURRENT
+      })
+    } catch (error) {
+      console.log(error.response.data);//para recueprar el error del back
+      throw error;// para poder mostrarlo en el front
+    }
+  } 
 }

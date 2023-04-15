@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 export default function ProtectLogin({ children }) {
   const loginUser = useSelector((state) => state.loginUser);
 
-  if (loginUser.state === "Locked" ) {
+  if (loginUser.state === "Blocked" ) {
     return <Navigate to="/user-blocked" />;
   }
 

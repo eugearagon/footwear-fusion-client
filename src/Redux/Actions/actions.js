@@ -63,3 +63,4 @@ export const GET_ORDEN_USER = "GET_ORDEN_USER"
 //accion promotions
 export const POST_PROMOTIONS = "POST_PROMOTIONS"
 export const GET_PROMOTIONS = "GET_PROMOTIONS"
+export const PUT_PROMO_CURRENT = "PUT_PROMO_CURRENT"

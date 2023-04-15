@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { crearOrdenDeCompra, statusMercadoPago } from "../Redux/Actions";
+import { crearOrdenDeCompra, getPromo, putPromo, statusMercadoPago } from "../Redux/Actions";
 
 function Succes() {
   const location = useLocation();
@@ -12,11 +12,14 @@ function Succes() {
   const datos = useSelector((state) => state.getMercadoPago);
   const datosCompra = useSelector((state) => state.postMercadoPago);
   const loginUserId = useSelector((state) => state.loginUser.id);
+  const promotionId = datosCompra.metadata.id;
+  const code = datosCompra.metadata.code;
 
 
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(statusMercadoPago(compraId));
+      if(code) await dispatch(getPromo(code));
     };
     fetchData();
   }, [compraId, dispatch]);
@@ -32,7 +35,9 @@ function Succes() {
       };
 
       const mandarOreden = async () => {
+         if(code) await dispatch(putPromo(promotionId, loginUserId))
         await dispatch(crearOrdenDeCompra(loginUserId, orden));
+        localStorage.removeItem("mercadoPago")
       };
 
       mandarOreden();

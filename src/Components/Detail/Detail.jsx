@@ -129,7 +129,6 @@ export default function Detail() {
   };
 
   const loginUser = useSelector((state) => state.loginUser);
-  console.log("credenciales", loginUser);
 
   const handleAddFav = async () => {
     if (!token) {

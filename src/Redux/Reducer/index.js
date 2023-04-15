@@ -7,6 +7,7 @@ import {
   GET_SIZE,
   GET_BRAND,
   GET_USERS,
+  GET_USER_BY_NAME,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
   FILTER_BY_SIZE,
@@ -212,6 +213,12 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+
+      case GET_USER_BY_NAME:
       return {
         ...state,
         users: action.payload,

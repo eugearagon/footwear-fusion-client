@@ -26,6 +26,7 @@ import {
   DELETE_FAV,
   DELETE_CART,
   GET_USERS_FAVORITES,
+  GET_USER_BY_NAME,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
@@ -181,6 +182,22 @@ export function getUsers() {
       var users = await axios.get(`${back}/user`, {headers});
       return dispatch({
         type: GET_USERS,
+        payload: users.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getUserByName(name) {
+  return async function (dispatch) {
+    try {
+      var users = await axios.get(
+        `${back}/user?name=${name}`
+      );
+      return dispatch({
+        type: GET_USER_BY_NAME,
         payload: users.data,
       });
     } catch (error) {

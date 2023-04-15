@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../Redux/Actions";
 import CardAdmin from "./CardAdmin/CardAdmin";
 import UploadWidget from "../../UploadWidget/UploadWidget";
+import OrderPaginate from "../../OrderPaginate/OrderPaginate";
 
 export default function ProductManage() {
   const dispatch = useDispatch();
@@ -30,15 +31,29 @@ export default function ProductManage() {
   function onUpload(url) {
     setProductData({ ...productData, imagen: url });
   }
+  const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
+  const prodPerPage = 6;
+  const indexLastProd = currentPage * prodPerPage;
+  const indexFirstProd = indexLastProd - prodPerPage;
+  
+  let currentProd = allProducts;
+
+  currentProd = currentProd.slice(indexFirstProd, indexLastProd);
+
+ 
 
   return (
-    <div className="admin-content">
+    <div className="admin-content blanco">
       <h1>PRODUCTOS</h1>
       <button onClick={() => setShowPopup(true)}>(+) AGREGAR PRODUCTO</button>
+      <OrderPaginate 
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       <div className="content-prod">
-        {allProducts?.map((p) => {
+        {currentProd?.map((p) => {
           return (
-            <CardAdmin
+            <CardAdmin currentPage={currentPage}
               key={p.id}
               id={p.id}
               title={p.title}

@@ -8,6 +8,7 @@ import UserManage from "./UserManage";
 import ProductManage from "./ProductManage";
 import SalesManage from "./SalesManage";
 import { useSelector } from "react-redux";
+import Searchbar from "../../Searchbar/Searchbar";
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("account");
@@ -23,8 +24,9 @@ export default function AdminPanel() {
       <div className="saludo-admin">
         <h5>{user ? `Bienvenido, ${ user.email}` : "Bienvenido, Pepe Hongo"}</h5>
         <div className="admin-buscador">
-          <input type="text" />
-          <button className="enviar">buscar</button>
+          {/* <input type="text" /> */}
+          <Searchbar/>
+          {/* <button className="enviar">buscar</button> */}
         </div>
         <div></div>
       </div>

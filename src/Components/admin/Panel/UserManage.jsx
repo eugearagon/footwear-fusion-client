@@ -23,7 +23,7 @@ export default function UserManage() {
   }, [dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
-  const prodPerPage = 6;
+  const prodPerPage = 2;
   const indexLastProd = currentPage * prodPerPage;
   const indexFirstProd = indexLastProd - prodPerPage;
 
@@ -68,7 +68,7 @@ export default function UserManage() {
              </>
             ))}</h5>
               <h5>{u.email}</h5>
-              <p className={`${u.rol.toLowerCase() === "Blocked" ? "rol-block" : ""}`} >{u.rol}</p>
+              <p className={`${u.state === "Blocked" ? "rol-block" : ""}`} >{u.state}</p>
             </>
             <br /><br />
           </>

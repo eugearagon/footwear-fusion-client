@@ -6,11 +6,7 @@ export default function UserPaginate(props) {
 
   const usuarios = useSelector((state) => state.users);
 
-  const prodPerPage = 6; // este estado local setea cuantas cartas entran por pagina
-  //const indexLastProd = currentPage * prodPerPage;
-  //const indexFirstProd = indexLastProd - prodPerPage;
-  //const currentProd = allProducts.slice(indexFirstProd, indexLastProd);
-
+  const prodPerPage = 2; 
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(usuarios.length / prodPerPage); i++) {
     pageNumbers.push(i);

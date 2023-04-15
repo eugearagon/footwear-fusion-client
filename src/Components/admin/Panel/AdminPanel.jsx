@@ -76,11 +76,11 @@ export default function AdminPanel() {
           <h1 className="novedades">NOVEDADES</h1>
           <br />
           <div>
-          <input type="text" value={novedades} onChange={handleNovedadesChange} />
-          <button className="enviar" onClick={handleAgregarNovedad}>Agregar Novedad</button>
+          {/* <input type="text" value={novedades} onChange={handleNovedadesChange} />
+          <button className="enviar" onClick={handleAgregarNovedad}>Agregar Novedad</button> */}
           </div>
          
-          <p><h4>01/05/2023</h4>{novedades}</p>
+          {/* <p><h4>01/05/2023</h4>{novedades}</p> */}
           <p>
             <h4>01/05/2023</h4>Celebremos el Día del Trabajo! Ofrecemos un
             descuento del 20% en todas las botas y botines. ¡Recuerda mencionar

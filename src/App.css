@@ -579,8 +579,8 @@ h1{
   cursor: pointer;
 }
 
-.blanco .order-paginate button{
-  color: #fff ;
+.blanco .order-paginate button, .order-paginate .blanco {
+  color: #fff !important;
 }
 
 /* fin orden y paginado */
@@ -1194,6 +1194,10 @@ h1{
 
 .modif-dato{
   background: none;
+}
+
+.estrellas span{
+  font-size: 16pt !important;
 }
 
 /*  ----   panel de usuario   ---- */

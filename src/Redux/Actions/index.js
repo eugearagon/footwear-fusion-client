@@ -329,14 +329,14 @@ export function priceRangeSelector(payload) {
 }
 
 export function addToCart(loginUserId, item) {
-  console.log("a ver si llega ",loginUserId, item);
+
   return async function (dispatch) {
     try {
       var userCart = await axios.post(
         `${back}/cart/${loginUserId}`,
         item
       );
-      
+      console.log(userCart);
       return dispatch({
         type: ADD_TO_CART,
         payload: userCart,

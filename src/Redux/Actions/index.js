@@ -520,8 +520,8 @@ export const correoRegistroNewsletter = (correo) => {
   };
 };
 
-export const mercadoPago = (item, player) => {
-  console.log(item, player, 'actions');
+export const mercadoPago = (item,promo, player) => {
+  console.log(item, promo, player, 'actions');
   return async function (dispatch) {
     try {
       const token = localStorage.getItem("token");
@@ -531,7 +531,7 @@ export const mercadoPago = (item, player) => {
       console.log(item);
       const response = await axios.post(
         `${back}/mp/create_preference`,
-        { data: { item, player } },
+        { data: { item, promo, player } },
         { headers }
       );
       const apiData = response.data;

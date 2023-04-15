@@ -11,7 +11,6 @@ function Succes() {
 
   const datos = useSelector((state) => state.getMercadoPago);
   const datosCompra = useSelector((state) => state.postMercadoPago);
-  const item = useSelector((state) => state.item);
   const loginUserId = useSelector((state) => state.loginUser.id);
 
 
@@ -26,7 +25,7 @@ function Succes() {
     if (datos && datosCompra) {
       const orden = {
         address: datosCompra.payer.address.street_name,
-        promotion: false,
+        promotion: datosCompra.metadata.promo,
         payment: datos.payment_method,
         orderStatus: datos.status,
         total: datos.transaction_amount,

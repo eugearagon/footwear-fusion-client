@@ -45,6 +45,7 @@ import {
   PUT_PRODUCT_IMAGE,
   PUT_PRODUCT_PRICE,
   PUT_PRODUCT_STOCK,
+  // POST_PROMOTION,
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -483,7 +484,7 @@ export const postNewsletter = (email) => {
   };
 };
 
-export const getNewsletter = () => {
+export const getNewsletter = (email) => {
   return async function (dispatch) {
     const token = localStorage.getItem("token");
     const headers = {
@@ -504,12 +505,13 @@ export const getNewsletter = () => {
   };
 };
 
-export const correoRegistroNewsletter = (correo) => {
+export const correoRegistroNewsletter = (correo, promo) => {
+  console.log(correo, promo, 'action');
   return async function (dispatch) {
     try {
       await axios.post(
         `${back}/correo/registroNewsletter`,
-        correo
+        { data: { correo, promo } }
       );
       dispatch({
         type: REGISTRO_NEWSLETTER,
@@ -700,3 +702,17 @@ export function modifyProductStock(id, stock) {
     }
   };
 }
+
+// export const createPromo = () => {
+//   return async (dispatch) => {
+//     try {
+//       // const promo = await axios.post(`${back}/promotions`);
+//       dispatch({
+//         type: POST_PROMOTION,
+//         // payload: promo.data,
+//       });
+//     } catch (err) {
+//       console.log(err.message); // Agregar este console.log
+//     }
+//   };
+// };

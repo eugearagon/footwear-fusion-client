@@ -1,5 +1,3 @@
-
-
 export const html = `
 <html>
 <head>
@@ -43,6 +41,9 @@ export const html = `
       <td>
         <img src="http://eugenioaragon.com.ar/footwear/logo.png" alt="Logo de la empresa" >
         <h3>¡Ya estás registrado!</h3>
+        <h4>Disfrutá este codigo de descuento:</h4>
+        <p>CÓDIGO: HHUUGGOO</p>
+        <p>DESCUENTO: IIGGNNAACCIIOO % OFF</p>
         <p>A partir de ahora vas a recibir todas las novedades y promociones que tenemos pensadas para vos!</p>
       </td>
     </tr>
@@ -56,4 +57,3 @@ export const html = `
 </html>
 
 `;
-

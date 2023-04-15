@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../Redux/Actions";
 import CardAdmin from "./CardAdmin/CardAdmin";
 import UploadWidget from "../../UploadWidget/UploadWidget";
+import OrderPaginate from "../../OrderPaginate/OrderPaginate";
+import ExportExcel from "react-export-excel";
+
+const ExcelFile = ExportExcel.ExcelFile;
+const ExcelSheet = ExportExcel.ExcelFile.ExcelSheet;
+const ExcelColumn = ExportExcel.ExcelFile.ExcelColumn;
 
 export default function ProductManage() {
   const dispatch = useDispatch();
@@ -24,21 +30,50 @@ export default function ProductManage() {
     marca: "",
     talle: "",
     color: "",
-    category: ""
+    category: "",
   });
 
   function onUpload(url) {
     setProductData({ ...productData, imagen: url });
   }
+  const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
+  const prodPerPage = 6;
+  const indexLastProd = currentPage * prodPerPage;
+  const indexFirstProd = indexLastProd - prodPerPage;
+
+  let currentProd = allProducts;
+
+  currentProd = currentProd.slice(indexFirstProd, indexLastProd);
 
   return (
-    <div className="admin-content">
+    <div className="admin-content blanco">
       <h1>PRODUCTOS</h1>
       <button onClick={() => setShowPopup(true)}>(+) AGREGAR PRODUCTO</button>
+      <OrderPaginate
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+      {allProducts && (
+        <ExcelFile
+          element={<button>Exportar a Excel</button>}
+          filename="Productos"
+        >
+          <ExcelSheet data={allProducts} name="Productos">
+            <ExcelColumn label="title" value={(col) => col.title} />
+            <ExcelColumn label="price" value={(col) => col.price} />
+            <ExcelColumn label="stock" value={(col) => col.stock} />
+            <ExcelColumn
+              label="marca"
+              value={(col) => col.MarcaProducts[0].name}
+            />
+          </ExcelSheet>
+        </ExcelFile>
+      )}
       <div className="content-prod">
-        {allProducts?.map((p) => {
+        {currentProd?.map((p) => {
           return (
             <CardAdmin
+              currentPage={currentPage}
               key={p.id}
               id={p.id}
               title={p.title}
@@ -57,12 +92,21 @@ export default function ProductManage() {
           <input type="text" placeholder="Título" />
           <input type="text" placeholder="Código del artículo" />
           <input type="text" placeholder="Precio (solo numero)" />
-          <div><small>Stock  </small>&nbsp;&nbsp;<input className="number" type="number" /></div>
+          <div>
+            <small>Stock </small>&nbsp;&nbsp;
+            <input className="number" type="number" />
+          </div>
           <input type="text" placeholder="Talles (separados por coma)" />
           <input type="text" placeholder="Estado" />
           <input type="text" placeholder="Categoría" />
           <input type="text" placeholder="Color" />
-          <textarea name="desc" id="" cols="30" rows="10" placeholder="Descripción"></textarea>
+          <textarea
+            name="desc"
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="Descripción"
+          ></textarea>
           <UploadWidget onUpload={onUpload} />
           <button onClick={() => setShowPopup(false)}>Cerrar</button>
         </div>

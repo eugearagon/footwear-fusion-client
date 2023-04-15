@@ -10,6 +10,8 @@ import UploadWidget from "../../../UploadWidget/UploadWidget";
 
 export default function CardAdmin({ id, title, price, image, marca, stock }) {
   const dispatch = useDispatch();
+
+  
   const [reloadComponent, setReloadComponent] = useState(false);
   const [newPrice, setNewPrice] = useState(price);
   const [newStock, setNewStock] = useState(stock);

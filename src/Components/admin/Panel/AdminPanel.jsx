@@ -10,23 +10,35 @@ import SalesManage from "./SalesManage";
 import { useSelector } from "react-redux";
 import Searchbar from "../../Searchbar/Searchbar";
 
+
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("account");
   const [showNovedades, setShowNovedades] = useState(true);
-  const user = useSelector(state => state.loginUser)
+  const user = useSelector((state) => state.loginUser);
+  const [novedades, setNovedades] = useState("");
 
   function handleTabClick(tabName) {
     setActiveTab(tabName);
     setShowNovedades(false);
   }
+
+  function handleNovedadesChange(event) {
+    setNovedades(event.target.value);
+  }
+
+  function handleAgregarNovedad() {
+    setShowNovedades(true);
+    setNovedades("");
+  }
+
   return (
     <div className="admin-panel">
       <div className="saludo-admin">
-        <h5>{user ? `Bienvenido, ${ user.email}` : "Bienvenido, Pepe Hongo"}</h5>
+        <h5>{user ? `Bienvenido, ${user.email}` : "Bienvenido, Pepe Hongo"}</h5>
         <div className="admin-buscador">
-          {/* <input type="text" /> */}
-          <Searchbar/>
-          {/* <button className="enviar">buscar</button> */}
+          
+          <Searchbar />
+          
         </div>
         <div></div>
       </div>
@@ -60,21 +72,50 @@ export default function AdminPanel() {
         </button>
       </div>
       {showNovedades && (
-        <div className="detail-admin" >
-        <h1>NOVEDADES</h1>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim vitae rerum reprehenderit quisquam. Sequi quibusdam mollitia animi optio ducimus! Laborum repudiandae itaque magnam aperiam expedita! Unde quae nobis consectetur. Saepe?
-        Odio suscipit aspernatur molestias, iure esse repellat pariatur quas cupiditate, enim ipsum maiores voluptatibus libero commodi ad delectus possimus architecto exercitationem excepturi voluptas. Soluta eligendi sapiente voluptate ea esse unde?
-        Exercitationem voluptatibus ea expedita, et assumenda facere dolor voluptas, vero animi reprehenderit porro nulla dignissimos, doloribus fuga molestias esse ut tempore deleniti maxime quidem recusandae consequatur repellat natus quod. Deserunt?</p>
-        <br />
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim vitae rerum reprehenderit quisquam. Sequi quibusdam mollitia animi optio ducimus! Laborum repudiandae itaque magnam aperiam expedita! Unde quae nobis consectetur. Saepe?
-        Odio suscipit aspernatur molestias, iure esse repellat pariatur quas cupiditate, enim ipsum maiores voluptatibus libero commodi ad delectus possimus architecto exercitationem excepturi voluptas. Soluta eligendi sapiente voluptate ea esse unde?
-        Exercitationem voluptatibus ea expedita, et assumenda facere dolor voluptas, vero animi reprehenderit porro nulla dignissimos, doloribus fuga molestias esse ut tempore deleniti maxime quidem recusandae consequatur repellat natus quod. Deserunt?</p>
-        <br />
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim vitae rerum reprehenderit quisquam. Sequi quibusdam mollitia animi optio ducimus! Laborum repudiandae itaque magnam aperiam expedita! Unde quae nobis consectetur. Saepe?
-        Odio suscipit aspernatur molestias, iure esse repellat pariatur quas cupiditate, enim ipsum maiores voluptatibus libero commodi ad delectus possimus architecto exercitationem excepturi voluptas. Soluta eligendi sapiente voluptate ea esse unde?
-        Exercitationem voluptatibus ea expedita, et assumenda facere dolor voluptas, vero animi reprehenderit porro nulla dignissimos, doloribus fuga molestias esse ut tempore deleniti maxime quidem recusandae consequatur repellat natus quod. Deserunt?</p>
-        
-      </div>
+        <div className="detail-admin">
+          <h1 className="novedades">NOVEDADES</h1>
+          <br />
+          <input type="text" value={novedades} onChange={handleNovedadesChange} />
+          <button className="enviar" onClick={handleAgregarNovedad}>Agregar Novedad</button>
+          <p>{novedades}</p>
+          <p>
+            <h4>01/05/2023</h4>Celebremos el Día del Trabajo! Ofrecemos un
+            descuento del 20% en todas las botas y botines. ¡Recuerda mencionar
+            esta oferta a todos los clientes que busquen estas categorías
+          </p>
+
+          <p>
+            <h4>10/03/2023</h4>¡Acaban de llegar las zapatillas deportivas Nike
+            Air Max 2023 en todas las tallas y colores! ¡Asegúrate de informar a
+            los clientes sobre esta nueva llegada y ayudarlos a encontrar el par
+            perfecto!
+          </p>
+
+          <p>
+            <h4>01/02/2023</h4>¿Quieres aumentar tus ventas? Prueba a combinar
+            las zapatillas de running con la ropa deportiva adecuada, o
+            recomienda una plantilla de gel para aquellos clientes que busquen
+            comodidad. También puedes ofrecer la segunda unidad con un descuento
+            especial.
+          </p>
+
+          <p>
+            <h4>20/01/2023</h4>Este sábado, organizaremos una demostración en
+            vivo de la marca de zapatos ecologicos X, y los primeros 10 clientes
+            que compren un par recibirán una bolsa ecológica de regalo.
+            ¡Asegúrate de estar preparado para el evento y dar una cálida
+            bienvenida a los clientes!
+          </p>
+
+          <p>
+            <h4>20/05/2020</h4>Recordatorio: Nuestra política de devoluciones
+            indica que se aceptarán devoluciones dentro de los primeros 30 días
+            de la compra, siempre y cuando el producto esté en condiciones de
+            venta y se presente el recibo de compra. También, se debe verificar
+            el cumplimiento del protocolo de seguridad y uso de cubrebocas para
+            evitar contagios por COVID-19.
+          </p>
+        </div>
       )}
       {activeTab === "users" && <UserManage />}
       {activeTab === "products" && <ProductManage />}

@@ -903,6 +903,25 @@ h1{
   color:#17e1e7;
 }
 
+.admin-panel .novedades{
+  font-size: 32pt ;
+  width: 100%;
+}
+
+.form-novedades form{
+  display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+.form-novedades textarea{
+  width: 600px;
+}
+
+.admin-panel p{
+  font-size: 13pt;
+}
+
 .saludo-admin{
   background-color: #0d0f12;
   color: #ffffff;

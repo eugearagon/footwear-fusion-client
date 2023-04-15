@@ -782,7 +782,6 @@ export const putPromo = (promotionId, loginUserId ) => {
       throw error;// para poder mostrarlo en el front
     }
   } 
-  
 }
 
 

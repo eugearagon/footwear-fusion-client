@@ -165,7 +165,7 @@ export default function Detail() {
         />
       </div>
       <div className="detail-der">
-        <h1>{marca}</h1>
+        <h1>{marca.toUpperCase()}</h1>
         <h2>{prod.title}</h2>
         <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">

@@ -72,8 +72,13 @@ export function getProducts() {
 
 export function postProducts(payload) {
   return async function (dispatch) {
+    
     try {
-      const newProduct = await axios.post(`${back}/product`, payload);
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
+      const newProduct = await axios.post(`${back}/product`, payload, {headers});
       console.log("POST", newProduct);
       return newProduct;
     } catch (error) {

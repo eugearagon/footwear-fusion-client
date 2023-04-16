@@ -36,6 +36,7 @@ import {
   PUT_PRODUCT_PRICE,
   GET_ORDEN_USER,
   POST_PROMOTION,
+  POST_USER_ADMIN
 } from "../Actions/actions";
 
 const initialState = {
@@ -405,6 +406,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         dataUser: datos
+      };
+
+      case POST_USER_ADMIN:
+      return {
+        ...state,
       };
 
       // case POST_PROMOTION:

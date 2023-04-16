@@ -3,10 +3,11 @@ import userIcon from "../../images/user-icon.png";
 import userIconBlock from "../../images/user-icon-block.png";
 import userIconAdmin from "../../images/user-icon-admin.png";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../../Redux/Actions";
+import { createUserAdmin, getUsers } from "../../../Redux/Actions";
 import { useEffect, useState } from "react";
 import ExportExcel from "react-export-excel";
 import UserPaginate from "./UserPaginate";
+import Swal from "sweetalert2";
 
 const ExcelFile = ExportExcel.ExcelFile;
 const ExcelSheet = ExportExcel.ExcelFile.ExcelSheet;
@@ -21,6 +22,39 @@ export default function UserManage() {
     dispatch(getUsers());
   }, [dispatch]);
 
+  const [showPopup, setShowPopup] = useState(false);
+
+  const [adminData, setAdminData] = useState({
+    name: "",
+    last_name: "",
+    address: "",
+    phone: "",
+    email: "",
+    rol: "",
+  });
+
+  const changeHandler = (e) => {
+    const property = e.target.name;
+    const value = e.target.value;
+    setAdminData({ ...adminData, [property]: value });
+  };
+
+
+  const submitHandler = () => {
+    // e.preventDefault()
+    dispatch(createUserAdmin(adminData))
+    setAdminData({
+      name: "",
+      last_name: "",
+      address: "",
+      phone: "",
+      email: "",
+      rol: "",
+    });
+    setShowPopup(false)
+    Swal.fire({title:'Administrador creado',text:'Has creado un nuevo administrador.', timer: 3000 })
+  }
+
   const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
   const prodPerPage = 2;
   const indexLastProd = currentPage * prodPerPage;
@@ -33,6 +67,7 @@ export default function UserManage() {
   return (
     <div className="admin-content">
       <h1>USUARIOS</h1>
+      <button onClick={() => setShowPopup(true)}>(+) AGREGAR ADMINISTRADOR</button>
       <UserPaginate
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -44,13 +79,13 @@ export default function UserManage() {
         >
           <ExcelSheet data={usuarios} name="Productos">
             <ExcelColumn label="email" value={(col) => col.email} />
-          
+
           </ExcelSheet>
         </ExcelFile>
       )}
       <div className="content-prod account">
         {currentUser?.map((u) => (
-          <> 
+          <>
             {u.rol.toLowerCase() === "admin" ? (
               <img src={userIconAdmin} alt="user icon" />
             ) : u.rol.toLowerCase() === "customer" ? (
@@ -59,20 +94,36 @@ export default function UserManage() {
               <img src={userIconBlock} alt="user icon" />
             )}
             <>
-            <h5>{u.DataUsers?.map((d) => (
-             <>
-              <h3>{d.name} &nbsp; {d.last_name}</h3>
-              <h5>{d.address}</h5>
-              <h5>{d.phone}</h5>
-             </>
-            ))}</h5>
+              <h5>{u.DataUsers?.map((d) => (
+                <>
+                  <h3>{d.name} &nbsp; {d.last_name}</h3>
+                  <h5>{d.address}</h5>
+                  <h5>{d.phone}</h5>
+                </>
+              ))}</h5>
               <h5>{u.email}</h5>
+              <h5>{u.rol}</h5>
               <p className={`${u.state === "Blocked" ? "rol-block" : ""}`} >{u.state}</p>
             </>
             <br /><br />
           </>
         ))}
       </div>
+      {showPopup && (
+        <div className="popup prod-popup" >
+          {/* <form onSubmit={(e) => submitHandler(e)}> */}
+          <h1>CREÁ NUEVO ADMINISTRADOR</h1>
+          <input type="text" value={adminData.name} onChange={changeHandler} name='name' placeholder="Nombre" />
+          <input type="text" value={adminData.last_name} onChange={changeHandler} name='last_name' placeholder="Apellido" />
+          <input type="text" value={adminData.address} onChange={changeHandler} name='address' placeholder="Domicilio" />
+          <input type="text" value={adminData.phone} onChange={changeHandler} name='phone' placeholder="Teléfono (solo numeros)" />
+          <input type="text" value={adminData.email} onChange={changeHandler} name='email' placeholder="Email" />
+          <input type="text" value={adminData.rol} onChange={changeHandler} name='rol' placeholder="Rol" />
+          <button onClick={() => submitHandler()}>Crear Administrador</button>
+          <button onClick={() => setShowPopup(false)}>Cerrar</button>
+          {/* </form> */}
+        </div>
+      )}
     </div>
   );
 }

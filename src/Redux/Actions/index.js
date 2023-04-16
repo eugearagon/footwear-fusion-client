@@ -49,6 +49,7 @@ import {
   POST_PROMOTIONS,
   GET_PROMOTIONS,
   PUT_PROMO_CURRENT,
+  POST_USER_ADMIN,
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -784,6 +785,26 @@ export const putPromo = (promotionId, loginUserId ) => {
   } 
 }
 
-
+export function createUserAdmin(adminData) {
+  return async function (dispatch) {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
+      await axios.post(
+        `${back}/admin/registro`,
+        { adminData },
+        { headers }
+      );
+      return dispatch({
+        type: POST_USER_ADMIN,
+      });
+    } catch (error) {
+      console.log(error.response.data);//para recueprar el error del back
+      throw error; // para poder mostrarlo en el front
+    }
+  };
+}
 
 

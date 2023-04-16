@@ -10,6 +10,7 @@ import {
   addFav,
   getFav,
 } from "../../Redux/Actions";
+import ReactStars from "react-stars";
 import swal from "sweetalert";
 
 export default function Detail() {
@@ -169,38 +170,37 @@ export default function Detail() {
         <h2>{prod.title}</h2>
         <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">
-          
           {stock === 0 ? (
             <h2 className="no-disp">STOCK NO DISPONIBLE</h2>
           ) : (
             <div className="column">
               <div className="cantidades">
-            <h5>Cantidad</h5>
-            <select defaultValue="Cantidad" onChange={handleQtySelect}>
-              <option disabled value="Cantidad">
-                Cantidad
-              </option>
-              {valores?.map((s) => (
-                <option value={s} key={s}>
-                  {s}
+                <h5>Cantidad</h5>
+                <select defaultValue="Cantidad" onChange={handleQtySelect}>
+                  <option disabled value="Cantidad">
+                    Cantidad
+                  </option>
+                  {valores?.map((s) => (
+                    <option value={s} key={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <h5>TALLES</h5>
+              <select
+                defaultValue="Seleccione un talle"
+                onChange={handleSizeSelect}
+              >
+                <option disabled value="Seleccione un talle">
+                  Seleccione un talle
                 </option>
-              ))}
-            </select>
-          </div>
-          <h5>TALLES</h5>
-          <select
-            defaultValue="Seleccione un talle"
-            onChange={handleSizeSelect}
-          >
-            <option disabled value="Seleccione un talle">
-              Seleccione un talle
-            </option>
-            {nuevoTalle?.map((talle) => (
-              <option key={talle} value={talle}>
-                {talle}
-              </option>
-            ))}
-          </select>
+                {nuevoTalle?.map((talle) => (
+                  <option key={talle} value={talle}>
+                    {talle}
+                  </option>
+                ))}
+              </select>
               <button className="comprar" onClick={handleAddToCart}>
                 ¡Agregar al Carrito!
               </button>
@@ -211,10 +211,26 @@ export default function Detail() {
             </div>
           )}
         </div>
-        <div className="description">
-          <h5>DETALLES DEL PRODUCTO</h5>
-          <p>{prod.description}</p>
-        </div>
+      </div>
+      <div className="description">
+        <h5>DETALLES DEL PRODUCTO</h5>
+        <p>{prod.description}</p>
+      </div>
+      <br />
+      <div className="description">
+        <h5>COMENTARIOS</h5>
+        {prod.ReviewsPuntuacions?.map((rp) => (
+          <>
+            <ReactStars
+              count={5}
+              size={24}
+              edit={false}
+              half={false}
+              value={rp.punctuation}
+            />
+            <p>{rp.review}</p>
+          </>
+        ))}
       </div>
     </div>
   );

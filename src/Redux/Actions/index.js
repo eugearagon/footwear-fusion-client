@@ -9,9 +9,9 @@ import {
   GET_BRAND,
   GET_SIZE,
   GET_PUNCTUATION,
+  POST_PUNCTUATION,
   GET_USERS,
   POST_USER_SUCCESS,
-  UPDATE_USER_FAILURE,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
   FILTER_BY_SIZE,
@@ -26,6 +26,7 @@ import {
   DELETE_FAV,
   DELETE_CART,
   GET_USERS_FAVORITES,
+  GET_USER_BY_NAME,
   POST_INGRESO,
   BORRAR_TOKEN,
   POST_REGISTRO,
@@ -69,18 +70,34 @@ export function getProducts() {
   };
 }
 
-export function postProducts() {
+export function postProducts(payload) {
   return async function (dispatch) {
     try {
-      var products = await axios.post(`${back}/product`);
-      return dispatch({
-        type: POST_PRODUCTS,
-        payload: products.data,
-      });
+      const newProduct = await axios.post(`${back}/product`,
+        payload);
+      return newProduct;
     } catch (error) {
       console.log("faltan campos por llenar");
     }
   };
+}
+
+export const postPunctuation = (productId, puntuacion) => {
+  return async function(dispatch){
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
+      await axios.post(`${back}/reviews/${productId}`,{puntuacion},{headers});
+      return dispatch({
+        type: POST_PUNCTUATION,
+      });
+    } catch (error) {
+      console.log(error.response.data);//para recueprar el error del back
+      throw error;// para poder mostrarlo en el front
+    }
+  }
 }
 
 export function getProductsByName(name) {
@@ -182,6 +199,22 @@ export function getUsers() {
       var users = await axios.get(`${back}/user`, {headers});
       return dispatch({
         type: GET_USERS,
+        payload: users.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getUserByName(name) {
+  return async function (dispatch) {
+    try {
+      var users = await axios.get(
+        `${back}/user?name=${name}`
+      );
+      return dispatch({
+        type: GET_USER_BY_NAME,
         payload: users.data,
       });
     } catch (error) {
@@ -313,14 +346,14 @@ export function priceRangeSelector(payload) {
 }
 
 export function addToCart(loginUserId, item) {
-  console.log("a ver si llega ",loginUserId, item);
+
   return async function (dispatch) {
     try {
       var userCart = await axios.post(
         `${back}/cart/${loginUserId}`,
         item
       );
-      
+      console.log(userCart);
       return dispatch({
         type: ADD_TO_CART,
         payload: userCart,
@@ -333,7 +366,6 @@ export function addToCart(loginUserId, item) {
 
 export function deleteFromCart(compraProductId) {
   return async function (dispatch) {
-    console.log("actions", compraProductId);
     try {
       var currentUserCart = await axios.delete(
         `${back}/compraproducto/${compraProductId}`
@@ -368,7 +400,6 @@ export function updateProduct(compraProductId, talle, qty) {
 }
 
 export function getUserCart(loginUserId) {
-  console.log(loginUserId);
   return async function (dispatch) {
     try {
       var userCart = await axios.get(
@@ -381,7 +412,7 @@ export function getUserCart(loginUserId) {
         payload: userCartData,
       });
     } catch (error) {
-      console.log(error);
+      console.log("parece que el problema esta aca, getUserCart");
     }
   };
 }
@@ -649,7 +680,8 @@ export function getOrdenesCompraId(userId) {
         { headers }
       );
       const ordenesCompraUser = ordenesCompraId.data;
-      console.log(ordenesCompraId.data, 'actions');
+      console.log(ordenesCompraUser, 'actions');
+
       dispatch({
         type: GET_ORDEN_USER,
         payload: ordenesCompraUser,
@@ -768,4 +800,9 @@ export const putPromo = (promotionId, loginUserId ) => {
       throw error;// para poder mostrarlo en el front
     }
   } 
+  
 }
+
+
+
+

@@ -6,11 +6,11 @@ import UploadWidget from "../../UploadWidget/UploadWidget";
 import OrderPaginate from "../../OrderPaginate/OrderPaginate";
 import ExportExcel from "react-export-excel";
 
-export default function ProductManage() {
-  const ExcelFile = ExportExcel.ExcelFile;
-  const ExcelSheet = ExportExcel.ExcelSheet;
-  const ExcelColumn = ExportExcel.ExcelColumn;
+const ExcelFile = ExportExcel.ExcelFile;
+const ExcelSheet = ExportExcel.ExcelFile.ExcelSheet;
+const ExcelColumn = ExportExcel.ExcelFile.ExcelColumn;
 
+export default function ProductManage() {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.products);
 
@@ -53,17 +53,22 @@ export default function ProductManage() {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-      <ExcelFile
-        element={<button>Exportar a Excel</button>}
-        filename="Productos"
-      >
-        <ExcelSheet data={allProducts} name="Productos">
-          <ExcelColumn label="title" value={allProducts.title} />
-          <ExcelColumn label="price" value={allProducts.price} />
-          <ExcelColumn label="stock" value={allProducts.stock} />
-          <ExcelColumn label="marca" value={allProducts.MarcaProducts} />
-        </ExcelSheet>
-      </ExcelFile>
+      {allProducts && (
+        <ExcelFile
+          element={<button>Exportar a Excel</button>}
+          filename="Productos"
+        >
+          <ExcelSheet data={allProducts} name="Productos">
+            <ExcelColumn label="title" value={(col) => col.title} />
+            <ExcelColumn label="price" value={(col) => col.price} />
+            <ExcelColumn label="stock" value={(col) => col.stock} />
+            <ExcelColumn
+              label="marca"
+              value={(col) => col.MarcaProducts[0].name}
+            />
+          </ExcelSheet>
+        </ExcelFile>
+      )}
       <div className="content-prod">
         {currentProd?.map((p) => {
           return (

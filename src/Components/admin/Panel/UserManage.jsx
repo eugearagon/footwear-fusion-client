@@ -74,7 +74,6 @@ export default function UserManage() {
       )}
       <div className="content-prod account">
         {currentUser?.map((u) => (
-          
           <div className="margenes">
             {u.rol.toLowerCase() === "admin" ? (
               <img src={userIconAdmin} alt="user icon" />
@@ -116,12 +115,19 @@ export default function UserManage() {
                   </button>
                 </div>
               )}
-              <p className={` ${u.state === "Blocked" ? "rol-block" : ""}`}>
-                {u.state}
-              </p>
+
+                {/* Joni este es el boton para cambiar el estado */}
+              
+              <button>
+                <p className={` ${u.state === "Blocked" ? "rol-block" : ""}`}>
+                  {u.state}
+                </p>
+              </button>
+
+
+
             </>
-            </div>
-          
+          </div>
         ))}
       </div>
     </div>

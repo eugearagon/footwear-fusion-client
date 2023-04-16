@@ -1,7 +1,6 @@
 import shoe from "../images/shoe.png";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 import { getOrdenesCompraId } from "../../Redux/Actions";
 
 export default function UserOrders() {

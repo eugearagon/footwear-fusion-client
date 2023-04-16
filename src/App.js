@@ -1,7 +1,7 @@
 import "./App.css";
 
 import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";
 import Login from "./Components/Register/Login";
@@ -33,9 +33,6 @@ function App() {
     setDarkMode(!darkMode);
   }
 
-  const loginUser = useSelector((state) => state.loginUser);
-  const loginUserId = loginUser.id;
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const expirationDate = localStorage.getItem("expirationDate");

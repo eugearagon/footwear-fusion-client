@@ -27,7 +27,7 @@ function AntesDeComprar() {
   );
 
   
-  const [modificar, setModificar] = useState(false);
+
   const [modificarTelefono, setModificarTelefono] = useState(false);
   const [modificarDireccion, setModificarDireccion] = useState(false);
   const [promoCode, setPromoCode] = useState("");
@@ -55,7 +55,7 @@ function AntesDeComprar() {
     } catch (error) {
       console.log("errorPromo", error);
     }
-  }, [descuento, totalPrice]);
+  }, [descuento, totalPrice,item]);
 
   useEffect(() => {
     const getCartAndFav = async () => {

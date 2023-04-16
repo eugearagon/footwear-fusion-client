@@ -1,14 +1,11 @@
 import axios from "axios";
 import {
   GET_PRODUCTS,
-  POST_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
-  GET_PRODUCT_DETAIL_ADMIN,
   GET_CATEGORY,
   GET_BRAND,
   GET_SIZE,
-  GET_PUNCTUATION,
   POST_PUNCTUATION,
   GET_USERS,
   POST_USER_SUCCESS,
@@ -24,7 +21,6 @@ import {
   ADD_SIZE,
   ADD_FAV,
   DELETE_FAV,
-  DELETE_CART,
   GET_USERS_FAVORITES,
   GET_USER_BY_NAME,
   POST_INGRESO,
@@ -49,7 +45,7 @@ import {
   POST_PROMOTIONS,
   GET_PROMOTIONS,
   PUT_PROMO_CURRENT,
-  PUT_ROL_USER
+  PUT_ROL_USER,
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -73,7 +69,11 @@ export function getProducts() {
 export function postProducts(payload) {
   return async function (dispatch) {
     try {
-      const newProduct = await axios.post(`${back}/product`, payload);
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
+      const newProduct = await axios.post(`${back}/product`, payload, {headers});
       console.log("POST", newProduct);
       return newProduct;
     } catch (error) {
@@ -813,6 +813,11 @@ export const putPromo = (promotionId, loginUserId ) => {
   } 
   
 }
+
+
+
+
+
 
 
 

@@ -35,7 +35,7 @@ export default function ProductManage() {
   });
 
   function onUpload(url) {
-    setProductData({ ...productData, imagen: url });
+    setProductData({ ...productData, image: url });
   }
 
   function handleChange(event) {

@@ -6,7 +6,7 @@ import OrderPaginate from "../OrderPaginate/OrderPaginate.jsx";
 import { CookiesProvider, useCookies } from "react-cookie";
 import popup from "../images/popup.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getDatosUser, getFav, getOrdenesCompraId, getUserCart } from "../../Redux/Actions";
+import { getDatosUser, getFav, getUserCart } from "../../Redux/Actions";
 
 export default function Home() {
   const loginUser = useSelector((state) => state.loginUser);
@@ -26,7 +26,7 @@ export default function Home() {
       }
     };
     iniciarTodo();
-  }, []);
+  }, [dispatch, loginUserId]);
 
   const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
   const [cookies, setCookie] = useCookies(["visited"]);

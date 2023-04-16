@@ -66,7 +66,7 @@ useEffect(() => {
     console.log("errorPromo",error)
   }
  
-}, [descuento, totalPrice]);
+}, [descuento, totalPrice, promoCode]);
 
   useEffect(() => {
     const getCarFav = async () => {
@@ -76,7 +76,7 @@ useEffect(() => {
       localStorage.removeItem("mercadoPago")
     };
     getCarFav();
-  }, [dispatch]);
+  }, [dispatch, loginUserId]);
 
   const handleDeleteFromCart = async (compraProductId) => {
     if (!token) {

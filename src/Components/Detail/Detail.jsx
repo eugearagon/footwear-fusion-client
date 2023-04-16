@@ -40,7 +40,7 @@ export default function Detail() {
       await dispatch(getFav(loginUserId));
     };
     userCart();
-  }, [dispatch]);
+  }, [dispatch, loginUserId]);
 
   const prod = useSelector((state) => state.detail);
 
@@ -128,7 +128,7 @@ export default function Detail() {
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };
 
-  const loginUser = useSelector((state) => state.loginUser);
+
 
   const handleAddFav = async () => {
     if (!token) {

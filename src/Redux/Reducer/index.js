@@ -29,11 +29,9 @@ import {
   POST_MERCADO_PAGO,
   GET_MERCADO_PAGO,
   GET_DATOS_USER,
-  POST_USER_SUCCESS,
   UPDATE_USER_FAILURE,
   DELETE_PRODUCT_CART,
   UPDATE_PRODUCT_CART,
-  PUT_PRODUCT_PRICE,
   GET_ORDEN_USER,
   GET_PROMOTIONS,
 
@@ -74,7 +72,8 @@ const initialState = {
   postMercadoPago: null,
   getMercadoPago: null,
   ordenesCompra: null,
-  promotions: null
+  promotions: null,
+  ventasProductos:[]
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -250,23 +249,23 @@ function rootReducer(state = initialState, action) {
         products: filteredProducts,
       };
 
-    case FILTER_BY_SIZE:
-      const sizeFilter = action.payload;
-      let sizeProd = state.filteredProducts.length ? state.filteredProducts : state.prodRender;
-      if (sizeFilter) {
-        sizeProd = sizeProd.filter((product) => {
-          if (product.TalleProducts) {
-            return product.TalleProducts[0].talle === action.payload;
-          } else {
-            return false;
-          }
-        });
-      }
-      return {
-        ...state,
-        products: sizeProd,
-        filteredProducts: sizeProd
-      };
+      case FILTER_BY_SIZE:
+        const sizeFilter = action.payload;
+        let sizeProd = state.filteredProducts.length ? state.filteredProducts : state.prodRender;
+        if (sizeFilter) {
+          sizeProd = sizeProd.filter((product) => {
+            if (product.TalleProducts) {
+              return product.TalleProducts[0].talle.split(",").filter((e) => e === action.payload).length > 0;
+            } else {
+              return false;
+            }
+          });
+        }
+        return {
+          ...state,
+          products: sizeProd,
+          filteredProducts: sizeProd
+        };
 
     case FILTER_BY_BRAND:
       const brandFilter = action.payload.toUpperCase();
@@ -425,8 +424,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         promotions: promo
-      }
-
+      };
     default:
       return state;
   }

@@ -248,7 +248,7 @@ h1 {
   font-size: 12pt;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1200px) {
   .zapas {
     display: none;
   }
@@ -1176,7 +1176,11 @@ h1 {
 
 .account h5,
 .account p {
+  text-align: center;
   margin: 0;
+}
+.account p input{
+  margin: 10px 0;
 }
 
 .botonera {

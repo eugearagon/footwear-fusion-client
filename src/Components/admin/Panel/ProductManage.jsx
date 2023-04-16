@@ -5,6 +5,7 @@ import CardAdmin from "./CardAdmin/CardAdmin";
 import UploadWidget from "../../UploadWidget/UploadWidget";
 import OrderPaginate from "../../OrderPaginate/OrderPaginate";
 import ExportExcel from "react-export-excel";
+import Swal from "sweetalert2";
 
 const ExcelFile = ExportExcel.ExcelFile;
 const ExcelSheet = ExportExcel.ExcelFile.ExcelSheet;
@@ -35,7 +36,7 @@ export default function ProductManage() {
   });
 
   function onUpload(url) {
-    setProductData({ ...productData, imagen: url });
+    setProductData({ ...productData, image: url });
   }
 
   function handleChange(event) {
@@ -50,6 +51,10 @@ export default function ProductManage() {
     event.preventDefault();
     dispatch(postProducts(productData));
     setShowPopup(false);
+    Swal.fire("Producto agregado correctamente","ya se puede mostrar en la web","success")
+    setTimeout(() => {
+      window.location.reload()
+    }, 2000);
   }
 
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,4 +1,3 @@
-
 import userIcon from "../../images/user-icon.png";
 import userIconBlock from "../../images/user-icon-block.png";
 import userIconAdmin from "../../images/user-icon-admin.png";
@@ -11,7 +10,6 @@ import UserPaginate from "./UserPaginate";
 const ExcelFile = ExportExcel.ExcelFile;
 const ExcelSheet = ExportExcel.ExcelFile.ExcelSheet;
 const ExcelColumn = ExportExcel.ExcelFile.ExcelColumn;
-
 
 export default function UserManage() {
   const usuarios = useSelector((state) => state.users);
@@ -43,20 +41,20 @@ export default function UserManage() {
     }));
   };
 
-  const rol = userRol.rol
+  const rol = userRol.rol;
   const guardarRol = async (id) => {
-   await dispatch(putRolUser(id, rol))
-   await dispatch(getUsers());
-   setModifRol((prevState) => ({
-    ...prevState,
-    [id]: false,
-  }));
+    await dispatch(putRolUser(id, rol));
+    await dispatch(getUsers());
+    setModifRol((prevState) => ({
+      ...prevState,
+      [id]: false,
+    }));
   };
 
   const cambiarRol = (evento) => {
     setUserRol((prevState) => ({
       ...prevState,
-      rol: evento.target.value
+      rol: evento.target.value,
     }));
   };
 
@@ -65,7 +63,10 @@ export default function UserManage() {
       <h1>USUARIOS</h1>
       <UserPaginate currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {currentUser && (
-        <ExcelFile element={<button>Exportar a Excel</button>} filename="Usuarios">
+        <ExcelFile
+          element={<button>Exportar a Excel</button>}
+          filename="Usuarios"
+        >
           <ExcelSheet data={usuarios} name="Productos">
             <ExcelColumn label="email" value={(col) => col.email} />
           </ExcelSheet>
@@ -73,7 +74,8 @@ export default function UserManage() {
       )}
       <div className="content-prod account">
         {currentUser?.map((u) => (
-          <>
+          
+          <div className="margenes">
             {u.rol.toLowerCase() === "admin" ? (
               <img src={userIconAdmin} alt="user icon" />
             ) : u.rol.toLowerCase() === "customer" ? (
@@ -96,19 +98,30 @@ export default function UserManage() {
               <h5>{u.email}</h5>
               {modifRol[u.id] ? (
                 <div>
-                  <input type="text" name="userRol" value={userRol.rol} onChange={cambiarRol} />
+                  <input
+                    type="text"
+                    name="userRol"
+                    value={userRol.rol}
+                    onChange={cambiarRol}
+                  />
                   <button onClick={() => guardarRol(u.id)}>guardar</button>
-          
                 </div>
-              ):
-              <div><p>{u.rol}</p> 
-              <button onClick={() => modificarRol(u.id)}>modificar</button>
-              </div>
-            }
-              <p>{u.state}</p>
+              ) : (
+                <div>
+                  <button
+                    className="sin-relleno blanco negrita mas-aire"
+                    onClick={() => modificarRol(u.id)}
+                  >
+                    {u.rol}
+                  </button>
+                </div>
+              )}
+              <p className={` ${u.state === "Blocked" ? "rol-block" : ""}`}>
+                {u.state}
+              </p>
             </>
-            <br /><br />
-          </>
+            </div>
+          
         ))}
       </div>
     </div>

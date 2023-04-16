@@ -26,8 +26,6 @@ function AntesDeComprar() {
     0
   );
 
-  
-  const [modificar, setModificar] = useState(false);
   const [modificarTelefono, setModificarTelefono] = useState(false);
   const [modificarDireccion, setModificarDireccion] = useState(false);
   const [promoCode, setPromoCode] = useState("");

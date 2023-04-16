@@ -128,8 +128,6 @@ export default function Detail() {
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };
 
-  const loginUser = useSelector((state) => state.loginUser);
-
   const handleAddFav = async () => {
     if (!token) {
       swal("Error", "Logueate para continuar!", "error");

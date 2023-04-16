@@ -323,6 +323,7 @@ function rootReducer(state = initialState, action) {
 
     case ADD_SIZE:
       const size = action.payload;
+      console.log("console.log add_size", size);
       return {
         ...state,
         selectedSize: size,
@@ -330,6 +331,7 @@ function rootReducer(state = initialState, action) {
 
     case ADD_QUANTITY:
       const qty = action.payload;
+      console.log("console.log add_qty", qty);
       return {
         ...state,
         selectedQty: qty,
@@ -352,6 +354,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_CART_BY_ID:
+      console.log(action.payload, "payload reducer");
       return {
         ...state,
         item: action.payload,
@@ -365,6 +368,7 @@ function rootReducer(state = initialState, action) {
 
       case GET_ORDEN_USER:
         const datosOrden= action.payload
+        console.log("DATOS", datosOrden)
         return {
           ...state,
           ordenesCompra: datosOrden

@@ -346,7 +346,6 @@ export function addToCart(loginUserId, item) {
 
 export function deleteFromCart(compraProductId) {
   return async function (dispatch) {
-    console.log("actions", compraProductId);
     try {
       var currentUserCart = await axios.delete(
         `${back}/compraproducto/${compraProductId}`
@@ -381,7 +380,6 @@ export function updateProduct(compraProductId, talle, qty) {
 }
 
 export function getUserCart(loginUserId) {
-  console.log(loginUserId);
   return async function (dispatch) {
     try {
       var userCart = await axios.get(
@@ -394,7 +392,7 @@ export function getUserCart(loginUserId) {
         payload: userCartData,
       });
     } catch (error) {
-      console.log(error);
+      console.log("parece que el problema esta aca, getUserCart");
     }
   };
 }

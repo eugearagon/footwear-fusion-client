@@ -3,7 +3,7 @@ import userIcon from "../../images/user-icon.png";
 import userIconBlock from "../../images/user-icon-block.png";
 import userIconAdmin from "../../images/user-icon-admin.png";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../../Redux/Actions";
+import { getUsers, putRolUser } from "../../../Redux/Actions";
 import { useEffect, useState } from "react";
 import ExportExcel from "react-export-excel";
 import UserPaginate from "./UserPaginate";
@@ -21,48 +21,59 @@ export default function UserManage() {
     dispatch(getUsers());
   }, [dispatch]);
 
-  const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
+  const [currentPage, setCurrentPage] = useState(1);
   const prodPerPage = 2;
   const indexLastProd = currentPage * prodPerPage;
   const indexFirstProd = indexLastProd - prodPerPage;
-
-  // const guardarState = () => {
-  //   setNewState(false);
-  // }
-
-  // const cambiarRol = () => {
-    
-  //   setNewRol(true);
-  // }
-
-  // const guardarRol = () => {
-  //   setNewRol(false);
-  // }
   let currentUser = usuarios;
 
   currentUser = currentUser.slice(indexFirstProd, indexLastProd);
 
+  const [modifRol, setModifRol] = useState({});
+
+  const [userRol, setUserRol] = useState({
+    id: "",
+    rol: "",
+  });
+
+  const modificarRol = (id) => {
+    setModifRol((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
+  };
+
+  const rol = userRol.rol
+  const guardarRol = async (id) => {
+   await dispatch(putRolUser(id, rol))
+   await dispatch(getUsers());
+   setModifRol((prevState) => ({
+    ...prevState,
+    [id]: false,
+  }));
+  };
+
+  const cambiarRol = (evento) => {
+    setUserRol((prevState) => ({
+      ...prevState,
+      rol: evento.target.value
+    }));
+  };
+
   return (
     <div className="admin-content">
       <h1>USUARIOS</h1>
-      <UserPaginate
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <UserPaginate currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {currentUser && (
-        <ExcelFile
-          element={<button>Exportar a Excel</button>}
-          filename="Usuarios"
-        >
+        <ExcelFile element={<button>Exportar a Excel</button>} filename="Usuarios">
           <ExcelSheet data={usuarios} name="Productos">
             <ExcelColumn label="email" value={(col) => col.email} />
-          
           </ExcelSheet>
         </ExcelFile>
       )}
       <div className="content-prod account">
         {currentUser?.map((u) => (
-          <> 
+          <>
             {u.rol.toLowerCase() === "admin" ? (
               <img src={userIconAdmin} alt="user icon" />
             ) : u.rol.toLowerCase() === "customer" ? (
@@ -71,15 +82,30 @@ export default function UserManage() {
               <img src={userIconBlock} alt="user icon" />
             )}
             <>
-            <h5>{u.DataUsers?.map((d) => (
-             <>
-              <h3>{d.name} &nbsp; {d.last_name}</h3>
-              <h5>{d.address}</h5>
-              <h5>{d.phone}</h5>
-             </>
-            ))}</h5>
+              <h5>
+                {u.DataUsers?.map((d) => (
+                  <>
+                    <h3>
+                      {d.name} &nbsp; {d.last_name}
+                    </h3>
+                    <h5>{d.address}</h5>
+                    <h5>{d.phone}</h5>
+                  </>
+                ))}
+              </h5>
               <h5>{u.email}</h5>
-              <p className={`${u.state === "Blocked" ? "rol-block" : ""}`} >{u.state}</p>
+              {modifRol[u.id] ? (
+                <div>
+                  <input type="text" name="userRol" value={userRol.rol} onChange={cambiarRol} />
+                  <button onClick={() => guardarRol(u.id)}>guardar</button>
+          
+                </div>
+              ):
+              <div><p>{u.rol}</p> 
+              <button onClick={() => modificarRol(u.id)}>modificar</button>
+              </div>
+            }
+              <p>{u.state}</p>
             </>
             <br /><br />
           </>

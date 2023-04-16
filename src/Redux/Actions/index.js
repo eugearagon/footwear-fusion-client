@@ -649,7 +649,7 @@ export const putRolUser = (userId, rol) => {
         type: PUT_ROL_USER
       })
     } catch (error) {
-      
+      console.log(error.response.data);
     }
    
   }

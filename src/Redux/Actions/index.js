@@ -45,7 +45,7 @@ import {
   POST_PROMOTIONS,
   GET_PROMOTIONS,
   PUT_PROMO_CURRENT,
-  PUT_ROL_USER
+  POST_USER_ADMIN,
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -530,7 +530,7 @@ export const postNewsletter = (email) => {
   };
 };
 
-export const getNewsletter = () => {
+export const getNewsletter = (email) => {
   return async function (dispatch) {
     const token = localStorage.getItem("token");
     const headers = {
@@ -551,12 +551,13 @@ export const getNewsletter = () => {
   };
 };
 
-export const correoRegistroNewsletter = (correo) => {
+export const correoRegistroNewsletter = (correo, promo) => {
+  console.log(correo, promo, 'action');
   return async function (dispatch) {
     try {
       await axios.post(
         `${back}/correo/registroNewsletter`,
-        correo
+        { data: { correo, promo } }
       );
       dispatch({
         type: REGISTRO_NEWSLETTER,
@@ -812,9 +813,28 @@ export const putPromo = (promotionId, loginUserId ) => {
       throw error;// para poder mostrarlo en el front
     }
   } 
-  
 }
 
-
+export function createUserAdmin(adminData) {
+  return async function (dispatch) {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
+      await axios.post(
+        `${back}/admin/registro`,
+        { adminData },
+        { headers }
+      );
+      return dispatch({
+        type: POST_USER_ADMIN,
+      });
+    } catch (error) {
+      console.log(error.response.data);//para recueprar el error del back
+      throw error; // para poder mostrarlo en el front
+    }
+  };
+}
 
 

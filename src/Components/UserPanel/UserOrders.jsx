@@ -5,15 +5,36 @@ import { getOrdenesCompraId } from "../../Redux/Actions";
 
 export default function UserOrders() {
   const dispatch = useDispatch();
-  const  compraProducto  = useSelector((state) => state.userCompras);
-  console.log("ACAA", compraProducto)
+  const compraProducto = useSelector((state) => state.ordenesCompra);
+  console.log("ACA", compraProducto)
   const user = useSelector((state) => state.loginUser);
-  const loginUserId = user.id
-  
+  const userId = user.id;
 
   useEffect(() => {
-    dispatch(getOrdenesCompraId(loginUserId));
-  }, [loginUserId,dispatch]);
+    const orden=async()=>{
+      await dispatch(getOrdenesCompraId(userId));
+    }
+    orden()
+  }, [userId, dispatch]);
+
+  const datosOrden = compraProducto.map((compra) => {
+    return{
+      Estado: compra.orderStatus,
+      pago: compra.payment,
+      total:compra.total,
+      productos: compra.comprasProducto.map((compra)=>{
+        return{
+          id: compra.productId,
+          nombre:compra.title,
+          imagen:compra.image,
+          marca:compra.marca,
+          codigo:compra.code
+        }
+      })
+    }
+  }
+  )
+  console.log("DATOSSSS", datosOrden)
 
   return (
     <div className="user-content">
@@ -21,19 +42,33 @@ export default function UserOrders() {
         <img src={shoe} alt="footwear-fusion" />
         <div className="data-list">
           <h6>MIS PEDIDOS REALIZADOS</h6>
-          {compraProducto.length > 0 ? (
+          {compraProducto.length === 0 ? (
             <div className="zapato-fav">
               <h1>TODAVIA NO HAY PEDIDOS REALIZADOS</h1>
             </div>
           ) : (
-           compraProducto.map((compra) => (
-            <div key={compra.id}>
-              <p>Estado del pedido: {compra.orderStatus}</p>
-              <p>Método de pago: {compra.payment}</p>
-              <p>Total: {compra.total}</p>
-            </div>
-          ))
-          )}
+              <div>
+                <p>Estado del pedido: {datosOrden.Estado}</p>
+                <p>Método de pago: {datosOrden.pago}</p>
+                <p>Total: {datosOrden.total}</p>
+                <p>Productos comprados: {datosOrden.productos?.map((producto)=>{
+                    <div>
+                      <p>
+                         nombre: {producto.nombre}
+                      </p>
+                      <img src={producto.imagen}/>
+                      <p>                    
+                         {producto.marca}
+                      </p>
+                      <p>
+                        {producto.code} 
+                      </p>
+                    </div>
+                })}</p>
+
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

@@ -11,7 +11,6 @@ import {
   GET_PUNCTUATION,
   GET_USERS,
   POST_USER_SUCCESS,
-  UPDATE_USER_FAILURE,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
   FILTER_BY_SIZE,
@@ -48,7 +47,7 @@ import {
   PUT_PRODUCT_STOCK,
   POST_PROMOTIONS,
   GET_PROMOTIONS,
-  PUT_PROMO_CURRENT
+  PUT_PROMO_CURRENT,
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -69,14 +68,12 @@ export function getProducts() {
   };
 }
 
-export function postProducts() {
+export function postProducts(payload) {
   return async function (dispatch) {
     try {
-      var products = await axios.post(`${back}/product`);
-      return dispatch({
-        type: POST_PRODUCTS,
-        payload: products.data,
-      });
+      const newProduct = await axios.post(`${back}/product`,
+        payload);
+      return newProduct;
     } catch (error) {
       console.log("faltan campos por llenar");
     }
@@ -647,10 +644,11 @@ export function getOrdenesCompraId(userId) {
         { headers }
       );
       const ordenesCompraUser = ordenesCompraId.data;
-      console.log(ordenesCompraId.data, 'actions');
+      console.log(ordenesCompraUser, 'actions');
+
       dispatch({
         type: GET_ORDEN_USER,
-        payload: ordenesCompraUser.compraProducto,
+        payload: ordenesCompraUser,
       });
     } catch (error) {
       console.log(error.response.data);

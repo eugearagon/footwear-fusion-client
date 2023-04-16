@@ -1,6 +1,5 @@
 import {
   GET_PRODUCTS,
-  POST_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
   GET_CATEGORY,
@@ -74,7 +73,7 @@ const initialState = {
   newsletter: [],
   postMercadoPago: null,
   getMercadoPago: null,
-  userCompras: null,
+  ordenesCompra: null,
   promotions: null
 };
 
@@ -367,11 +366,13 @@ function rootReducer(state = initialState, action) {
         itemFav: action.payload,
       };
 
-    case GET_ORDEN_USER:
-      return {
-        ...state,
-        userCompras: action.payload,
-      };
+      case GET_ORDEN_USER:
+        const datosOrden= action.payload
+        console.log("DATOS", datosOrden)
+        return {
+          ...state,
+          ordenesCompra: datosOrden
+        };
 
     case DELETE_FAV:
       return {

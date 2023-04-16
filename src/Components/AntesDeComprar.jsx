@@ -134,9 +134,12 @@ function AntesDeComprar() {
               <h2>Precio</h2>
               <h2>${item.price.toLocaleString("de-De")}</h2>
             </div>
-            <button onClick={handleCompraClick}>COMPRAR</button>
+          
           </div>
         ))}
+          <div className="margenes">
+          <button className="mas-aire" onClick={handleCompraClick}>COMPRAR</button>
+          </div>
       <h1> DATOS DE ENTREGA</h1>
       <h4>Nombre y Apellido: {`${dataUser.name} ${dataUser.last_name}`}</h4>
       <p>Email: {loginUser.email}</p>

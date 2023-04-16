@@ -27,7 +27,9 @@ p,
 a,
 button,
 li,
-span {
+span,
+input,
+textarea {
   font-family: "Roboto", sans-serif !important;
 }
 
@@ -35,13 +37,13 @@ body {
   align-items: center;
 }
 
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
   width: 3px;
   background-color: #292929;
 }
 
-body::-webkit-scrollbar-thumb{
-  background-color:#4a5757;
+body::-webkit-scrollbar-thumb {
+  background-color: #4a5757;
 }
 
 h1 {
@@ -98,7 +100,7 @@ select {
   background-color: #f5f5f5;
   font-size: 8pt;
 }
-h1{
+h1 {
   font-weight: 300;
 }
 
@@ -106,11 +108,20 @@ h1{
   text-align: center;
 }
 
-.column{
+.column {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column !important;
   gap: 10px !important;
+}
+
+.margenes {
+  margin: 20px 0;
+}
+.mas-aire {
+  color: #ffffff;
+  background-color: #23901b;
+  padding: 20px 100px;
 }
 
 .popup {
@@ -134,7 +145,7 @@ h1{
   opacity: 1;
 }
 
-.prod-popup{
+.prod-popup {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -142,7 +153,7 @@ h1{
 }
 
 .widgetContainer span {
-  color:#17e1e7;
+  color: #17e1e7;
   border: none;
   font-size: 9pt;
   font-weight: 500;
@@ -150,7 +161,7 @@ h1{
   cursor: pointer;
 }
 
-.widgetContainer button{
+.widgetContainer button {
   color: #0d0f12;
 }
 
@@ -237,17 +248,15 @@ h1{
   font-size: 12pt;
 }
 
-
-@media only screen and (max-width: 1000px)  {
-  .zapas{
+@media only screen and (max-width: 1000px) {
+  .zapas {
     display: none;
   }
-  .register-landing .form{
+  .register-landing .form {
     width: 100vw;
     min-height: 800px;
   }
 }
-
 
 /* register landing */
 
@@ -558,7 +567,7 @@ h1{
 }
 
 .paginado button {
-  background: none
+  background: none;
 }
 
 .paginado li,
@@ -581,7 +590,8 @@ h1{
   cursor: pointer;
 }
 
-.blanco .order-paginate button, .order-paginate .blanco {
+.blanco .order-paginate button,
+.order-paginate .blanco {
   color: #fff !important;
 }
 
@@ -674,7 +684,7 @@ h1{
   font-size: 11pt;
 }
 
-.no-disp{
+.no-disp {
   font-weight: 300 !important;
   color: #646464 !important;
 }
@@ -697,7 +707,8 @@ h1{
   background-color: #292929;
 }
 
-.dark-mode .cards-container a, .dark-mode strong {
+.dark-mode .cards-container a,
+.dark-mode strong {
   color: #17e1e7;
 }
 
@@ -730,7 +741,7 @@ h1{
   color: #fff !important;
 }
 
-.dark-mode .zapato-fav{
+.dark-mode .zapato-fav {
   color: #ffffff !important;
 }
 
@@ -893,7 +904,7 @@ h1{
   gap: 30px;
 }
 
-.admin-panel{
+.admin-panel {
   background-color: #425866;
   color: #fff;
   display: flex;
@@ -901,30 +912,30 @@ h1{
   padding-bottom: 200px;
 }
 
-.admin-panel a{
-  color:#17e1e7;
+.admin-panel a {
+  color: #17e1e7;
 }
 
-.admin-panel .novedades{
-  font-size: 32pt ;
+.admin-panel .novedades {
+  font-size: 32pt;
   width: 100%;
 }
 
-.form-novedades form{
+.form-novedades form {
   display: flex;
-    flex-direction: column;
-    margin: 20px 0;
+  flex-direction: column;
+  margin: 20px 0;
 }
 
-.form-novedades textarea{
+.form-novedades textarea {
   width: 600px;
 }
 
-.admin-panel p{
+.admin-panel p {
   font-size: 13pt;
 }
 
-.saludo-admin{
+.saludo-admin {
   background-color: #0d0f12;
   color: #ffffff;
   width: 100vw;
@@ -939,19 +950,19 @@ h1{
   z-index: 9999999;
 }
 
-.admin-buscador{
+.admin-buscador {
   display: flex;
   flex-direction: row;
   gap: 20px;
 }
 
-.admin-menu button{
+.admin-menu button {
   background: none;
   color: #fff;
   padding: 20px 80px 10px 80px;
 }
 
-.admin-menu{
+.admin-menu {
   height: 100vh;
   max-width: 180px;
   background-color: #1d232c;
@@ -972,20 +983,19 @@ h1{
   width: 3px;
 }
 .admin-menu::-webkit-scrollbar-thumb {
- background-color: #0d0f1200;
+  background-color: #0d0f1200;
 }
 
-.admin-panel h1{
+.admin-panel h1 {
   font-weight: 300;
   font-size: 16pt;
 }
 
-.admin-active{
+.admin-active {
   background-color: #0d0f12 !important;
-
 }
 
-.admin-content{
+.admin-content {
   background-color: #425866;
   display: flex;
   flex-direction: column;
@@ -1001,7 +1011,8 @@ h1{
   gap: 30px;
 }
 
-.content-prod, .detail-admin{
+.content-prod,
+.detail-admin {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -1009,10 +1020,9 @@ h1{
   gap: 20px;
   text-align: left;
   justify-content: space-evenly;
-  
 }
 
-.detail-admin{
+.detail-admin {
   position: relative;
   top: 150px;
   margin: 0 auto;
@@ -1021,10 +1031,9 @@ h1{
   line-height: 15pt;
 }
 
-
-.rol-block{
+.rol-block {
   font-weight: 800;
-  background-color:#c82c2c;
+  background-color: #c82c2c;
   color: #d9d9d9;
   padding: 5px 10px;
   border-radius: 20px;
@@ -1032,17 +1041,18 @@ h1{
   top: 10px;
 }
 
-.admin-card{
+.admin-card {
   width: 290px;
 }
 
-.modif-prod{
+.modif-prod {
   display: flex;
   flex-wrap: nowrap;
   width: 50%;
 }
 
-.modif-prod button, .admin-card button{
+.modif-prod button,
+.admin-card button {
   font-size: 12pt;
   padding: 0;
   color: #17e1e7;
@@ -1050,15 +1060,15 @@ h1{
   margin: 0 10px;
 }
 
-.number{
+.number {
   width: 70px;
 }
 
-.image-popup{
+.image-popup {
   font-size: 9pt;
   text-align: center;
   background-color: #04101eed;
-  width: 235px ;
+  width: 235px;
   padding: 10px 0;
   margin-bottom: 5px;
 }
@@ -1077,11 +1087,11 @@ h1{
 
 /*  ----   panel de usuario   ---- */
 
-.relleno{
+.relleno {
   padding: 10px 30px;
 }
 
-.centrar{
+.centrar {
   width: 60%;
   margin: 0 auto;
   padding-bottom: 30px;
@@ -1154,21 +1164,20 @@ h1{
   gap: 70px;
 }
 
-.account{
+.account {
   flex-direction: column;
   gap: 0;
   align-items: flex-start;
 }
 
-.account h6{
+.account h6 {
   margin: 5px 0;
 }
 
-.account h5, .account p{
+.account h5,
+.account p {
   margin: 0;
 }
-
-
 
 .botonera {
   display: flex;
@@ -1188,40 +1197,71 @@ h1{
   background: none;
 }
 
-.favs{
+.favs {
   z-index: 9999999;
 }
 
-.modif-dato{
+.modif-dato {
   background: none;
 }
 
-.estrellas span{
+.estrellas span {
   font-size: 16pt !important;
 }
 
-/*  ----   panel de usuario   ---- */
+.estado {
+  display: flex;
+  flex-direction: column;
+}
 
+.prod-comp {
+  flex-direction: row;
+  gap: 50px;
+}
+
+.comprados,
+.prod-comp {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.comprados {
+  flex-direction: column;
+}
+.img-comprada img {
+  width: 150px;
+}
+
+.review-popup {
+  color: #ffffff;
+  flex-direction: column;
+  gap: 30px;
+}
+/*  ----   panel de usuario   ---- */
 
 /* usuario bloqueado */
 
-.user-blocked{
+.user-blocked {
   display: flex;
   color: #dedede;
-  background: rgb(238,54,54);
-  background: radial-gradient(circle, rgba(238,54,54,1) 0%, rgba(89,8,8,1) 100%);
+  background: rgb(238, 54, 54);
+  background: radial-gradient(
+    circle,
+    rgba(238, 54, 54, 1) 0%,
+    rgba(89, 8, 8, 1) 100%
+  );
   flex-direction: column;
   height: 100vh;
   align-items: center;
   justify-content: center;
 }
 
-.user-blocked h1{
+.user-blocked h1 {
   font-size: 52pt;
 }
 
-.user-blocked a{
-  color: rgb(238,54,54);
+.user-blocked a {
+  color: rgb(238, 54, 54);
   background-color: #dedede;
   padding: 5px 10px;
   border-radius: 20px;

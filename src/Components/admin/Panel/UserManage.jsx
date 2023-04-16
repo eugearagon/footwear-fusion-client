@@ -26,22 +26,19 @@ export default function UserManage() {
   const indexLastProd = currentPage * prodPerPage;
   const indexFirstProd = indexLastProd - prodPerPage;
 
-<<<<<<< HEAD
-  const guardarState = () => {
-    setNewState(false);
-  }
+  // const guardarState = () => {
+  //   setNewState(false);
+  // }
 
-  const cambiarRol = () => {
+  // const cambiarRol = () => {
     
-    setNewRol(true);
-  }
+  //   setNewRol(true);
+  // }
 
-  const guardarRol = () => {
-    setNewRol(false);
-  }
-=======
+  // const guardarRol = () => {
+  //   setNewRol(false);
+  // }
   let currentUser = usuarios;
->>>>>>> d03fd87647b75f53cab1e425442c555b877284d7
 
   currentUser = currentUser.slice(indexFirstProd, indexLastProd);
 

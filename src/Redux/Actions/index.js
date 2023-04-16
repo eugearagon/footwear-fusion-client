@@ -349,9 +349,13 @@ export function addToCart(loginUserId, item) {
 
   return async function (dispatch) {
     try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
       var userCart = await axios.post(
         `${back}/cart/${loginUserId}`,
-        item
+        item,{headers}
       );
       console.log(userCart);
       return dispatch({
@@ -383,11 +387,14 @@ export function deleteFromCart(compraProductId) {
 
 export function updateProduct(compraProductId, talle, qty) {
   return async function (dispatch) {
-    console.log("actions updateProduct", compraProductId, talle, qty);
     try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
       var updatedUserCart = await axios.delete(
         `${back}/compraproducto/${compraProductId}`,
-        { data: { talle, qty } }
+        { data: { talle, qty } },{headers}
       );
       return dispatch({
         type: UPDATE_PRODUCT_CART,
@@ -402,8 +409,12 @@ export function updateProduct(compraProductId, talle, qty) {
 export function getUserCart(loginUserId) {
   return async function (dispatch) {
     try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
       var userCart = await axios.get(
-        `${back}/cart/${loginUserId}`
+        `${back}/cart/${loginUserId}`,{headers}
       );
       const userCartData = userCart.data;
       console.log(userCartData, "actions get user cart");

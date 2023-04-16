@@ -78,7 +78,7 @@ function App() {
           <Route path="/login" element={ <Login />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
           <Route path="/user-blocked" element={ <UserBlocked /> }/>
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={<ProtectLogin><Cart /></ProtectLogin>} />
           <Route path="/userpanel" element={<ProtectLogin><UserPanel /></ProtectLogin>} />
           <Route path="/product/:prodId" element={<ProtectLogin><Detail /></ProtectLogin>} />
           <Route exact path="/admin" element={<ProtecAdmin> <AdminPanel /> </ProtecAdmin> } />

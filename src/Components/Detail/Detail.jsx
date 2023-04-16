@@ -10,6 +10,7 @@ import {
   addFav,
   getFav,
 } from "../../Redux/Actions";
+import ReactStars from "react-stars";
 import swal from "sweetalert";
 
 export default function Detail() {
@@ -214,6 +215,22 @@ export default function Detail() {
       <div className="description">
         <h5>DETALLES DEL PRODUCTO</h5>
         <p>{prod.description}</p>
+      </div>
+      <br />
+      <div className="description">
+        <h5>COMENTARIOS</h5>
+        {prod.ReviewsPuntuacions?.map((rp) => (
+          <>
+            <ReactStars
+              count={5}
+              size={24}
+              edit={false}
+              half={false}
+              value={rp.punctuation}
+            />
+            <p>{rp.review}</p>
+          </>
+        ))}
       </div>
     </div>
   );

@@ -124,6 +124,12 @@ h1 {
   padding: 20px 100px;
 }
 
+.sin-relleno{
+  background: none;
+  padding: 0;
+  font-weight: 500 !important;
+}
+
 .popup {
   position: absolute;
   z-index: 9999;
@@ -1176,9 +1182,9 @@ h1 {
 
 .account h5,
 .account p {
-  text-align: center;
   margin: 0;
 }
+
 .account p input{
   margin: 10px 0;
 }

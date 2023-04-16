@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import promos from "../images/promos.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteFromCart, getFav, getPromo, getUserCart } from "../../Redux/Actions";
+import { deleteFromCart, getDatosUser, getFav, getPromo, getUserCart } from "../../Redux/Actions";
 import swal from "sweetalert";
 import { useEffect, useState } from "react";
 
@@ -10,6 +10,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const item = useSelector((state) => state.item);
   const loginUserId = useSelector((state) => state.loginUser.id);
+  const dataUser = useSelector(state => state.dataUser)
   const descuento = useSelector((state) => state.promotions)
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -69,6 +70,7 @@ useEffect(() => {
 
   useEffect(() => {
     const getCarFav = async () => {
+      await dispatch(getDatosUser(loginUserId))
       await dispatch(getUserCart(loginUserId));
       await dispatch(getFav(loginUserId))
       localStorage.removeItem("mercadoPago")
@@ -86,6 +88,18 @@ useEffect(() => {
     swal("Producto eliminado", "Se elmininó del carrito", "success");
   };
 
+  const handleSubmitUser = () => {
+
+    if(!dataUser){
+      navigate("/userpanel")
+      return swal("Error", "Completa tus datos para terminar de comprar!", "error"); 
+    } return navigate("/terminarCompra")
+   
+   
+    
+    
+  }
+  
   
   return (
      <div className="cart">
@@ -94,9 +108,9 @@ useEffect(() => {
           <h3>CARRITO DE COMPRAS</h3>
           <p>{item.length} PRODUCTOS</p>
         </div>
-        <NavLink to={"/terminarCompra"}>
-          <button>TERMINAR COMPRAR</button>
-        </NavLink>
+      
+          <button onClick={handleSubmitUser}>TERMINAR COMPRAR</button>
+        
       </div>
 
       {item && item.length > 0 ? (
@@ -138,9 +152,9 @@ useEffect(() => {
           :
         <h1>Total: ${newPrice ? newPrice.toLocaleString("de-De") : totalPrice.toLocaleString("de-De")}</h1>
           }
-        <NavLink to={"/terminarCompra" }>
-          <button>TERMINAR COMPRAR</button>
-        </NavLink>
+       
+          <button onClick={handleSubmitUser}>TERMINAR COMPRAR</button>
+     
        
         <div className="centrar zapato-fav column">
           <label htmlFor="promoCode">¿Tenes un código promocional?</label>

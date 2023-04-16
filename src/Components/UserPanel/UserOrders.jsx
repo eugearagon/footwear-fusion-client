@@ -1,8 +1,9 @@
 import shoe from "../images/shoe.png";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrdenesCompraId } from "../../Redux/Actions";
+import { getOrdenesCompraId, postPunctuation } from "../../Redux/Actions";
 import ReactStars from "react-stars";
+
 
 export default function UserOrders() {
   const dispatch = useDispatch();
@@ -11,8 +12,17 @@ export default function UserOrders() {
   const userId = user.id;
 
   const [showPopup, setShowPopup] = useState(false);
+  const [productId, setProductId] = useState(null); // Agregar esta línea
+
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+
+  console.log(rating, reviewText);
+
+  const puntuacion = {
+    punctuation: rating,
+    review: reviewText
+  }
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
@@ -28,6 +38,11 @@ export default function UserOrders() {
     };
     orden();
   }, [userId, dispatch]);
+
+  const handleReview = (productId) => {
+    dispatch(postPunctuation(productId, puntuacion)); // Cambiar esta línea
+    setProductId(null); // Agregar esta línea
+  }
 
   return (
     <div className="user-content">
@@ -66,7 +81,10 @@ export default function UserOrders() {
                           Marca: {producto.marca}
                         </p>
                       </div>
-                      <button onClick={() => setShowPopup(true)}>¡OPINÁ SOBRE EL PRODUCTO!</button>
+                      <button onClick={() => {
+                         setShowPopup(true);
+                         setProductId(producto.productId); // Agregar esta línea
+                      }}>¡OPINÁ SOBRE EL PRODUCTO!</button>
                     </div>
                   ))}
                   
@@ -78,6 +96,7 @@ export default function UserOrders() {
       </div>
       {showPopup && (
         <div className="popup review-popup">
+           <button onClick={() => setShowPopup(false)}>Cerrar</button>
           <h1>DEJANOS TU RESEÑA!</h1>
           <ReactStars
               count={5}
@@ -89,12 +108,12 @@ export default function UserOrders() {
           <textarea onChange={handleReviewTextChange}
             name="desc"
             id=""
-            cols="30"
+            cols="37"
             rows="10"
             placeholder="Contanos que te pareció el producto"
           ></textarea>
-          
-          <button onClick={() => setShowPopup(false)}>Cerrar</button>
+          <button onClick={() => handleReview(productId, puntuacion)} className="mas-aire">Enviar Review</button>
+         
         </div>
       )}
     </div>

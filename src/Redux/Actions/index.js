@@ -9,6 +9,7 @@ import {
   GET_BRAND,
   GET_SIZE,
   GET_PUNCTUATION,
+  POST_PUNCTUATION,
   GET_USERS,
   POST_USER_SUCCESS,
   FILTER_BY_CATEGORY,
@@ -78,6 +79,24 @@ export function postProducts(payload) {
       console.log("faltan campos por llenar");
     }
   };
+}
+
+export const postPunctuation = (productId, puntuacion) => {
+  return async function(dispatch){
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
+      await axios.post(`${back}/reviews/${productId}`,{puntuacion},{headers});
+      return dispatch({
+        type: POST_PUNCTUATION,
+      });
+    } catch (error) {
+      console.log(error.response.data);//para recueprar el error del back
+      throw error;// para poder mostrarlo en el front
+    }
+  }
 }
 
 export function getProductsByName(name) {
@@ -762,6 +781,9 @@ export const putPromo = (promotionId, loginUserId ) => {
       throw error;// para poder mostrarlo en el front
     }
   } 
+  
 }
+
+
 
 

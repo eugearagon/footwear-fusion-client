@@ -16,24 +16,7 @@ export default function UserOrders() {
     };
     orden();
   }, [userId, dispatch]);
-
-  const datosOrden = compraProducto.map((compra) => {
-    return {
-      Estado: compra.orderStatus,
-      pago: compra.payment,
-      total: compra.total,
-      productos: compra.comprasProducto.map((compra) => {
-        return {
-          id: compra.productId,
-          nombre: compra.title,
-          imagen: compra.image,
-          marca: compra.marca,
-          codigo: compra.code,
-        };
-      }),
-    };
-  });
-  console.log("DATOSSSS", datosOrden);
+  
 
   return (
     <div className="user-content">
@@ -46,23 +29,24 @@ export default function UserOrders() {
               <h1>TODAVIA NO HAY PEDIDOS REALIZADOS</h1>
             </div>
           ) : (
-            <div>
-              <p>Estado del pedido: {datosOrden.Estado}</p>
-              <p>Método de pago: {datosOrden.pago}</p>
-              <p>Total: {datosOrden.total}</p>
-              <p>
-                Productos comprados:{" "}
-                {datosOrden.productos?.map((producto) => (
-                  <div>
-                    <p>nombre: {producto.nombre}</p>
-                    <img src={producto.imagen} alt={producto.title} />
-
-                    <p>{producto.marca}</p>
-                    <p>{producto.code}</p>
-                  </div>
-                ))}
-              </p>
-            </div>
+            compraProducto.map((compra) => (
+              <div key={compra.id}>
+                <p>Estado del pedido: {compra.orderStatus}</p>
+                <p>Método de pago: {compra.payment}</p>
+                <p>Total: {compra.total}</p>
+                <p>Productos Comprados: 
+                  {compra.comprasProducto.map((producto) => (
+                    <div key={producto.productId}>
+                      <p>Nombre del producto: {producto.title}</p>
+                      <p>Código del producto: {producto.code}</p>
+                      <img src={producto.image} alt={producto.title} />
+                      <p>Marca: {producto.marca}</p>
+                      <button>comenta sobre el producto</button>
+                    </div>
+                  ))}
+                </p>
+              </div>
+            ))
           )}
         </div>
       </div>

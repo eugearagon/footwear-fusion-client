@@ -79,7 +79,7 @@ export default function UserOrders() {
                         <p>
                           <b>{producto.title}</b> <br />
                           Código del producto: {producto.code} <br />
-                          Marca: {producto.marca}
+                          Marca: {producto.marca.toUpperCase()}
                         </p>
                       </div>
                       <button onClick={() => {

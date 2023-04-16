@@ -123,7 +123,7 @@ function AntesDeComprar() {
             <img src={item.image} alt="zapato" />
             <div className="zapato-dataUser">
               <p>
-                <strong>{item.marca}</strong>
+                <strong>{item.marca.toUpperCase()}</strong>
                 <br />
                 {item.title}
               </p>

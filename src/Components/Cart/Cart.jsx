@@ -14,6 +14,7 @@ export default function Cart() {
   const descuento = useSelector((state) => state.promotions)
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+console.log("a ver desde el lado del cart", item, loginUserId);
 
   const totalPrice = item.reduce(
     (total, item) => total + item.price * item.qty,

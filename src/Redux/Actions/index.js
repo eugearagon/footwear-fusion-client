@@ -47,7 +47,8 @@ import {
   PUT_PRODUCT_STOCK,
   POST_PROMOTIONS,
   GET_PROMOTIONS,
-  PUT_PROMO_CURRENT
+  PUT_PROMO_CURRENT,
+  PUT_ROL_USER
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -593,6 +594,24 @@ export const getDatosUser = (loginUserId) => {
     }
   };
 };
+
+export const putRolUser = (userId, rol) => {
+  return async function(dispatch){
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
+      await axios.put(`${back}/user/${userId}`,{rol},{headers})
+      dispatch({
+        type: PUT_ROL_USER
+      })
+    } catch (error) {
+      
+    }
+   
+  }
+}
 
 export const crearOrdenDeCompra = (loginUserId, orden) => {
   console.log(loginUserId, orden, 'actions');

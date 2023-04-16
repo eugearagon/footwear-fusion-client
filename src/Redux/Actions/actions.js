@@ -48,6 +48,7 @@ export const CLOSE_SESSION = "CLOSE_SESSION";
 export const POST_MERCADO_PAGO = "POST_MERCADO_PAGO";
 export const GET_MERCADO_PAGO = "GET_MERCADO_PAGO";
 export const GET_DATOS_USER = "GET_DATOS_USER";
+export const PUT_ROL_USER = "PUT_ROL_USER";
 //acciones del administrador
 export const GET_USER_DETAIL=" GET_USER_DETAIL"
 export const PUT_USER="PUT_USER"

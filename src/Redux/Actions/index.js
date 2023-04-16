@@ -49,6 +49,7 @@ import {
   POST_PROMOTIONS,
   GET_PROMOTIONS,
   PUT_PROMO_CURRENT,
+  PUT_ROL_USER
 } from "../Actions/actions.js";
 
 const back = "http://localhost:3001";
@@ -348,9 +349,13 @@ export function addToCart(loginUserId, item) {
 
   return async function (dispatch) {
     try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
       var userCart = await axios.post(
         `${back}/cart/${loginUserId}`,
-        item
+        item,{headers}
       );
       console.log(userCart);
       return dispatch({
@@ -382,11 +387,14 @@ export function deleteFromCart(compraProductId) {
 
 export function updateProduct(compraProductId, talle, qty) {
   return async function (dispatch) {
-    console.log("actions updateProduct", compraProductId, talle, qty);
     try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
       var updatedUserCart = await axios.delete(
         `${back}/compraproducto/${compraProductId}`,
-        { data: { talle, qty } }
+        { data: { talle, qty } },{headers}
       );
       return dispatch({
         type: UPDATE_PRODUCT_CART,
@@ -401,8 +409,12 @@ export function updateProduct(compraProductId, talle, qty) {
 export function getUserCart(loginUserId) {
   return async function (dispatch) {
     try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
       var userCart = await axios.get(
-        `${back}/cart/${loginUserId}`
+        `${back}/cart/${loginUserId}`,{headers}
       );
       const userCartData = userCart.data;
       console.log(userCartData, "actions get user cart");
@@ -624,6 +636,24 @@ export const getDatosUser = (loginUserId) => {
     }
   };
 };
+
+export const putRolUser = (userId, rol) => {
+  return async function(dispatch){
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "x-access-token": token,
+      };
+      await axios.put(`${back}/user/${userId}`,{rol},{headers})
+      dispatch({
+        type: PUT_ROL_USER
+      })
+    } catch (error) {
+      console.log(error.response.data);
+    }
+   
+  }
+}
 
 export const crearOrdenDeCompra = (loginUserId, orden) => {
   console.log(loginUserId, orden, 'actions');

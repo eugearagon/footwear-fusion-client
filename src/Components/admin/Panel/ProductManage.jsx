@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../../Redux/Actions";
+import { getProducts, postProducts } from "../../../Redux/Actions";
 import CardAdmin from "./CardAdmin/CardAdmin";
 import UploadWidget from "../../UploadWidget/UploadWidget";
 import OrderPaginate from "../../OrderPaginate/OrderPaginate";
+
+
 
 export default function ProductManage() {
   const dispatch = useDispatch();
@@ -27,6 +29,7 @@ export default function ProductManage() {
     color: "",
     category: ""
   });
+  console.log(productData)
 
   function onUpload(url) {
     setProductData({ ...productData, imagen: url });
@@ -40,7 +43,22 @@ export default function ProductManage() {
 
   currentProd = currentProd.slice(indexFirstProd, indexLastProd);
 
- 
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(postProducts(productData));
+    setProductData({
+        title: "",
+        code: "",
+        description: "",
+        price: "",
+        image: "",
+        stock: "",
+        marca: "",
+        talle: "",
+        color: "",
+        category: ""
+      });
+  }
 
   return (
     <div className="admin-content blanco">
@@ -68,6 +86,7 @@ export default function ProductManage() {
       {showPopup && (
         <div className="popup prod-popup">
           <h1>CARGÁ TU NUEVO PRODUCTO!</h1>
+          <form  onSubmit={(e) => handleSubmit(e)}>
           <input type="text" placeholder="Marca" />
           <input type="text" placeholder="Título" />
           <input type="text" placeholder="Código del artículo" />
@@ -78,6 +97,8 @@ export default function ProductManage() {
           <input type="text" placeholder="Categoría" />
           <input type="text" placeholder="Color" />
           <textarea name="desc" id="" cols="30" rows="10" placeholder="Descripción"></textarea>
+          </form>
+          <button type="submit"  onClick={(e) => handleSubmit(e)}>Crear </ button>
           <UploadWidget onUpload={onUpload} />
           <button onClick={() => setShowPopup(false)}>Cerrar</button>
         </div>

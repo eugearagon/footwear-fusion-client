@@ -715,7 +715,7 @@ select {
 }
 
 .dark-mode {
-  color: #ededed;
+  color: #ededed !important;
   background-color: #202123;
 }
 
@@ -758,6 +758,10 @@ select {
 }
 
 .dark-mode .zapato-fav {
+  color: #ffffff !important;
+}
+
+.dark-mode button p{
   color: #ffffff !important;
 }
 

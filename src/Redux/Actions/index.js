@@ -72,11 +72,11 @@ export function getProducts() {
 export function postProducts(payload) {
   return async function (dispatch) {
     try {
-      const newProduct = await axios.post(`${back}/product`,
-        payload);
+      const newProduct = await axios.post(`${back}/product`, payload);
+      console.log("POST", newProduct);
       return newProduct;
     } catch (error) {
-      console.log("faltan campos por llenar");
+      console.log("Error al crear un nuevo producto:", error.message);
     }
   };
 }

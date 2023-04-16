@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../../Redux/Actions";
+import { getProducts, postProducts } from "../../../Redux/Actions";
 import CardAdmin from "./CardAdmin/CardAdmin";
 import UploadWidget from "../../UploadWidget/UploadWidget";
 import OrderPaginate from "../../OrderPaginate/OrderPaginate";
@@ -27,6 +27,7 @@ export default function ProductManage() {
     price: "",
     image: "",
     stock: "",
+    productState:"",
     marca: "",
     talle: "",
     color: "",
@@ -36,7 +37,22 @@ export default function ProductManage() {
   function onUpload(url) {
     setProductData({ ...productData, imagen: url });
   }
-  const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setProductData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    dispatch(postProducts(productData));
+    setShowPopup(false);
+  }
+
+  const [currentPage, setCurrentPage] = useState(1);
   const prodPerPage = 6;
   const indexLastProd = currentPage * prodPerPage;
   const indexFirstProd = indexLastProd - prodPerPage;
@@ -88,26 +104,28 @@ export default function ProductManage() {
       {showPopup && (
         <div className="popup prod-popup">
           <h1>CARGÁ TU NUEVO PRODUCTO!</h1>
-          <input type="text" placeholder="Marca" />
-          <input type="text" placeholder="Título" />
-          <input type="text" placeholder="Código del artículo" />
-          <input type="text" placeholder="Precio (solo numero)" />
+          <input type="text" placeholder="Marca" name="marca" onChange={handleChange} />
+          <input type="text" placeholder="Título" name="title" onChange={handleChange} />
+          <input type="text" placeholder="Código del artículo" name="code" onChange={handleChange} />
+          <input type="text" placeholder="Precio (solo numero)" name="price" onChange={handleChange} />
           <div>
             <small>Stock </small>&nbsp;&nbsp;
-            <input className="number" type="number" />
+            <input className="number" type="number" name="stock" onChange={handleChange} />
           </div>
-          <input type="text" placeholder="Talles (separados por coma)" />
-          <input type="text" placeholder="Estado" />
-          <input type="text" placeholder="Categoría" />
-          <input type="text" placeholder="Color" />
+          <input type="text" placeholder="Talles (separados por coma)" name="talle" onChange={handleChange} />
+          <input type="text" placeholder="Estado" name="productState" onChange={handleChange} />
+          <input type="text" placeholder="Categoría" name="category" onChange={handleChange} />
+          <input type="text" placeholder="Color" name="color" onChange={handleChange} />
           <textarea
-            name="desc"
+            name="description"
             id=""
             cols="30"
             rows="10"
             placeholder="Descripción"
+            onChange={handleChange}
           ></textarea>
           <UploadWidget onUpload={onUpload} />
+          <button onClick={handleSubmit}>Enviar</button>
           <button onClick={() => setShowPopup(false)}>Cerrar</button>
         </div>
       )}

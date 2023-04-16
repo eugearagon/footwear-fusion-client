@@ -15,7 +15,7 @@ export default function Footer() {
 
   const correo = {
     email: email.email, 
-    subject:"Bienvenido al newsletter de FOOTWEAR FUSION",
+    subject:"Gracias por Suscribirte!",
     html: html
 }
 
@@ -28,7 +28,7 @@ export default function Footer() {
   };
 
   const newEmail = async ()=> {
-    swal("Ya estas registrado!", "Vas a recibir un correo de confirmacion","success")
+    swal("Ya estas registrado!", "Vas a recibir un correo de confirmación","success")
     setTimeout(() => {
       window.location.reload()
     }, 3000);

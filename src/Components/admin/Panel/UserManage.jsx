@@ -118,7 +118,7 @@ export default function UserManage() {
 
                 {/* Joni este es el boton para cambiar el estado */}
               
-              <button>
+              <button className="sin-relleno mas-aire">
                 <p className={` ${u.state === "Blocked" ? "rol-block" : ""}`}>
                   {u.state}
                 </p>

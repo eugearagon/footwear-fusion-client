@@ -50,40 +50,7 @@ export default function UserManage() {
       rol: "",
     });
     setShowPopup(false)
-    Swal.fire({title:'Administrador creado',text:'Has creado un nuevo administrador.', timer: 3000 })
-  }
-
-  const [showPopup, setShowPopup] = useState(false);
-
-  const [adminData, setAdminData] = useState({
-    name: "",
-    last_name: "",
-    address: "",
-    phone: "",
-    email: "",
-    rol: "",
-  });
-
-  const changeHandler = (e) => {
-    const property = e.target.name;
-    const value = e.target.value;
-    setAdminData({ ...adminData, [property]: value });
-  };
-
-
-  const submitHandler = () => {
-    // e.preventDefault()
-    dispatch(createUserAdmin(adminData))
-    setAdminData({
-      name: "",
-      last_name: "",
-      address: "",
-      phone: "",
-      email: "",
-      rol: "",
-    });
-    setShowPopup(false)
-    Swal.fire({title:'Administrador creado',text:'Has creado un nuevo administrador.', timer: 3000 })
+    Swal.fire({ title: 'Administrador creado', text: 'Has creado un nuevo administrador.', timer: 3000 })
   }
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -137,85 +104,81 @@ export default function UserManage() {
         >
           <ExcelSheet data={usuarios} name="Productos">
             <ExcelColumn label="email" value={(col) => col.email} />
-
           </ExcelSheet>
         </ExcelFile>
       )}
       <div className="content-prod account">
         {currentUser?.map((u) => (
-          <div className="margenes">
-          <>
-            {u.rol.toLowerCase() === "admin" ? (
-              <img src={userIconAdmin} alt="user icon" />
-            ) : u.rol.toLowerCase() === "customer" ? (
-              <img src={userIcon} alt="user icon" />
-            ) : (
-              <img src={userIconBlock} alt="user icon" />
-            )}
+          <><div className="margenes" key={u.id}>
             <>
-                <h5>
-                {u.DataUsers?.map((d) => (
-                     <>
-                        <h3>
-                      {d.name} &nbsp; {d.last_name}
-                    </h3>
-                        <h5>{d.address}</h5>
-                        <h5>{d.phone}</h5>
-                     </>
-                  ))}
-              </h5>
-              <h5>{u.email}</h5>
-              {modifRol[u.id] ? (
-                <h5>{u.rol}</h5>
-              <div>
-                  <input
-                    type="text"
-                    name="userRol"
-                    value={userRol.rol}
-                    onChange={cambiarRol}
-                  />
-                  <button onClick={() => guardarRol(u.id)}>guardar</button>
-                </div>
+              {u.rol.toLowerCase() === "admin" ? (
+                <img src={userIconAdmin} alt="user icon" />
+              ) : u.rol.toLowerCase() === "customer" ? (
+                <img src={userIcon} alt="user icon" />
               ) : (
-                <div>
-                  <button
-                    className="sin-relleno blanco negrita mas-aire"
-                    onClick={() => modificarRol(u.id)}
-                  >
-                    {u.rol}
-                  </button>
-                </div>
+                <img src={userIconBlock} alt="user icon" />
               )}
-
-                {/* Joni este es el boton para cambiar el estado */}
-              
-              <button className="sin-relleno mas-aire">
-                <p className={` ${u.state === "Blocked" ? "rol-block" : ""}`}>
-                  {u.state}
-                </p>
-              </button>
-
-
-
+              <>
+                <h5>
+                  {u.DataUsers?.map((d) => (
+                    <>
+                      <h3>
+                        {d.name} &nbsp; {d.last_name}
+                      </h3>
+                      <h5>{d.address}</h5>
+                      <h5>{d.phone}</h5>
+                    </>
+                  ))}
+                </h5>
+                <h5>{u.email}</h5>
+                {modifRol[u.id] ? (
+                  <>
+                    <h5>{u.rol}</h5>
+                    <div>
+                      <input
+                        type="text"
+                        name="userRol"
+                        value={userRol.rol}
+                        onChange={cambiarRol} />
+                      <button onClick={() => guardarRol(u.id)}>guardar</button>
+                    </div>
+                  </>
+                ) : (
+                  <div>
+                    <button
+                      className="sin-relleno blanco negrita mas-aire"
+                      onClick={() => modificarRol(u.id)}
+                    >
+                      {u.rol}
+                    </button>
+                  </div>
+                )}
+              </>
             </>
+          </div><button className="sin-relleno mas-aire">
+              <p className={` ${u.state === "Blocked" ? "rol-block" : ""}`}>
+                {u.state}
+              </p>
+            </button></>
+
+        ))
+        } </div >
+      {
+        showPopup && (
+          <div className="popup prod-popup" >
+            <h1>CREÁ NUEVO ADMINISTRADOR</h1>
+            <input type="text" value={adminData.name} onChange={changeHandler} name='name' placeholder="Nombre" />
+            <input type="text" value={adminData.last_name} onChange={changeHandler} name='last_name' placeholder="Apellido" />
+            <input type="text" value={adminData.address} onChange={changeHandler} name='address' placeholder="Domicilio" />
+            <input type="text" value={adminData.phone} onChange={changeHandler} name='phone' placeholder="Teléfono (solo numeros)" />
+            <input type="text" value={adminData.email} onChange={changeHandler} name='email' placeholder="Email" />
+            <input type="text" value={adminData.rol} onChange={changeHandler} name='rol' placeholder="Rol" />
+            <button onClick={() => submitHandler()}>Crear Administrador</button>
+            <button onClick={() => setShowPopup(false)}>Cerrar</button>
           </div>
-        ))}
-      </div>
-      {showPopup && (
-        <div className="popup prod-popup" >
-          {/* <form onSubmit={(e) => submitHandler(e)}> */}
-          <h1>CREÁ NUEVO ADMINISTRADOR</h1>
-          <input type="text" value={adminData.name} onChange={changeHandler} name='name' placeholder="Nombre" />
-          <input type="text" value={adminData.last_name} onChange={changeHandler} name='last_name' placeholder="Apellido" />
-          <input type="text" value={adminData.address} onChange={changeHandler} name='address' placeholder="Domicilio" />
-          <input type="text" value={adminData.phone} onChange={changeHandler} name='phone' placeholder="Teléfono (solo numeros)" />
-          <input type="text" value={adminData.email} onChange={changeHandler} name='email' placeholder="Email" />
-          <input type="text" value={adminData.rol} onChange={changeHandler} name='rol' placeholder="Rol" />
-          <button onClick={() => submitHandler()}>Crear Administrador</button>
-          <button onClick={() => setShowPopup(false)}>Cerrar</button>
-          {/* </form> */}
-        </div>
-      )}
+        )
+
+      }
     </div>
-  );
+  )
 }

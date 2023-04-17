@@ -6,6 +6,7 @@ import {
   filterBySize,
   getPrice,
   priceRangeSelector,
+  getProducts,
 } from "../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "@mui/material/Slider";
@@ -89,6 +90,12 @@ export default function Filters() {
 
   /* esto es parte del slider de precios  */
 
+  const handleBorrarFiltros =async()=>{
+    const checkboxes =  document.querySelectorAll("input[type='checkbox']");
+   checkboxes.forEach((checkbox) => (checkbox.checked = false));
+    await dispatch(getProducts())
+  }
+
   return (
     <div className="filtros">
       <div className="filtro-adentro">
@@ -157,6 +164,9 @@ export default function Filters() {
           max={maxPrice}
         />
         <button onClick={(e) => handleRangeSelector(e)}>APLICAR</button>
+
+        <button onClick={(e) => handleBorrarFiltros(e)}>BORRAR FILTROS</button>
+
       </div>
     </div>
   );

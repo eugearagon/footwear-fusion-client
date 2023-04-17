@@ -51,7 +51,7 @@ export default function OrderPaginate(props) {
 
   return (
     <div className="order-paginate">
-      <h5>Zapatillas {allProducts.length} productos</h5>
+      <h5>Tenemos {allProducts.length} zapatillas!</h5>
       <div className="ordenar">
         <h5>Ordenar Por</h5>
         <select defaultValue="Seleccione" onChange={(e) => handleSelect(e)}>

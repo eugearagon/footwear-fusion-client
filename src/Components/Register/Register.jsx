@@ -2,32 +2,124 @@ import Zapas from "../images/login-image.jpg";
 import logo from "../images/logo.png";
 
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "./authContext";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { correoRegistroNewsletter, registros } from "../../Redux/Actions/index";
+import { html } from "./emailRegister";
+import Swal from "sweetalert2";
+
 export default function Register() {
   
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
 
+    const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [email, setEmail] = useState({
+    email: ""
+  });
+
+  const [error, setError] = useState()
+
+  const { registrarUserFirebase } = useAuth();
+
+
+  const actualizarEstadouser = (evento) => {
+    const { name, value } = evento.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
+    setEmail({
+      ...email,
+      [name]: value
+    });
+  };
+
+  const correo = {
+    email: email.email, 
+    subject:"¡Tus próximas zapatillas están acá!",
+    html: html
+}
+  
+
+  const newEmail = async ()=> {
+    Swal.fire("Ya estas registrado!", "Vas a recibir un correo de confirmación","success")
+    setTimeout(() => {
+      window.location.reload()
+    }, 3000);
+    await dispatch(correoRegistroNewsletter(correo))
+  }
+
+  const enviarDatos = async (evento) => {
+    evento.preventDefault();
+    setError("");
+    try {
+      const login = await registrarUserFirebase(user.email, user.password)
+      await dispatch(registros(login.user.email))
+      navigate("/")
+    } catch (error) {
+      console.log(error.code);//esto me muestra por consola el codigo del error, para poder cambiar el mensaje.
+      if(error.code === "auth/invalid-email"){
+        setError("correo invalido")
+      }
+      if(error.code === "auth/weak-password"){
+        setError("la contraseña debe contener 6 caracteres")
+      }
+      if(error.code === "auth/email-already-in-use"){
+        setError("este correo ya se encuentra registrado")
+      }
+    }
+    
+  }
   return (
     <div className="register-landing">
       <div className="form">
-        <NavLink to={"/"}><img src={logo} alt="" /></NavLink>
-        <h1>Dale logueate! Tus próximas zapatillas están acá!</h1>
+        <NavLink to={"/"}>
+          <img src={logo} alt="" />
+        </NavLink>
+        <h1>Registrate! Tus próximas zapatillas están acá!</h1>
+        {error && <p className="error">{error}</p>}
         <div>
-          <form action="">
+          <form onSubmit={enviarDatos}>
             <div className="form-lab">
               <label htmlFor="">Email</label>
-              <input type="text" />
+              <input
+                onChange={actualizarEstadouser}
+                type="email"
+                name="email"
+                id="email"
+                placeholder="nombre@mail.com"
+              />
               <label htmlFor="">Contraseña</label>
-              <input type="password" />
+              <input
+                onChange={actualizarEstadouser}
+                type="password"
+                name="password"
+                id="password"
+              />
             </div>
             <br />
-            <button>Enviar</button>
-            <button className="favs">Olvidé mi contraseña</button>
+            <button onClick={newEmail}>Enviar</button>
+          
           </form>
           
          
         </div>
         <div className="log-admin">
+          <h6 className="ya-estas">Ya estas registrado?</h6>
+          <NavLink to={"/login"}>
+            <h6 className="ya-estas"> Logueate aca</h6>
+          </NavLink>
+        </div>
+        <div className="log-admin">
           <h6>Sos Admin? </h6>
-          <NavLink to={"/"}>
+          <NavLink to={"/login-admin"}>
             <h6> Logueate aca</h6>
           </NavLink>
         </div>

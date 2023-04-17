@@ -2,7 +2,7 @@ import logo from "../../images/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert"
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import {  ingreso } from "../../../Redux/Actions";
 import { useAuth } from "../../Register/authContext";
 

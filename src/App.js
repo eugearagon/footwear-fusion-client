@@ -1,7 +1,6 @@
 import "./App.css";
 
 import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
-
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";
 import Login from "./Components/Register/Login";

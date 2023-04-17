@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Slider from "../Slider/Slider.jsx";
 import Filters from "../Filters/Filters.jsx";
@@ -50,7 +51,6 @@ export default function Home() {
         <div className="home-adentro">
           <Filters />
           <CardsContainer currentPage={currentPage} />{" "}
-          {/* pasar currentPage como prop */}
         </div>
       </div>
     </CookiesProvider>

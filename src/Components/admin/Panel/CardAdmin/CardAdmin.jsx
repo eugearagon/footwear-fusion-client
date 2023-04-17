@@ -11,8 +11,6 @@ import UploadWidget from "../../../UploadWidget/UploadWidget";
 export default function CardAdmin({ id, title, price, image, marca, stock }) {
   const dispatch = useDispatch();
 
-  
-  const [reloadComponent] = useState(false);
   const [newPrice, setNewPrice] = useState(price);
   const [newStock, setNewStock] = useState(stock);
   const [newImage, setNewImage] = useState(image);
@@ -88,7 +86,7 @@ export default function CardAdmin({ id, title, price, image, marca, stock }) {
   }
 
   return (
-    <div key={reloadComponent ? "reload" : ""} className="card admin-card">
+    <div className="card admin-card">
       {showPopup && (
         <div className="image-popup">
           <UploadWidget onUpload={handleModifyImage} />

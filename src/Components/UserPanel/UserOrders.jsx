@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrdenesCompraId, postPunctuation } from "../../Redux/Actions";
 import ReactStars from "react-stars";
+import swal from "sweetalert";
 
 
 export default function UserOrders() {
@@ -12,12 +13,10 @@ export default function UserOrders() {
   const userId = user.id;
 
   const [showPopup, setShowPopup] = useState(false);
-  const [productId, setProductId] = useState(null); // Agregar esta línea
+  const [productId, setProductId] = useState(null); // para obtener el id del producto
 
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
-
-  console.log(rating, reviewText);
 
   const puntuacion = {
     punctuation: rating,
@@ -40,8 +39,10 @@ export default function UserOrders() {
   }, [userId, dispatch]);
 
   const handleReview = (productId) => {
-    dispatch(postPunctuation(productId, puntuacion)); // Cambiar esta línea
-    setProductId(null); // Agregar esta línea
+    dispatch(postPunctuation(productId, puntuacion));
+    setProductId(null); 
+    swal("Excelente!", "Gracias por tu comentario!", "success");
+    setShowPopup(false)
   }
 
   return (
@@ -78,12 +79,12 @@ export default function UserOrders() {
                         <p>
                           <b>{producto.title}</b> <br />
                           Código del producto: {producto.code} <br />
-                          Marca: {producto.marca}
+                          Marca: {producto.marca.toUpperCase()}
                         </p>
                       </div>
                       <button onClick={() => {
                          setShowPopup(true);
-                         setProductId(producto.productId); // Agregar esta línea
+                         setProductId(producto.productId); 
                       }}>¡OPINÁ SOBRE EL PRODUCTO!</button>
                     </div>
                   ))}

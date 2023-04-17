@@ -125,11 +125,8 @@ export default function Detail() {
     }
     await dispatch(addToCart(loginUserId, item));
     await dispatch(getUserCart(loginUserId));
-    console.log(loginUser, item);
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };
-
-  const loginUser = useSelector((state) => state.loginUser);
 
   const handleAddFav = async () => {
     if (!token) {
@@ -166,7 +163,7 @@ export default function Detail() {
         />
       </div>
       <div className="detail-der">
-        <h1>{marca}</h1>
+        <h1>{marca.toUpperCase()}</h1>
         <h2>{prod.title}</h2>
         <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">

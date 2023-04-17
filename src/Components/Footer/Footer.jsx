@@ -17,6 +17,8 @@ export default function Footer() {
   const correo = {
     email: email.email,
     subject: "Bienvenido al newsletter de FOOTWEAR FUSION",
+    email: email.email, 
+    subject:"Gracias por Suscribirte!",
     html: html
   }
 
@@ -29,7 +31,7 @@ export default function Footer() {
   };
 
   const newEmail = async () => {
-    swal("Ya estas registrado!", "Vas a recibir un correo de confirmacion", "success")
+    swal("Ya estas registrado!", "Vas a recibir un correo de confirmación", "success")
     await dispatch(postNewsletter(email))
     const promo = await axios.post(`${back}/promotions`);
     const promoData = promo.data

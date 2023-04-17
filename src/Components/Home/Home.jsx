@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Slider from "../Slider/Slider.jsx";
 import Filters from "../Filters/Filters.jsx";
@@ -6,7 +7,7 @@ import OrderPaginate from "../OrderPaginate/OrderPaginate.jsx";
 import { CookiesProvider, useCookies } from "react-cookie";
 import popup from "../images/popup.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getDatosUser, getFav, getOrdenesCompraId, getUserCart } from "../../Redux/Actions";
+import { getDatosUser, getFav, getUserCart } from "../../Redux/Actions";
 
 export default function Home() {
   const loginUser = useSelector((state) => state.loginUser);
@@ -50,7 +51,6 @@ export default function Home() {
         <div className="home-adentro">
           <Filters />
           <CardsContainer currentPage={currentPage} />{" "}
-          {/* pasar currentPage como prop */}
         </div>
       </div>
     </CookiesProvider>

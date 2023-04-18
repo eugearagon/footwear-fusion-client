@@ -19,6 +19,42 @@ export default function UserManage() {
     dispatch(getUsers());
   }, [dispatch]);
 
+  const [showPopup, setShowPopup] = useState(false);
+
+  const [adminData, setAdminData] = useState({
+    name: "",
+    last_name: "",
+    address: "",
+    phone: "",
+    email: "",
+    rol: "",
+  });
+
+  const changeHandler = (e) => {
+    const property = e.target.name;
+    const value = e.target.value;
+    setAdminData({ ...adminData, [property]: value });
+  };
+
+  const submitHandler = () => {
+    // e.preventDefault()
+    dispatch(createUserAdmin(adminData));
+    setAdminData({
+      name: "",
+      last_name: "",
+      address: "",
+      phone: "",
+      email: "",
+      rol: "",
+    });
+    setShowPopup(false);
+    Swal.fire({
+      title: "Administrador creado",
+      text: "Has creado un nuevo administrador.",
+      timer: 3000,
+    });
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
   const prodPerPage = 2;
   const indexLastProd = currentPage * prodPerPage;
@@ -94,6 +130,7 @@ export default function UserManage() {
   return (
     <div className="admin-content">
       <h1>USUARIOS</h1>
+      <button onClick={() => setShowPopup(true)}>(+) AGREGAR ADMINISTRADOR</button>
       <UserPaginate currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {currentUser && (
         <ExcelFile
@@ -102,6 +139,12 @@ export default function UserManage() {
         >
           <ExcelSheet data={usuarios} name="Productos">
             <ExcelColumn label="email" value={(col) => col.email} />
+            <ExcelColumn label="name" value={(col) => col.DataUsers?.[0]?.name} />
+            <ExcelColumn label="last name" value={(col) => col.DataUsers?.[0]?.last_name} />
+            <ExcelColumn label="address" value={(col) => col.DataUsers?.[0]?.address} />
+            <ExcelColumn label="phone" value={(col) => col.DataUsers?.[0]?.phone} />
+            <ExcelColumn label="rol" value={(col) => col.rol} />
+            <ExcelColumn label="state" value={(col) => col.state} />
           </ExcelSheet>
         </ExcelFile>
       )}
@@ -175,6 +218,21 @@ export default function UserManage() {
           </>
         ))}
       </div>
+      {showPopup && (
+        <div className="popup prod-popup" >
+          {/* <form onSubmit={(e) => submitHandler(e)}> */}
+          <h1>CREÁ NUEVO ADMINISTRADOR</h1>
+          <input type="text" value={adminData.name} onChange={changeHandler} name='name' placeholder="Nombre" />
+          <input type="text" value={adminData.last_name} onChange={changeHandler} name='last_name' placeholder="Apellido" />
+          <input type="text" value={adminData.address} onChange={changeHandler} name='address' placeholder="Domicilio" />
+          <input type="text" value={adminData.phone} onChange={changeHandler} name='phone' placeholder="Teléfono (solo numeros)" />
+          <input type="text" value={adminData.email} onChange={changeHandler} name='email' placeholder="Email" />
+          <input type="text" value={adminData.rol} onChange={changeHandler} name='rol' placeholder="Rol" />
+          <button onClick={() => submitHandler()}>Crear Administrador</button>
+          <button onClick={() => setShowPopup(false)}>Cerrar</button>
+          {/* </form> */}
+        </div>
+      )}
     </div>
   );
 }

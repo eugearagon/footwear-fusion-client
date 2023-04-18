@@ -351,16 +351,15 @@ export function addToCart(loginUserId, item) {
       const headers = {
         "x-access-token": token,
       };
-      var userCart = await axios.post(
+     await axios.post(
         `${back}/cart/${loginUserId}`,
         item,{headers}
       );
       return dispatch({
         type: ADD_TO_CART,
-        payload: userCart,
       });
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error);
     }
   };
 }

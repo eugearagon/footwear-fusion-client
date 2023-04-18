@@ -11,6 +11,7 @@ import { getDatosUser, getFav, getOrdenesCompraId, getUserCart } from "../../Red
 export default function Home() {
   const loginUser = useSelector((state) => state.loginUser);
   const loginUserId = loginUser.id;
+  const token = localStorage.getItem("token");
 
   const dispatch = useDispatch();
 
@@ -18,9 +19,9 @@ export default function Home() {
   useEffect(() => {
     const iniciarTodo = async () => {
       try {
-        if(loginUserId){
-          await dispatch(getUserCart(loginUserId));
+        if(token){
           await dispatch(getFav(loginUserId));
+          await dispatch(getUserCart(loginUserId));
           await dispatch(getDatosUser(loginUserId));
         }
       } catch (error) {
@@ -28,7 +29,7 @@ export default function Home() {
       }
     };
     iniciarTodo();
-  }, []);
+  }, [token,dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
   const [cookies, setCookie] = useCookies(["visited"]);

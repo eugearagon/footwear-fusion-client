@@ -37,13 +37,13 @@ export default function Detail() {
 
   useEffect(() => {
     const userCart = async () => {
-      if(user){
+      if(token){
         await dispatch(getUserCart(loginUserId));
         await dispatch(getFav(loginUserId));
       }
     };
     userCart();
-  }, [user,dispatch]);
+  }, [token,dispatch]);
 
   const prod = useSelector((state) => state.detail);
 
@@ -131,20 +131,10 @@ export default function Detail() {
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };
 
-  const loginUser = useSelector((state) => state.loginUser);
-
   const handleAddFav = async () => {
     if (!token) {
       swal("Error", "Logueate para continuar!", "error");
       return navigate("/login");
-    }
-    if (!selectedSize || !selectedQty) {
-      swal(
-        "Error",
-        "Para agregar este producto al carrito debe seleccionar un talle y la cantidad",
-        "error"
-      );
-      return navigate(`/product/${prodId}`);
     }
     await dispatch(addFav(loginUserId, prodId));
     await dispatch(getFav(loginUserId));

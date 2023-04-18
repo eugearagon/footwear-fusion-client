@@ -7,6 +7,7 @@ import {
   mercadoPago,
 } from "../Redux/Actions";
 
+
 function AntesDeComprar() {
   const dispatch = useDispatch();
   const loginUser = useSelector((state) => state.loginUser);
@@ -25,8 +26,8 @@ function AntesDeComprar() {
     0
   );
 
-  
-  const [modificar, setModificar] = useState(false);
+  const [modificarTelefono, setModificarTelefono] = useState(false);
+  const [modificarDireccion, setModificarDireccion] = useState(false);
   const [promoCode, setPromoCode] = useState("");
 
   
@@ -52,7 +53,7 @@ function AntesDeComprar() {
     } catch (error) {
       console.log("errorPromo", error);
     }
-  }, [descuento, totalPrice]);
+  }, [descuento, totalPrice,item]);
 
   useEffect(() => {
     const getCartAndFav = async () => {
@@ -64,18 +65,22 @@ function AntesDeComprar() {
   }, [dispatch, loginUserId]);
 
   const handlePhoneChange = (event) => {
-    setModificar(true);
+    setModificarTelefono(true);
     setDatoModificado({ ...datoModificado, number: event.target.value });
   };
 
   const handleAddressChange = (event) => {
-    setModificar(true);
+    setModificarDireccion(true);
     setDatoModificado({ ...datoModificado, address: event.target.value });
   };
 
-  const handleModificarSubmit = (event) => {
+  const handleModificarSubmitTelefono = (event) => {
     event.preventDefault();
-    setModificar(false);
+    setModificarTelefono(false);
+  };
+  const handleModificarSubmitDireccion = (event) => {
+    event.preventDefault();
+    setModificarDireccion(false);
   };
 
   //para verificar que va a mandar items, si tengo promo manda promoCode, sino el item normal
@@ -111,13 +116,14 @@ function AntesDeComprar() {
   return (
     <div className="centrar">
       <h1>RESUMEN DE TU COMPRA</h1>
+      
       {items &&
         items.map((item) => (
           <div className="zapato-fav" key={item.code}>
             <img src={item.image} alt="zapato" />
             <div className="zapato-dataUser">
               <p>
-                <strong>{item.marca}</strong>
+                <strong>{item.marca.toUpperCase()}</strong>
                 <br />
                 {item.title}
               </p>
@@ -132,12 +138,16 @@ function AntesDeComprar() {
               <h2>Precio</h2>
               <h2>${item.price.toLocaleString("de-De")}</h2>
             </div>
+          
           </div>
         ))}
+          <div className="margenes">
+          <button className="mas-aire" onClick={handleCompraClick}>COMPRAR</button>
+          </div>
       <h1> DATOS DE ENTREGA</h1>
       <h4>Nombre y Apellido: {`${dataUser.name} ${dataUser.last_name}`}</h4>
       <p>Email: {loginUser.email}</p>
-      {modificar ? (
+      {modificarTelefono ? (
         <div>
           <label htmlFor="number">Nuevo número:</label>
           <input
@@ -146,15 +156,15 @@ function AntesDeComprar() {
             name={datoModificado.number}
             onChange={handlePhoneChange}
           />
-          <button onClick={handleModificarSubmit}>Guardar cambios</button>
+          <button onClick={handleModificarSubmitTelefono}>Guardar cambios</button>
         </div>
       ) : (
         <div>
-          <p>Teléfono: {datoModificado.number || dataUser.phone}</p>
-          <button onClick={() => setModificar(true)}>Modificar</button>
+          
+          <button className="sin-relleno" onClick={() => setModificarTelefono(true)}><p className="sin-relleno">Teléfono: {datoModificado.number || dataUser.phone}</p></button>
         </div>
       )}
-      {modificar ? (
+      {modificarDireccion ? (
         <div>
           <label htmlFor="address">Nueva dirección:</label>
           <input
@@ -163,18 +173,15 @@ function AntesDeComprar() {
             value={datoModificado.address}
             onChange={handleAddressChange}
           />
-          <button onClick={handleModificarSubmit}>Guardar cambios</button>
+          <button onClick={handleModificarSubmitDireccion}>Guardar cambios</button>
         </div>
       ) : (
         <div>
-          <p>Dirección: {datoModificado.address || dataUser.address}</p>
-          <button onClick={() => setModificar(true)}>Modificar</button>
+         
+          <button className="sin-relleno" onClick={() => setModificarDireccion(true)}> <p className="sin-relleno">Dirección: {datoModificado.address || dataUser.address}</p></button>
         </div>
       )}
-      <br />
-      <button onClick={handleCompraClick}>COMPRAR</button>
-      <br />
-      <br />
+
     </div>
   );
 }

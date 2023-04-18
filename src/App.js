@@ -1,7 +1,6 @@
 import "./App.css";
 
 import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";
 import Login from "./Components/Register/Login";
@@ -33,9 +32,6 @@ function App() {
     setDarkMode(!darkMode);
   }
 
-  const loginUser = useSelector((state) => state.loginUser);
-  const loginUserId = loginUser.id;
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const expirationDate = localStorage.getItem("expirationDate");
@@ -78,7 +74,7 @@ function App() {
           <Route path="/login" element={ <Login />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
           <Route path="/user-blocked" element={ <UserBlocked /> }/>
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={<ProtectLogin><Cart /></ProtectLogin>} />
           <Route path="/userpanel" element={<ProtectLogin><UserPanel /></ProtectLogin>} />
           <Route path="/product/:prodId" element={<ProtectLogin><Detail /></ProtectLogin>} />
           <Route exact path="/admin" element={<ProtecAdmin> <AdminPanel /> </ProtecAdmin> } />

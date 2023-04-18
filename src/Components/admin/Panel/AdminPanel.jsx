@@ -15,21 +15,12 @@ export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("account");
   const [showNovedades, setShowNovedades] = useState(true);
   const user = useSelector((state) => state.loginUser);
-  const [novedades, setNovedades] = useState("");
 
   function handleTabClick(tabName) {
     setActiveTab(tabName);
     setShowNovedades(false);
   }
 
-  function handleNovedadesChange(event) {
-    setNovedades(event.target.value);
-  }
-
-  function handleAgregarNovedad() {
-    setShowNovedades(true);
-    setNovedades("");
-  }
 
   return (
     <div className="admin-panel">
@@ -75,9 +66,12 @@ export default function AdminPanel() {
         <div className="detail-admin">
           <h1 className="novedades">NOVEDADES</h1>
           <br />
-          <input type="text" value={novedades} onChange={handleNovedadesChange} />
-          <button className="enviar" onClick={handleAgregarNovedad}>Agregar Novedad</button>
-          <p>{novedades}</p>
+          <div>
+          {/* <input type="text" value={novedades} onChange={handleNovedadesChange} />
+          <button className="enviar" onClick={handleAgregarNovedad}>Agregar Novedad</button> */}
+          </div>
+         
+          {/* <p><h4>01/05/2023</h4>{novedades}</p> */}
           <p>
             <h4>01/05/2023</h4>Celebremos el Día del Trabajo! Ofrecemos un
             descuento del 20% en todas las botas y botines. ¡Recuerda mencionar

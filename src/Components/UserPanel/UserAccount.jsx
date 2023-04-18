@@ -1,14 +1,18 @@
 import React from "react";
 import cuenta from "../images/f.png";
 import { useEffect, useState } from "react";
-import { getDatosUser, getFav, getUserCart, postDataUser } from "../../Redux/Actions";
+import {
+  getDatosUser,
+  getFav,
+  getUserCart,
+  postDataUser,
+} from "../../Redux/Actions";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-
 export default function UserAccount() {
- const user = useSelector((state) => state.loginUser);
-  const loginUserId = user.id
+  const user = useSelector((state) => state.loginUser);
+  const loginUserId = user.id;
   const dataUsers = useSelector((state) => state.dataUser);
   const dispatch = useDispatch();
 
@@ -16,7 +20,7 @@ export default function UserAccount() {
     const userData = async () => {
       await dispatch(getDatosUser(loginUserId));
       await dispatch(getUserCart(loginUserId));
-      await dispatch(getFav(loginUserId))
+      await dispatch(getFav(loginUserId));
     };
     userData();
   }, [loginUserId, dispatch]);
@@ -25,8 +29,8 @@ export default function UserAccount() {
     name: "",
     last_name: "",
     phone: "",
-    address: ""
-  })
+    address: "",
+  });
 
   const actualizarDatosUser = (evento) => {
     const { name, value } = evento.target;
@@ -34,7 +38,6 @@ export default function UserAccount() {
       ...datos,
       [name]: value,
     });
-
   };
 
   const enviarDatos = async () => {
@@ -42,10 +45,9 @@ export default function UserAccount() {
       await dispatch(postDataUser(loginUserId, datos));
       await dispatch(getDatosUser(loginUserId));
     } catch (error) {
-      console.log(error.menssage)
+      console.log(error.menssage);
     }
-  }
-
+  };
 
   return (
     <div className="user-content">
@@ -62,24 +64,63 @@ export default function UserAccount() {
 
               <h6>DATOS DE CONTACTO</h6>
               <p>
-               
-                  <span>
-                    {dataUsers? dataUsers.name : <input type="text" name="name" placeholder="Añadir Nombre" onChange={actualizarDatosUser} />} &nbsp;
-                    {dataUsers ? dataUsers.last_name : <input type="text" name="last_name" placeholder="Añadir Apellido" onChange={actualizarDatosUser} />}
-                  </span>
-      
-               
+                <span>
+                  {dataUsers ? (
+                    dataUsers.name
+                  ) : (
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Añadir Nombre"
+                      onChange={actualizarDatosUser}
+                    />
+                  )}{" "}
+                  &nbsp;
+                  {dataUsers ? (
+                    dataUsers.last_name
+                  ) : (
+                    <input
+                      type="text"
+                      name="last_name"
+                      placeholder="Añadir Apellido"
+                      onChange={actualizarDatosUser}
+                    />
+                  )}
+                </span>
+
                 <br />
-                
-               
-                  <span>{dataUsers ? dataUsers.phone : <input type="text" name="phone" placeholder="Añadir Telefono" onChange={actualizarDatosUser} />}</span>
-            
+
+                <span>
+                  {dataUsers ? (
+                    dataUsers.phone
+                  ) : (
+                    <input
+                      type="text"
+                      name="phone"
+                      placeholder="Añadir Telefono"
+                      onChange={actualizarDatosUser}
+                    />
+                  )}
+                </span>
+
                 <br />
-               
-                  <span>{dataUsers ? dataUsers.address : <input type="text" name="address" placeholder="Añadir Dirección" onChange={actualizarDatosUser} />}</span>
-               
+
+                <span>
+                  {dataUsers ? (
+                    dataUsers.address
+                  ) : (
+                    <input
+                      type="text"
+                      name="address"
+                      placeholder="Añadir Dirección"
+                      onChange={actualizarDatosUser}
+                    />
+                  )}
+                </span>
+                <br />
+                {!dataUsers && <button onClick={enviarDatos}>Guardar</button>}
               </p>
-             { !dataUsers && <button onClick={enviarDatos} >Guardar</button>}
+              
             </div>
           ) : (
             <div className="zapato-fav">

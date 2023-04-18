@@ -22,7 +22,7 @@ export default function UserPanel() {
       }
     };
     iniciarOrdenesCompraUser();
-  }, []);
+  }, [dispatch, loginUserId]);
 
 
   function handleTabClick(tabName) {

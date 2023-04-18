@@ -45,6 +45,7 @@ import {
   POST_PROMOTIONS,
   GET_PROMOTIONS,
   PUT_PROMO_CURRENT,
+  PUT_ROL_USER,
   POST_USER_ADMIN,
 } from "../Actions/actions.js";
 

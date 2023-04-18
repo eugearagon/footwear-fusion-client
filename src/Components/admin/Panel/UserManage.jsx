@@ -2,7 +2,7 @@ import userIcon from "../../images/user-icon.png";
 import userIconBlock from "../../images/user-icon-block.png";
 import userIconAdmin from "../../images/user-icon-admin.png";
 import { useDispatch, useSelector } from "react-redux";
-import { createUserAdmin, getUsers } from "../../../Redux/Actions";
+import { createUserAdmin, getUsers, putRolUser } from "../../../Redux/Actions";
 import { useEffect, useState } from "react";
 import ExportExcel from "react-export-excel";
 import UserPaginate from "./UserPaginate";
@@ -37,10 +37,9 @@ export default function UserManage() {
     setAdminData({ ...adminData, [property]: value });
   };
 
-
   const submitHandler = () => {
     // e.preventDefault()
-    dispatch(createUserAdmin(adminData))
+    dispatch(createUserAdmin(adminData));
     setAdminData({
       name: "",
       last_name: "",
@@ -49,16 +48,19 @@ export default function UserManage() {
       email: "",
       rol: "",
     });
-    setShowPopup(false)
-    Swal.fire({title:'Administrador creado',text:'Has creado un nuevo administrador.', timer: 3000 })
-  }
+    setShowPopup(false);
+    Swal.fire({
+      title: "Administrador creado",
+      text: "Has creado un nuevo administrador.",
+      timer: 3000,
+    });
+  };
 
-  const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
+  const [currentPage, setCurrentPage] = useState(1);
   const prodPerPage = 2;
   const indexLastProd = currentPage * prodPerPage;
   const indexFirstProd = indexLastProd - prodPerPage;
   let currentUser = usuarios;
-
   currentUser = currentUser.slice(indexFirstProd, indexLastProd);
 
   const [modifRol, setModifRol] = useState({});
@@ -107,13 +109,18 @@ export default function UserManage() {
         >
           <ExcelSheet data={usuarios} name="Productos">
             <ExcelColumn label="email" value={(col) => col.email} />
-
+            <ExcelColumn label="name" value={(col) => col.DataUsers?.[0]?.name} />
+            <ExcelColumn label="last name" value={(col) => col.DataUsers?.[0]?.last_name} />
+            <ExcelColumn label="address" value={(col) => col.DataUsers?.[0]?.address} />
+            <ExcelColumn label="phone" value={(col) => col.DataUsers?.[0]?.phone} />
+            <ExcelColumn label="rol" value={(col) => col.rol} />
+            <ExcelColumn label="state" value={(col) => col.state} />
           </ExcelSheet>
         </ExcelFile>
       )}
       <div className="content-prod account">
         {currentUser?.map((u) => (
-          <>
+          <div key={u._id}>
             {u.rol.toLowerCase() === "admin" ? (
               <img src={userIconAdmin} alt="user icon" />
             ) : u.rol.toLowerCase() === "customer" ? (
@@ -122,12 +129,12 @@ export default function UserManage() {
               <img src={userIconBlock} alt="user icon" />
             )}
             <>
-              <h5>{u.DataUsers?.map((d) => (
-                <>
+              <h5>{u.DataUsers?.map((d, index) => (
+                <div key={index}>
                   <h3>{d.name} &nbsp; {d.last_name}</h3>
                   <h5>{d.address}</h5>
                   <h5>{d.phone}</h5>
-                </>
+                </div>
               ))}</h5>
               <h5>{u.email}</h5>
               <h5>{u.rol}</h5>

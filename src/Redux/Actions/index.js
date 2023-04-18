@@ -272,6 +272,24 @@ export const registros = (email) => {
   };
 };
 
+export const registroAdmin = (email, rol) => {
+  console.log("accion",email, rol);
+  return async function (dispatch) {
+    try {
+      const apiData = await axios.post(`${back}/admin/registro`, {
+        email,rol
+      });
+      const usuario = apiData.data;
+      dispatch({
+        type: POST_REGISTRO,
+      });
+      return usuario;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const loginUserGoogle = (email) => {
   return async function (dispatch) {
     try {

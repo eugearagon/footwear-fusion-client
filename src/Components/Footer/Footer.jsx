@@ -1,13 +1,14 @@
-
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import medios from "../images/mediosdepago.png";
 import { useState } from "react";
-import { correoRegistroNewsletter, postNewsletter } from "../../Redux/Actions";
-import { html } from "./correo";
+import { correoRegistroNewsletter, postNewsletter, createPromo, getNewsletter } from "../../Redux/Actions";
 import swal from "sweetalert";
+import { html } from "./correo";
+import axios from "axios";
 
 export default function Footer() {
   const dispatch = useDispatch()
+  const back = "http://localhost:3001";
 
   const [email, setEmail] = useState({
     email: ""
@@ -15,9 +16,9 @@ export default function Footer() {
 
   const correo = {
     email: email.email, 
-    subject:"Bienvenido al newsletter de FOOTWEAR FUSION",
+    subject:"Gracias por Suscribirte!",
     html: html
-}
+  }
 
   const capturarEmail = (evento) => {
     const { name, value } = evento.target;
@@ -28,14 +29,16 @@ export default function Footer() {
   };
 
   const newEmail = async ()=> {
-    swal("Ya estas registrado!", "Vas a recibir un correo de confirmacion","success")
+    swal("Ya estas registrado!", "Vas a recibir un correo de confirmación","success")
     setTimeout(() => {
       window.location.reload()
     }, 3000);
     await dispatch(postNewsletter(email))
-    await dispatch(correoRegistroNewsletter(correo))
+    const promo = await axios.post(`${back}/promotions`);
+    const promoData = promo.data
+    await dispatch(correoRegistroNewsletter(correo, promoData))
   }
-  
+
   return (
     <div className="footer">
 
@@ -44,9 +47,9 @@ export default function Footer() {
         <img src={medios} alt="" />
       </div>
 
-        <h5>Suscribite a nuestro Newsletter y no te pierdas las novedades!</h5>
-        <input type="text" name="email"  placeholder="Ingresa tu email..." onChange={capturarEmail}/>
-        <button className="enviar" onClick={newEmail}>Enviar</button>
+      <h5>Suscribite a nuestro Newsletter y no te pierdas las novedades!</h5>
+      <input type="text" name="email" placeholder="Ingresa tu email..." onChange={capturarEmail} />
+      <button className="enviar" onClick={newEmail}>Enviar</button>
 
     </div>
   );

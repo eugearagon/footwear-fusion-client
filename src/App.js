@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Home from "./Components/Home/Home.jsx";
 import Register from "./Components/Register/Register";
 import Login from "./Components/Register/Login";
@@ -14,10 +14,15 @@ import Whatsapp from "./Components/whatsapp/whatsapp";
 import Cart from "./Components/Cart/Cart";
 import UserPanel from "./Components/UserPanel/UserPanel";
 import AdminPanel from "./Components/admin/Panel/AdminPanel";
-import DetailAdmin from "./Components/admin/Panel/DetailAdmin/DetailAdmin";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./Components/Register/authContext";
 import swal from "sweetalert";
+import AntesDeComprar from "./Components/AntesDeComprar";
+import Succes from "./Components/Succes";
+import Failure from "./Components/Failure";
+import ProtecAdmin from "./Components/admin/LoginAdmin/ProtecAdmin";
+import ProtectLogin from "./Components/Register/ProtectLogin";
+import UserBlocked from "./Components/UserBlocked.jsx";
 
 function App() {
   const location = useLocation();
@@ -36,46 +41,54 @@ function App() {
       localStorage.removeItem("token");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("expirationDate");
+      localStorage.removeItem("mercadoPago");
       swal(
-        "Cuidado",
-        "Credenciales expiradas. Por favor, inicie sesión de nuevo!",
+        "¡Volvé a loguearte!",
+        "Tus credenciales expiraron ",
         "info"
       );
-      window.location.reload();
+      navigate("/login");
+      window.location.reload()
     }
   }, [token, expirationDate, navigate]);
 
+  const isAdminDetail = location.pathname.includes("/admin/");
+  
   return (
     <div className={`App ${darkMode ? "dark-mode" : ""}`}>
       {location.pathname !== "/login" &&
         location.pathname !== "/login-admin" &&
-        location.pathname !== "/adminpanel" &&
-        location.pathname !== "/admin/product" &&
-        location.pathname !== "/admin/product/:prodId" &&
+        location.pathname !== "/user-blocked" &&
+        location.pathname !== "/admin" &&
+        !isAdminDetail && // No renderizar navbar, categories, darkmode, whatsapp y footer en la página de detalle de administrador
         location.pathname !== "/register" && (
           <>
             <Navbar />
             <Categories />
-            
           </>
         )}
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={ <Login />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/userpanel" element={<UserPanel />} />
-          <Route path="/product/:prodId" element={<Detail />} />
-          <Route exact path="/adminpanel" element={<AdminPanel />} />
-          <Route exact path="/admin/product/:prodId" element={<DetailAdmin />} />
+          <Route path="/user-blocked" element={ <UserBlocked /> }/>
+          <Route path="/cart" element={<ProtectLogin><Cart /></ProtectLogin>} />
+          <Route path="/userpanel" element={<ProtectLogin><UserPanel /></ProtectLogin>} />
+          <Route path="/product/:prodId" element={<ProtectLogin><Detail /></ProtectLogin>} />
+          <Route exact path="/admin" element={<ProtecAdmin> <AdminPanel /> </ProtecAdmin> } />
+          {/* para mercadopago */}
+          <Route path="/terminarCompra" element = {<ProtectLogin><AntesDeComprar /></ProtectLogin>} />
+          <Route path="/success" element ={<ProtectLogin><Succes /></ProtectLogin>} />
+          <Route path="/failure" element={ <ProtectLogin><Failure /></ProtectLogin> }/>
+          
         </Routes>
         {location.pathname !== "/login" &&
           location.pathname !== "/login-admin" &&
-          location.pathname !== "/adminpanel" &&
-          location.pathname !== "/admin/product" &&
-          location.pathname !== "/admin/product/:prodId" &&
+          location.pathname !== "/user-blocked" &&
+          location.pathname !== "/admin" &&
+          !isAdminDetail && // No renderizar darkmode, whatsapp y footer en la página de detalle de administrador
           location.pathname !== "/register" && (
             <>
               <DarkMode toggleDarkMode={toggleDarkMode} />
@@ -86,27 +99,6 @@ function App() {
       </AuthProvider>
     </div>
   );
-
-  // return (
-  //   <div className={`App ${darkMode ? "dark-mode" : ""}`}>
-  //     {location.pathname !== "/register" && <Navbar />}
-  //     {location.pathname !== "/register" && <Categories />}
-  //     <AuthProvider>
-  //       <Routes>
-  //         <Route path="/" element={<Home />} />
-  //         <Route path="/register" element={<Register />} />
-  //         <Route path="/login" element={<Login />} />
-  //         <Route path="/product/:prodId" element={<Detail />} />
-  //         <Route path="/cart" element={<Cart />} />
-  //       </Routes>
-  //     </AuthProvider>
-  //     {location.pathname !== "/register" && (
-  //       <DarkMode toggleDarkMode={toggleDarkMode} />
-  //     )}
-  //     {location.pathname !== "/register" && <Whatsapp />}
-  //     {location.pathname !== "/register" && <Footer />}
-  //   </div>
-  // );
 }
 
 export default App;

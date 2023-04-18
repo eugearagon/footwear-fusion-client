@@ -10,12 +10,16 @@ import {
   addFav,
   getFav,
 } from "../../Redux/Actions";
+import ReactStars from "react-stars";
 import swal from "sweetalert";
 
 export default function Detail() {
   const { prodId } = useParams();
   const loginUserId = useSelector((state) => state.loginUser.id);
+<<<<<<< HEAD
  // const items = useSelector((state) => state.item);
+=======
+>>>>>>> f1e76e7e040724dbb2155c465ddeb79ac82bcee8
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -37,9 +41,10 @@ export default function Detail() {
   useEffect(() => {
     const userCart = async () => {
       await dispatch(getUserCart(loginUserId));
+      await dispatch(getFav(loginUserId));
     };
     userCart();
-  }, [dispatch]);
+  }, [dispatch, loginUserId]);
 
   const prod = useSelector((state) => state.detail);
 
@@ -98,7 +103,10 @@ export default function Detail() {
     size: selectedSize,
     qty: selectedQty,
   };
+<<<<<<< HEAD
   console.log("este es el console.log de item", item);
+=======
+>>>>>>> f1e76e7e040724dbb2155c465ddeb79ac82bcee8
 
   const handleSizeSelect = (e) => {
     dispatch(addSize(e.target.value));
@@ -127,9 +135,6 @@ export default function Detail() {
     await dispatch(getUserCart(loginUserId));
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };
-
-  const loginUser = useSelector((state) => state.loginUser);
-  console.log("credenciales", loginUser);
 
   const handleAddFav = async () => {
     if (!token) {
@@ -166,49 +171,71 @@ export default function Detail() {
         />
       </div>
       <div className="detail-der">
-        <h1>{marca}</h1>
+        <h1>{marca.toUpperCase()}</h1>
         <h2>{prod.title}</h2>
         <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">
-          <div className="cantidades">
-            <h5>Cantidad</h5>
-            <select defaultValue="Cantidad" onChange={handleQtySelect}>
-              <option disabled value="Cantidad">
-                Cantidad
-              </option>
-              {valores?.map((s) => (
-                <option value={s} key={s}>
-                  {s}
+          {stock === 0 ? (
+            <h2 className="no-disp">STOCK NO DISPONIBLE</h2>
+          ) : (
+            <div className="column">
+              <div className="cantidades">
+                <h5>Cantidad</h5>
+                <select defaultValue="Cantidad" onChange={handleQtySelect}>
+                  <option disabled value="Cantidad">
+                    Cantidad
+                  </option>
+                  {valores?.map((s) => (
+                    <option value={s} key={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <h5>TALLES</h5>
+              <select
+                defaultValue="Seleccione un talle"
+                onChange={handleSizeSelect}
+              >
+                <option disabled value="Seleccione un talle">
+                  Seleccione un talle
                 </option>
-              ))}
-            </select>
-          </div>
-          <h5>TALLES</h5>
-          <select
-            defaultValue="Seleccione un talle"
-            onChange={handleSizeSelect}
-          >
-            <option disabled value="Seleccione un talle">
-              Seleccione un talle
-            </option>
-            {nuevoTalle?.map((talle) => (
-              <option key={talle} value={talle}>
-                {talle}
-              </option>
-            ))}
-          </select>
-          <button className="comprar" onClick={handleAddToCart}>
-            ¡Agregar al Carrito!
-          </button>
-          <button className="favs" onClick={handleAddFav}>
-            {" "}
-            ❤️ Agregar a favoritos
-          </button>
+                {nuevoTalle?.map((talle) => (
+                  <option key={talle} value={talle}>
+                    {talle}
+                  </option>
+                ))}
+              </select>
+              <button className="comprar" onClick={handleAddToCart}>
+                ¡Agregar al Carrito!
+              </button>
+              <button className="favs" onClick={handleAddFav}>
+                {" "}
+                ❤️ Agregar a favoritos
+              </button>
+            </div>
+          )}
         </div>
-        <div className="description">
-          <h5>DETALLES DEL PRODUCTO</h5>
-          <p>{prod.description}</p>
-        </div>
+      </div>
+      <div className="description">
+        <h5>DETALLES DEL PRODUCTO</h5>
+        <p>{prod.description}</p>
+      </div>
+      <br />
+      <div className="description">
+        <h5>COMENTARIOS</h5>
+        {prod.ReviewsPuntuacions?.map((rp) => (
+          <>
+            <ReactStars
+              count={5}
+              size={24}
+              edit={false}
+              half={false}
+              value={rp.punctuation}
+            />
+            <p>{rp.review}</p>
+          </>
+        ))}
       </div>
     </div>
   );

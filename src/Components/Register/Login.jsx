@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
 
   const [user, setUser] = useState({
     email: "",
@@ -34,6 +35,7 @@ export default function Login() {
     setError("");
     try {
       const login = await iniciarLogin(user.email, user.password);
+     
       await dispatch(ingreso(login.user.email));
       navigate("/");
     } catch (error) {

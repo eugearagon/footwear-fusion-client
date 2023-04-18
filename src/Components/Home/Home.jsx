@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Slider from "../Slider/Slider.jsx";
 import Filters from "../Filters/Filters.jsx";
@@ -7,7 +6,7 @@ import OrderPaginate from "../OrderPaginate/OrderPaginate.jsx";
 import { CookiesProvider, useCookies } from "react-cookie";
 import popup from "../images/popup.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getDatosUser, getFav, getUserCart } from "../../Redux/Actions";
+import { getDatosUser, getFav, getOrdenesCompraId, getUserCart } from "../../Redux/Actions";
 
 export default function Home() {
   const loginUser = useSelector((state) => state.loginUser);
@@ -19,15 +18,17 @@ export default function Home() {
   useEffect(() => {
     const iniciarTodo = async () => {
       try {
-        await dispatch(getUserCart(loginUserId));
-        await dispatch(getFav(loginUserId));
-        await dispatch(getDatosUser(loginUserId));
+        if(loginUserId){
+          await dispatch(getUserCart(loginUserId));
+          await dispatch(getFav(loginUserId));
+          await dispatch(getDatosUser(loginUserId));
+        }
       } catch (error) {
         console.log(error.message);
       }
     };
     iniciarTodo();
-  }, [dispatch, loginUserId]);
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1); // definir estado currentPage aquí
   const [cookies, setCookie] = useCookies(["visited"]);
@@ -51,6 +52,7 @@ export default function Home() {
         <div className="home-adentro">
           <Filters />
           <CardsContainer currentPage={currentPage} />{" "}
+          {/* pasar currentPage como prop */}
         </div>
       </div>
     </CookiesProvider>

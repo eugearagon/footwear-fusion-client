@@ -14,16 +14,19 @@ export default function UserAccount() {
   const user = useSelector((state) => state.loginUser);
   const loginUserId = user.id;
   const dataUsers = useSelector((state) => state.dataUser);
+  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
 
   useEffect(() => {
     const userData = async () => {
-      await dispatch(getDatosUser(loginUserId));
-      await dispatch(getUserCart(loginUserId));
-      await dispatch(getFav(loginUserId));
+      if(token){
+        await dispatch(getDatosUser(loginUserId));
+        await dispatch(getUserCart(loginUserId));
+        await dispatch(getFav(loginUserId));
+      }
     };
     userData();
-  }, [loginUserId, dispatch]);
+  }, [token, dispatch]);
 
   const [datos, setDatos] = useState({
     name: "",

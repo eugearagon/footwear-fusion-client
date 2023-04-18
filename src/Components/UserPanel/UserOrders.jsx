@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrdenesCompraId, postPunctuation } from "../../Redux/Actions";
 import ReactStars from "react-stars";
+import swal from "sweetalert";
 
 
 export default function UserOrders() {
@@ -10,14 +11,13 @@ export default function UserOrders() {
   const compraProducto = useSelector((state) => state.ordenesCompra);
   const user = useSelector((state) => state.loginUser);
   const userId = user.id;
+  const token = localStorage.getItem("token");
 
   const [showPopup, setShowPopup] = useState(false);
-  const [productId, setProductId] = useState(null); // Agregar esta línea
+  const [productId, setProductId] = useState(null); // para obtener el id del producto
 
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
-
-  console.log(rating, reviewText);
 
   const puntuacion = {
     punctuation: rating,
@@ -34,15 +34,21 @@ export default function UserOrders() {
 
   useEffect(() => {
     const orden = async () => {
-      await dispatch(getOrdenesCompraId(userId));
+      if(token){
+        await dispatch(getOrdenesCompraId(userId));
+      }
     };
     orden();
-  }, [userId, dispatch]);
+  }, [token, dispatch]);
 
   const handleReview = (productId) => {
-    dispatch(postPunctuation(productId, puntuacion)); // Cambiar esta línea
-    setProductId(null); // Agregar esta línea
+    dispatch(postPunctuation(productId, puntuacion));
+    setProductId(null); 
+    swal("Excelente!", "Gracias por tu comentario!", "success");
+    setShowPopup(false)
   }
+
+  if(!token) return (<h1>TODAVIA NO HAY PEDIDOS REALIZADOS</h1>)
 
   return (
     <div className="user-content">
@@ -50,8 +56,8 @@ export default function UserOrders() {
         <img src={shoe} alt="footwear-fusion" />
         <div className="data-list">
           <h6>MIS PEDIDOS REALIZADOS</h6>
-          {!compraProducto ? (
-            <div className="zapato-fav">
+          {compraProducto.length === 0 ? (
+            <div className="zapato-fav"> 
               <h1>TODAVIA NO HAY PEDIDOS REALIZADOS</h1>
             </div>
           ) : (
@@ -83,7 +89,7 @@ export default function UserOrders() {
                       </div>
                       <button onClick={() => {
                          setShowPopup(true);
-                         setProductId(producto.productId); // Agregar esta línea
+                         setProductId(producto.productId); 
                       }}>¡OPINÁ SOBRE EL PRODUCTO!</button>
                     </div>
                   ))}

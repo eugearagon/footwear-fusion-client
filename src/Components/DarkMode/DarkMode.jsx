@@ -1,4 +1,3 @@
-
 import mode from "../images/mode.png"
 
 export default function DarkMode(props){

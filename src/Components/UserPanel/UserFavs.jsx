@@ -12,7 +12,7 @@ export default function UserFavs() {
   const deleteOneFav = async (userId, prodId) => {
     await dispatch(deletFav(userId, prodId));
     await dispatch(getFav(userId));
-    Swal("Producto eliminado", "","success")
+    Swal("Producto eliminado", "eliminado correctamente","success")
   };
 
   return (

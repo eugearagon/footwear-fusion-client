@@ -30,10 +30,6 @@ const eliminarLocalStore = () => {
 }
 
 const handleGetUserCart = () => {
-  // if (!lcdtmab || lcdtmab.length === 0) {
-  //   alert("Todavía no hay productos en su carrito");
-  //   return;
-  // }
   dispatch(getUserCart(loginUserId));
 };
 

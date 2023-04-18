@@ -15,12 +15,21 @@ export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("account");
   const [showNovedades, setShowNovedades] = useState(true);
   const user = useSelector((state) => state.loginUser);
+  // const [novedades, setNovedades] = useState("");
 
   function handleTabClick(tabName) {
     setActiveTab(tabName);
     setShowNovedades(false);
   }
 
+  // function handleNovedadesChange(event) {
+  //   setNovedades(event.target.value);
+  // }
+
+  // function handleAgregarNovedad() {
+  //   setShowNovedades(true);
+  //   setNovedades("");
+  // }
 
   return (
     <div className="admin-panel">

@@ -23,7 +23,7 @@ function Succes() {
       if(code) await dispatch(getPromo(code));
     };
     fetchData();
-  }, [compraId, dispatch, code]);
+  }, [compraId, dispatch]);
 
   useEffect(() => {
     if (datos && datosCompra) {

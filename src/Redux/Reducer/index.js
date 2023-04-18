@@ -1,12 +1,12 @@
 import {
   GET_PRODUCTS,
-  POST_PRODUCTS,
   GET_PRODUCTS_BY_NAME,
   GET_PRODUCT_DETAIL,
   GET_CATEGORY,
   GET_SIZE,
   GET_BRAND,
   GET_USERS,
+  GET_USER_BY_NAME,
   FILTER_BY_CATEGORY,
   FILTER_BY_BRAND,
   FILTER_BY_SIZE,
@@ -33,17 +33,17 @@ import {
   DELETE_PRODUCT_CART,
   UPDATE_PRODUCT_CART,
   GET_ORDEN_USER,
-  POST_PROMOTION,
-  POST_USER_ADMIN
+  GET_PROMOTIONS,
+
 } from "../Actions/actions";
 
 const initialState = {
   products: [],
   prodRender: [],
+  filteredProducts:[],
   detail: [],
   detailAdmin: [],
   categories: [],
-  filteredProducts: [],
   users: [],
   dataUser: {
     name: "",
@@ -71,8 +71,8 @@ const initialState = {
   newsletter: [],
   postMercadoPago: null,
   getMercadoPago: null,
-  userCompras: null,
-  ordenesCompras:null,
+  ordenesCompra: null,
+  promotions: null
 };
 
 const storedUser = localStorage.getItem("loginUser");
@@ -216,6 +216,12 @@ function rootReducer(state = initialState, action) {
         users: action.payload,
       };
 
+      case GET_USER_BY_NAME:
+      return {
+        ...state,
+        users: action.payload,
+      };
+
     case UPDATE_USER_FAILURE:
       return {
         ...state,
@@ -242,23 +248,23 @@ function rootReducer(state = initialState, action) {
         products: filteredProducts,
       };
 
-      case FILTER_BY_SIZE:
-        const sizeFilter = action.payload;
-        let sizeProd = state.filteredProducts.length ? state.filteredProducts : state.prodRender;
-        if (sizeFilter) {
-          sizeProd = sizeProd.filter((product) => {
-            if (product.TalleProducts) {
-              return product.TalleProducts[0].talle.split(",").filter((e) => e === action.payload).length > 0;
-            } else {
-              return false;
-            }
-          });
-        }
-        return {
-          ...state,
-          products: sizeProd,
-          filteredProducts: sizeProd
-        };
+    case FILTER_BY_SIZE:
+      const sizeFilter = action.payload;
+      let sizeProd = state.filteredProducts.length ? state.filteredProducts : state.prodRender;
+      if (sizeFilter) {
+        sizeProd = sizeProd.filter((product) => {
+          if (product.TalleProducts) {
+            return product.TalleProducts[0].talle === action.payload;
+          } else {
+            return false;
+          }
+        });
+      }
+      return {
+        ...state,
+        products: sizeProd,
+        filteredProducts: sizeProd
+      };
 
     case FILTER_BY_BRAND:
       const brandFilter = action.payload.toUpperCase();
@@ -290,32 +296,31 @@ function rootReducer(state = initialState, action) {
             : sortedProducts,
       };
 
-      case PRICE_RANGE_SELECTOR:
-        const { minPrice, maxPrice } = action.payload;
-        let priceProd = state.filteredProducts.length ? state.filteredProducts : state.prodRender;
-        let nuevoPrecio = [];
-        if (minPrice && maxPrice) {
-          priceProd &&
-            priceProd.filter((product) => {
-              if (
-                Number(product.price) >= minPrice &&
-                Number(product.price) <= maxPrice
-              ) {
-                nuevoPrecio.push(product);
-              }
-            });
-        }
-  
-        return {
-          ...state,
-          selectedPriceRange: { minPrice, maxPrice },
-          products: nuevoPrecio,
-          filteredProducts:nuevoPrecio
-        };
+    case PRICE_RANGE_SELECTOR:
+      const { minPrice, maxPrice } = action.payload;
+      let priceProd = state.filteredProducts.length ? state.filteredProducts : state.prodRender;
+      let nuevoPrecio = [];
+      if (minPrice && maxPrice) {
+        priceProd &&
+          priceProd.filter((product) => {
+            if (
+              Number(product.price) >= minPrice &&
+              Number(product.price) <= maxPrice
+            ) {
+              nuevoPrecio.push(product);
+            }
+          });
+      }
+
+      return {
+        ...state,
+        selectedPriceRange: { minPrice, maxPrice },
+        products: nuevoPrecio,
+        filteredProducts:nuevoPrecio
+      };
 
     case ADD_SIZE:
       const size = action.payload;
-      console.log("console.log add_size", size);
       return {
         ...state,
         selectedSize: size,
@@ -323,7 +328,6 @@ function rootReducer(state = initialState, action) {
 
     case ADD_QUANTITY:
       const qty = action.payload;
-      console.log("console.log add_qty", qty);
       return {
         ...state,
         selectedQty: qty,
@@ -346,7 +350,6 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_CART_BY_ID:
-      console.log(action.payload, "payload reducer");
       return {
         ...state,
         item: action.payload,
@@ -365,7 +368,7 @@ function rootReducer(state = initialState, action) {
           ...state,
           ordenesCompra: datosOrden
         };
-        
+
     case DELETE_FAV:
       return {
         ...state,
@@ -411,22 +414,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         dataUser: datos
       };
-
-      case POST_USER_ADMIN:
+    
+    case GET_PROMOTIONS:
+      const promo = action.payload;
       return {
         ...state,
-      };
-
-      // case POST_PROMOTION:
-      //   const promo = action.payload;
-      //   return {
-      //     ...state,
-      //     promotions:
-      //     {
-      //       code: promo.code,
-      //       discount: promo.discount,
-      //     }
-      //   };
+        promotions: promo
+      }
 
     default:
       return state;

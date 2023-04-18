@@ -6,9 +6,7 @@ import { useState } from "react";
 import { useAuth } from "./authContext";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { correoRegistroNewsletter, registros } from "../../Redux/Actions/index";
-import { html } from "./emailRegister";
-import Swal from "sweetalert2";
+import { registros } from "../../Redux/Actions/index";
 
 export default function Register() {
   
@@ -19,11 +17,7 @@ export default function Register() {
     email: "",
     password: "",
   });
-
-  const [email, setEmail] = useState({
-    email: ""
-  });
-
+  
   const [error, setError] = useState()
 
   const { registrarUserFirebase } = useAuth();
@@ -35,26 +29,7 @@ export default function Register() {
       ...user,
       [name]: value,
     });
-    setEmail({
-      ...email,
-      [name]: value
-    });
   };
-
-  const correo = {
-    email: email.email, 
-    subject:"¡Tus próximas zapatillas están acá!",
-    html: html
-}
-  
-
-  const newEmail = async ()=> {
-    Swal.fire("Ya estas registrado!", "Vas a recibir un correo de confirmación","success")
-    setTimeout(() => {
-      window.location.reload()
-    }, 3000);
-    await dispatch(correoRegistroNewsletter(correo))
-  }
 
   const enviarDatos = async (evento) => {
     evento.preventDefault();
@@ -77,6 +52,7 @@ export default function Register() {
     }
     
   }
+
   return (
     <div className="register-landing">
       <div className="form">
@@ -105,7 +81,7 @@ export default function Register() {
               />
             </div>
             <br />
-            <button onClick={newEmail}>Enviar</button>
+            <button>Enviar</button>
           
           </form>
           

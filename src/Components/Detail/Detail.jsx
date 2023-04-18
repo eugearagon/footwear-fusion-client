@@ -15,7 +15,8 @@ import swal from "sweetalert";
 
 export default function Detail() {
   const { prodId } = useParams();
-  const loginUserId = useSelector((state) => state.loginUser.id);
+  const user = useSelector((state) => state.loginUser);
+  const loginUserId = user.id
   const dispatch = useDispatch();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -36,11 +37,13 @@ export default function Detail() {
 
   useEffect(() => {
     const userCart = async () => {
-      await dispatch(getUserCart(loginUserId));
-      await dispatch(getFav(loginUserId));
+      if(user){
+        await dispatch(getUserCart(loginUserId));
+        await dispatch(getFav(loginUserId));
+      }
     };
     userCart();
-  }, [dispatch, loginUserId]);
+  }, [user,dispatch]);
 
   const prod = useSelector((state) => state.detail);
 
@@ -128,6 +131,8 @@ export default function Detail() {
     swal("Excelente!", "Producto agregado al carrito!", "success");
   };
 
+  const loginUser = useSelector((state) => state.loginUser);
+
   const handleAddFav = async () => {
     if (!token) {
       swal("Error", "Logueate para continuar!", "error");
@@ -163,7 +168,7 @@ export default function Detail() {
         />
       </div>
       <div className="detail-der">
-        <h1>{marca.toUpperCase()}</h1>
+        <h1>{marca}</h1>
         <h2>{prod.title}</h2>
         <h3>${Number(prod.price).toLocaleString("de-DE")}.-</h3>
         <div className="options">

@@ -9,20 +9,19 @@ export default function UserPanel() {
   const [activeTab, setActiveTab] = useState("account");
   const loginUser = useSelector((state) => state.loginUser);
   const loginUserId = loginUser.id;
+  const token = localStorage.getItem("token");
 
   const dispatch = useDispatch();
 
-// unificamos los useEffect del cart y fav
+
   useEffect(() => {
     const iniciarOrdenesCompraUser = async () => {
-      try {
-        await dispatch(getOrdenesCompraId(loginUserId));
-      } catch (error) {
-        console.log(error.message);
-      }
+        if(token){
+          await dispatch(getOrdenesCompraId(loginUserId));
+        }
     };
     iniciarOrdenesCompraUser();
-  }, [dispatch, loginUserId]);
+  }, [token,loginUserId,dispatch]);
 
 
   function handleTabClick(tabName) {

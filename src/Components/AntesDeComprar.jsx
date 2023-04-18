@@ -26,6 +26,8 @@ function AntesDeComprar() {
     0
   );
 
+  
+  const [modificar, setModificar] = useState(false);
   const [modificarTelefono, setModificarTelefono] = useState(false);
   const [modificarDireccion, setModificarDireccion] = useState(false);
   const [promoCode, setPromoCode] = useState("");
@@ -53,7 +55,7 @@ function AntesDeComprar() {
     } catch (error) {
       console.log("errorPromo", error);
     }
-  }, [descuento, totalPrice,item]);
+  }, [descuento, totalPrice]);
 
   useEffect(() => {
     const getCartAndFav = async () => {
@@ -123,7 +125,7 @@ function AntesDeComprar() {
             <img src={item.image} alt="zapato" />
             <div className="zapato-dataUser">
               <p>
-                <strong>{item.marca.toUpperCase()}</strong>
+                <strong>{item.marca}</strong>
                 <br />
                 {item.title}
               </p>

@@ -5,8 +5,8 @@ import Card from "../Card/Card";
 
 export default function CardsContainer(props) {
   const dispatch = useDispatch();
-  const { products, prodRender, filteredProducts } = useSelector((state) => state); // Combina todos los estados en un objeto
-  
+  const allProducts = useSelector((state) => state.products);
+
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -15,7 +15,7 @@ export default function CardsContainer(props) {
   const indexLastProd = props.currentPage * prodPerPage;
   const indexFirstProd = indexLastProd - prodPerPage;
   
-  let currentProd = products;
+  let currentProd = allProducts;
 
   currentProd = currentProd.slice(indexFirstProd, indexLastProd);
 

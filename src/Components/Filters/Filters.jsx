@@ -99,6 +99,7 @@ export default function Filters() {
     checkboxes.forEach((checkbox) => (checkbox.checked = false));
     await dispatch(filterByBrand(""));
     await dispatch(filterBySize(""));
+
     fetchProducts(); 
   };
 

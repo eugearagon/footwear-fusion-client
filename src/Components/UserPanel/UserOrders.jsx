@@ -58,7 +58,7 @@ export default function UserOrders() {
           {compraProducto?.length === 0 || !token ? (
             
             <div className="zapato-fav">
-              <h1><AUN></AUN> NO HAY PEDIDOS REALIZADOS</h1>
+              <h1>NO HAY PEDIDOS REALIZADOS</h1>
             </div>
           ) : (
             compraProducto.map((compra) => (
